@@ -34,7 +34,11 @@ const app = express();
 
 // Middleware setup.
 app.use(express.json());
-app.use(morgan("dev")); // To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
+// To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
+app.use(morgan("dev", {
+  // don't log health checks
+  skip: (req, res) => req.url === '/health'
+}));
 const sessionSecret = process.env.SESSION_SECRET;
 if (sessionSecret === undefined) {
   throw new Error("Please add a session secret as 'SESSION_SECRET'");
