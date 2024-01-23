@@ -17,6 +17,6 @@ export interface Story extends Document {
   _id: string;
 }
 
-const StoryModel = model<Story>("story", StorySchema);
+const StoryModel = model<Story>("Story", StorySchema);
 
 export default StoryModel;

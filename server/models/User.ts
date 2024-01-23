@@ -11,6 +11,6 @@ export interface User extends Document {
   _id: string;
 }
 
-const UserModel = model<User>("user", UserSchema);
+const UserModel = model<User>("User", UserSchema);
 
 export default UserModel;

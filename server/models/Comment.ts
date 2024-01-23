@@ -13,6 +13,6 @@ export interface Comment extends Document {
   _id: string;
 }
 
-const CommentModel = model<Comment>("comment", CommentSchema);
+const CommentModel = model<Comment>("Comment", CommentSchema);
 
 export default CommentModel;

@@ -3,9 +3,9 @@ import auth from "./auth"; // import authentication library
 import socketManager from "./server-socket";
 
 // import models so we can interact with the database
-const User = require("./models/user");
-const Story = require("./models/story");
-const Comment = require("./models/comment");
+const User = require("./models/User");
+const Story = require("./models/Story");
+const Comment = require("./models/Comment");
 
 const router = express.Router();
 
