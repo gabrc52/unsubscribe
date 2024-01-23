@@ -2,7 +2,6 @@ import { Schema, model, Document } from "mongoose";
 
 const StorySchema = new Schema({
   creator_id: String,
-  creator_name: String,
   food_type: String,
   photo: String,
   content: String,
@@ -10,7 +9,6 @@ const StorySchema = new Schema({
 
 export interface Story extends Document {
   creator_id: string;
-  creator_name: string;
   food_type: string;
   photo: string;
   content: string;
