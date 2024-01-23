@@ -49,6 +49,10 @@ app.use(
 app.use(auth.populateCurrentUser);
 app.use("/api", api);
 
+// Health endpoint (for Render)
+// (Note: Not proxied by `npm run hotloader`)
+app.get("/health", (req, res) => res.send({}));
+
 // Serves the frontend code
 const reactPath = path.resolve(__dirname, "..", "client", "dist");
 app.use(express.static(reactPath));
