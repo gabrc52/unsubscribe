@@ -1,6 +1,12 @@
 import express from "express";
-import auth from "./auth";
+import auth from "./auth"; // import authentication library
 import socketManager from "./server-socket";
+
+// import models so we can interact with the database
+const User = require("./models/user");
+const Story = require("./models/story");
+const Comment = require("./models/comment");
+
 const router = express.Router();
 
 router.post("/login", auth.login);
