@@ -58,8 +58,9 @@ router.get("/foodevents", (req, res) => {
 router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
   const newFoodEvent = new FoodEvent({
     creator_googleid: req.body.creator_googleid,
+    title: req.body.title,
     food_type: req.body.food_type,
-    photo: req.body.photo,
+    photos: req.body.photos,
     content: req.body.content,
   });
 
@@ -73,6 +74,17 @@ router.post("/comment", auth.ensureLoggedIn, (req, res) => {
   });
   newComment.save().then((comment) => res.send(comment));
 });
+
+router.post("/comment", auth.ensureLoggedIn, (req, res) => {
+  const newComment = new Comment({
+    creator_googleid: req.body.creator_googleid,
+    parent: req.body.parent,
+    content: req.body.content,
+  });
+
+  newComment.save().then((comment) => res.send(comment));
+});
+
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
