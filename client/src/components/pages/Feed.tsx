@@ -19,13 +19,21 @@ type Props = {
   handleLogout: () => void;
 };
 
+type FoodEventObj = {
+  _id: string
+  title: string;
+  food_type: string;
+  photo: string;
+  content: string;
+}
+
 const Feed = (props: Props) => {
   const { handleLogin, handleLogout } = props;
-  const [foodEvents, setFoodEvents] = useState([]);
+  const [foodEvents, setFoodEvents] = useState<FoodEventObj[]>([]);
 
   useEffect(() => {
     document.title = "Food Events";
-    get("/api/foodevents").then((foodEventObjs) => {
+    get("/api/foodevents").then((foodEventObjs: FoodEventObj[]) => {
       let reversedFoodEventObjs = foodEventObjs.reverse();
       setFoodEvents(reversedFoodEventObjs);
     });
@@ -35,7 +43,7 @@ const Feed = (props: Props) => {
     setFoodEvents([foodEventObj].concat(foodEvents));
   };
 
-  let foodEventsList = null;
+  let foodEventsList: JSX.Element | JSX.Element[];
   const hasFoodEvents = foodEvents.length !== 0;
 
   if (hasFoodEvents) {
