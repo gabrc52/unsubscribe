@@ -75,14 +75,10 @@ router.post("/comment", auth.ensureLoggedIn, (req, res) => {
   newComment.save().then((comment) => res.send(comment));
 });
 
-router.post("/comment", auth.ensureLoggedIn, (req, res) => {
-  const newComment = new Comment({
-    creator_googleid: req.body.creator_googleid,
-    parent: req.body.parent,
-    content: req.body.content,
+router.get("/comment", (req, res) => {
+  Comment.find({ parent: req.query.parent }).then((comments) => {
+    res.send(comments);
   });
-
-  newComment.save().then((comment) => res.send(comment));
 });
 
 // anything else falls to this "not found" case
