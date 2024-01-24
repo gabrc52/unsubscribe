@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
-import SingleFoodEvent from "../modules/SingleFoodEvent";
+import NewPostInput from "../modules/NewPostInput";
 import {
   GoogleOAuthProvider,
   GoogleLogin,
@@ -20,12 +20,12 @@ type Props = {
 };
 
 type FoodEventObj = {
-  _id: string
+  _id: string;
   title: string;
   food_type: string;
   photo: string;
   content: string;
-}
+};
 
 const Feed = (props: Props) => {
   const { handleLogin, handleLogout } = props;
@@ -74,7 +74,7 @@ const Feed = (props: Props) => {
         <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
       )}
 
-      {props.userId && <SingleFoodEvent onSubmit={handleFoodEventSubmission} />}
+      {props.userId && <NewPostInput onSubmit={handleFoodEventSubmission} />}
       {foodEventsList}
     </GoogleOAuthProvider>
   );
