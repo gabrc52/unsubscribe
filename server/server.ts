@@ -31,7 +31,8 @@ mongoose
 const app = express();
 
 // Middleware setup.
-app.use(express.json());
+// Allow larger JSON payloads (TODO: do it more granularly)
+app.use(express.json({ limit: "50mb" }));
 // To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
 app.use(
   morgan("dev", {
