@@ -19,11 +19,12 @@ const GOOGLE_CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.goo
 //   handleLogout: () => void;
 // };
 
+// TODO: didn't we already declare it? see if we can use `/shared` to put the type definition there
 type FoodEventObj = {
   _id: string;
   title: string;
   food_type: string;
-  photo: string;
+  photos: string[];
   content: string;
 };
 
@@ -49,11 +50,14 @@ const Feed = (props) => {
 
   if (hasFoodEvents) {
     foodEventsList = foodEvents.map((foodEventObj) => (
-      <div key={`FoodEvent_${foodEventObj._id}`}>
+      <div key={`FoodEvent_${foodEventObj._id}`} className="email-container">
         <h3>{foodEventObj.title}</h3>
         <p>{foodEventObj.food_type}</p>
-        <p>{foodEventObj.photo}</p>
-        <p>{foodEventObj.content}</p>
+        {/* https://stackoverflow.com/questions/40418024/how-to-replace-n-to-linebreaks-in-react-js */}
+        <p className="email-body">{foodEventObj.content}</p>
+        <div className="email-image-container">
+          {foodEventObj.photos.map((url) => <img src={url} className="email-image"/>)}
+        </div>
       </div>
     ));
   } else {

@@ -7,8 +7,13 @@ from urllib import request, error
 from datetime import datetime
 from config import TOKEN, ENDPOINT
 
-
-_headers = {"Content-Type": "application/json"}
+# Go to script's location
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+# Ensure the `saved` folder exist
+if not os.path.exists("saved"):
+    os.mkdir("saved")
 
 
 # Copied from linked code
@@ -28,12 +33,16 @@ def pass_to_api(email, endpoint, *, save=True):
         "email": email,
         "token": TOKEN,
     }
-    req = request.Request(
-        endpoint, data=json.dumps(payload).encode(), headers=_headers, method="POST"
-    )
-
-    response = request.urlopen(req)
-    if response.status == 201 and save:
+    try:
+        req = request.Request(
+            endpoint,
+            data=json.dumps(payload).encode(),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        response = request.urlopen(req)
+    # We want to save the email no matter what (especially useful if error)
+    finally:
         save_last_email(email)
 
 

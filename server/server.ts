@@ -12,10 +12,8 @@ import api from "./api";
 dotenv.config({});
 
 // Server configuration below
-// TODO change connection URL after setting up your team database and creating the .env file
 const mongoConnectionURL = process.env.MONGO_SRV;
-// TODO change database name to the name you chose
-const databaseName = "IncludeYourDatabaseNameHere";
+const databaseName = process.env.DATABASE_NAME ?? "unsubscribe-dev";
 
 if (mongoConnectionURL === undefined) {
   throw new Error("Please add the MongoDB connection SRV as 'MONGO_SRV'");
@@ -33,12 +31,15 @@ mongoose
 const app = express();
 
 // Middleware setup.
-app.use(express.json());
+// Allow larger JSON payloads (TODO: do it more granularly)
+app.use(express.json({ limit: "50mb" }));
 // To change the format of logs: https://github.com/expressjs/morgan#predefined-formats
-app.use(morgan("dev", {
-  // don't log health checks
-  skip: (req, res) => req.url === '/health'
-}));
+app.use(
+  morgan("dev", {
+    // don't log health checks
+    skip: (req, res) => req.url === "/health",
+  })
+);
 const sessionSecret = process.env.SESSION_SECRET;
 if (sessionSecret === undefined) {
   throw new Error("Please add a session secret as 'SESSION_SECRET'");
