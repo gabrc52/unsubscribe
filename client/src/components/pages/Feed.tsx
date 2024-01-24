@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
-import NewPostInput from "../modules/NewPostInput";
+import Card from "../modules/Card.js";
+import { NewFoodevent } from "../modules/NewPostInput";
 import {
   GoogleOAuthProvider,
   GoogleLogin,
@@ -63,10 +64,27 @@ const Feed = (props) => {
   } else {
     foodEventsList = <div>No food events!</div>;
   }
+  /*
+  if (hasFoodEvents) {
+    foodEventsList = foodEvents.map((foodEventObj) => (
+      <Card
+        key={`Card_${foodEventObj._id}`}
+        _id={foodEventObj._id}
+        creator_id={foodEventObj.creator_googleid}
+        title={foodEventObj.title}
+        food_type{foodEventObj.food_type}
+        photos={foodEventObj.photos}
+        content={foodEventObj.content}
+      />
+    ));
+  } else {
+    foodEventsList = <div>No food events!</div>;
+  }
+  */
 
   return (
     <span>
-      {props.userId && <NewPostInput onSubmit={handleFoodEventSubmission} />}
+      {props.userId && <NewFoodevent onSubmit={handleFoodEventSubmission} />}
       {foodEventsList}
     </span>
   );
