@@ -1,0 +1,9 @@
+LOGFILE=${HOME}/mail_scripts/log
+
+:0
+* ^Delivered-To:.*rgabriel\+food@.*
+| /usr/bin/python ${HOME}/mail_scripts/send_to_backend.py
+
+:0
+*
+! rgabriel@mit.edu
