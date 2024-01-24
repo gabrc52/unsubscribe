@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SingleFoodEvent from "./SingleFoodEvent.js"
+import CommentsBlock from "./CommentsBlock.js";
+import { get } from "../../utilities";
 
 import "./Card.css";
 
@@ -29,8 +31,11 @@ const Card = (props) => {
   return (
     <div className="Card-container">
       <SingleFoodEvent
-        _id={props._id}
         creator_googleid={props.creator_googleid}
+        _id={props._id}
+        title={props.title}
+        photos={props.photos}
+        food_type={props.food_type}
         content={props.content}
       />
       <CommentsBlock
