@@ -12,7 +12,7 @@ function _getFullFrom(parsed: ParsedMail): EmailAddress | undefined {
     console.warn("Email has a From field with no emails?!");
     return undefined;
   }
-  if (parsed.from.value.length > 0) {
+  if (parsed.from.value.length > 1) {
     console.warn("Email has multiple senders?!");
   }
   return parsed.from.value[0];
