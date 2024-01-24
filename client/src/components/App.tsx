@@ -5,7 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { get, post } from "../utilities";
 import NotFound from "./pages/NotFound";
-import Skeleton from "./pages/Skeleton";
+import Feed from "./pages/Feed.js";
+// import Skeleton from "./pages/Skeleton";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
@@ -50,7 +51,8 @@ const App = () => {
       <Routes>
         <Route
           element={
-            <Skeleton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+            <Feed handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+            // <Skeleton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
           }
           path="/"
         />
