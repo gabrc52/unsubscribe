@@ -4,7 +4,7 @@ import socketManager from "./server-socket";
 
 // import models so we can interact with the database
 const User = require("./models/User");
-const Story = require("./models/Story");
+const Story = require("./models/FoodEvent");
 const Comment = require("./models/Comment");
 
 const router = express.Router();
