@@ -4,7 +4,7 @@ import socketManager from "./server-socket";
 
 // import models so we can interact with the database
 const User = require("./models/User");
-const Story = require("./models/FoodEvent");
+const FoodEvent = require("./models/FoodEvent");
 const Comment = require("./models/Comment");
 
 const router = express.Router();
@@ -30,19 +30,19 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
-router.get("/foodEvents", (req, res) => {
-  Story.find({}).then((stories) => res.send(stories));
+router.get("/foodevents", (req, res) => {
+  FoodEvent.find({}).then((foodevents) => res.send(foodevents));
 });
 
-router.post("/foodEvent", auth.ensureLoggedIn, (req, res) => {
-  const foodEvent = new Story({
+router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
+  const newFoodEvent = new FoodEvent({
     creator_id: req.body.creator_id,
     food_type: req.body.food_type,
     photo: req.body.photo,
-    content: req.body.content
+    content: req.body.content,
   });
 
-  foodEvent.save().then((story) => res.send(story));
+  newFoodEvent.save().then((foodevent) => res.send(foodevent));
 });
 
 // anything else falls to this "not found" case
