@@ -13,11 +13,11 @@ import "./Feed.css";
 //TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.googleusercontent.com";
 
-type Props = {
-  userId?: string;
-  handleLogin: (credentialResponse: CredentialResponse) => void;
-  handleLogout: () => void;
-};
+// type Props = {
+//   userId?: string;
+//   handleLogin: (credentialResponse: CredentialResponse) => void;
+//   handleLogout: () => void;
+// };
 
 type FoodEventObj = {
   _id: string;
@@ -27,8 +27,9 @@ type FoodEventObj = {
   content: string;
 };
 
-const Feed = (props: Props) => {
-  const { handleLogin, handleLogout } = props;
+// const Feed = (props: Props) => {
+const Feed = (props) => {
+  // const { handleLogin, handleLogout } = props;
   const [foodEvents, setFoodEvents] = useState<FoodEventObj[]>([]);
 
   useEffect(() => {
@@ -60,23 +61,10 @@ const Feed = (props: Props) => {
   }
 
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      {props.userId ? (
-        <button
-          onClick={() => {
-            googleLogout();
-            handleLogout();
-          }}
-        >
-          Logout
-        </button>
-      ) : (
-        <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
-      )}
-
+    <span>
       {props.userId && <NewPostInput onSubmit={handleFoodEventSubmission} />}
       {foodEventsList}
-    </GoogleOAuthProvider>
+    </span>
   );
 };
 

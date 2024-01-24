@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { get, post } from "../utilities";
 import NavBar from "./modules/NavBar.js";
+import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
 import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
@@ -16,6 +17,7 @@ import "./App.css";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     get("/api/whoami")
@@ -23,6 +25,7 @@ const App = () => {
         if (user._id) {
           // TRhey are registed in the database and currently logged in.
           setUserId(user._id);
+          setLoggedIn(true);
         }
       })
       .then(() =>
@@ -52,22 +55,31 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <NavBar />
-        {/* <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
-        <div className="App-container">
+        {/* Check if logged in, else show Login */}
+        {loggedIn ? (
+          <>
+            <NavBar userId={userId} /> 
+            {/* only want to b able to log OUT from navbar */}
+            {/* <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
+            <div className="App-container">
+              <Routes>
+                {/* <Route
+                  element={
+                    <Skeleton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+                  }
+                  path="/"
+                /> */}
+                <Route path="/" element={<Feed userId={userId} />} />
+                <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </>
+        ) : (
           <Routes>
-            <Route
-              element={
-                // <Feed />
-                <Feed handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-                // <Skeleton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-              }
-              path="/"
-            />
-            <Route path="/profile/:userId" element={<YourPosts />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />} />
           </Routes>
-        </div>
+        )}
       </BrowserRouter>
     </>
   );

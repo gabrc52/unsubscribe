@@ -1,0 +1,183 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  /* display: flex; */
+}
+
+.Login-container {
+  /* max-width: 960px; */
+  /* padding: var(--m) var(--m); */
+  margin: auto;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: var(--primary); */
+  /* position: relative; */
+  /* overflow: hidden; */
+  font-family: "Montserrat", sans-serif;
+}
+
+.Login-linkContainer {
+  margin-left: var(--l);
+}
+
+.Login-link,
+.Login-link:visited {
+  color: var(--white);
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.Login-link:hover {
+  opacity: 0.8;
+}
+
+.Login-link.Login-login {
+  opacity: 1;
+}
+
+.Login-link + .Login-link {
+  margin-left: var(--m);
+}
+
+.Login-textContainer {
+  display: flex;
+  height: 50vh;
+  justify-content: space-between;
+  /* position: relative; */
+  /* -ms-transform: translateY(-50%);
+  transform: translateY(-50%); */
+}
+
+.Login-header {
+  gap: 1em;
+  margin-top: 70px;
+  flex-grow: 1;
+}
+
+.Login-header:hover {
+  letter-spacing: 6px;
+}
+
+.Login-header h1 {
+  font-weight: 500;
+  font-size: 60px;
+  font-family: "Libre Barcode 128 Text", system-ui;
+}
+
+h2.Login-prompt {
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 58px;
+  text-align: center;
+  margin: 90px 0 20px 0;
+  padding: 0 20px;
+}
+
+.Login-header img {
+  width: 52.5px;
+  height: 49px;
+}
+
+.Login-buttonPrompt {
+  background-color: transparent;
+  border: none;
+}
+
+.Login-buttonPrompt > .Login-buttonContent {
+  height: fit-content;
+  padding: 20px 25px;
+  margin: 10px 0;
+  gap: 25px;
+  border: none;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  background: var(--primary--dim);
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+.Login-buttonPrompt:hover > .Login-buttonContent {
+  transform: translate(6px, 6px);
+  box-shadow: none;
+  opacity: 0.8;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+  transition-timing-function: ease;
+}
+
+.Login-buttonContent p {
+  font-weight: 300;
+  margin: 0;
+  font-size: 40px;
+  line-height: 48px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.Login-buttonContent img {
+  height: 50px;
+}
+
+.Login-extraInfo {
+  width: 100vw;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  bottom: 5px;
+  text-align: center;
+  font-size: 1em;
+}
+
+.Login-extraInfo:hover {
+  color: gray;
+}
+
+.Login-extraInfo a {
+  color: black;
+}
+.Login-extraInfo a:hover {
+  text-decoration: none;
+  color: gray;
+}
+.Login-extraInfo b {
+  font-weight: 600;
+}
+
+.nsm7Bb-HzV7m-LgbsSe {
+  border: 0px solid #0cf300;
+  /* border-width: 20px; */
+}
+
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+  font-family: "Libre Barcode 128 Text", system-ui;
+  font-variant: normal;
+  /* color: #0cf300; */
+  /* color: white; */
+  color: var(--primary--dim);
+  /* background-color: var(--primary--dim); */
+  border-color: var(--primary--dim);
+  border-radius: 0%;
+  border: 0px solid #0cf300;
+  font-size: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-style: normal;
+  stroke-width: 10px;
+  /* border-width: -20px; */
+}
+
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb {
+  font-family: "Libre Barcode 128 Text", system-ui;
+  /* border-width: 20px; */
+}
