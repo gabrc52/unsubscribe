@@ -28,7 +28,7 @@ const CommentsBlock = (props) => {
           />
         ))}
         {props.creator_googleid && (
-          <NewComment foodeventId={props.foodevent._id} addNewComment={props.addNewComment} />
+          <NewComment foodeventId={props.foodeventId} addNewComment={props.addNewComment} />
         )}
       </div>
     </div>
