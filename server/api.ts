@@ -6,9 +6,9 @@ import { handleEmail } from "./email";
 import socketManager from "./server-socket";
 
 // import models so we can interact with the database
-const User = require("./models/User");
-const FoodEvent = require("./models/FoodEvent");
-const Comment = require("./models/Comment");
+import Comment from "./models/Comment";
+import FoodEvent from "./models/FoodEvent";
+import User from "./models/User";
 
 const router = express.Router();
 
