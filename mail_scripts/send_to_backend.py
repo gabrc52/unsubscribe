@@ -5,10 +5,8 @@ import os
 import json
 from urllib import request, error
 from datetime import datetime
+from config import TOKEN, ENDPOINT
 
-
-TOKEN = os.getenv("BACKEND_SHARED_SECRET")
-ENDPOINT = os.getenv("ENDPOINT")
 
 _headers = {"Content-Type": "application/json"}
 
