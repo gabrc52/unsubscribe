@@ -1,16 +1,7 @@
+import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  googleLogout,
-  CredentialResponse,
-} from "@react-oauth/google";
-
 import "./NavBar.css";
-
-// This identifies your web application to Google's authentication service
-const GOOGLE_CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.googleusercontent.com";
 
 /**
  * The navigation bar at the top of all pages. Takes no props.
@@ -40,25 +31,22 @@ const NavBar = (props) => {
         <Link to="/llm/" className="NavBar-link">
           LLM
         </Link> */}
-        <GoogleOAuthProvider>
-          {props.userId ? (
-            <GoogleLogout
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Logout"
-              onLogoutSuccess={props.handleLogout}
-              onFailure={(err) => console.log(err)}
-              className="NavBar-link NavBar-login"
-            />
-          ) : (
-            <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText="Login"
-              onSuccess={props.handleLogin}
-              onFailure={(err) => console.log(err)}
-              className="NavBar-link NavBar-login"
-            />
-          )}
-        </GoogleOAuthProvider>
+        {props.userId ? (
+          <a
+            className="NavBar-link"
+            onClick={(e) => {
+              e.preventDefault();
+              googleLogout();
+              props.handleLogout();
+            }}
+            href="#"
+          >
+            Logout
+          </a>
+        ) : (
+          // uhh this shouldn't happen, but ok
+          <GoogleLogin onSuccess={props.handleLogin} />
+        )}
       </div>
     </nav>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { CredentialResponse } from "@react-oauth/google";
+import { CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { get, post } from "../utilities";
@@ -14,18 +14,21 @@ import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
 import "./App.css";
+import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+  console.log("Welcome to App");
 
   useEffect(() => {
     get("/api/whoami")
       .then((user: User) => {
+        console.log("Just called whoami");
         if (user._id) {
-          // TRhey are registed in the database and currently logged in.
+          console.log("whoami returned a user", user);
+          // They are registed in the database and currently logged in.
           setUserId(user._id);
-          setLoggedIn(true);
         }
       })
       .then(() =>
@@ -36,8 +39,11 @@ const App = () => {
   }, []);
 
   const handleLogin = (credentialResponse: CredentialResponse) => {
+    console.log("On handle login, got", credentialResponse);
     const userToken = credentialResponse.credential;
+    console.log("userToken is", userToken);
     const decodedCredential = jwt_decode(userToken as string) as { name: string; email: string };
+    console.log("decodedCredential is", decodedCredential);
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
@@ -55,31 +61,38 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        {/* Check if logged in, else show Login */}
-        {loggedIn ? (
-          <>
-            <NavBar userId={userId} /> 
-            {/* only want to b able to log OUT from navbar */}
-            {/* <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
-            <div className="App-container">
-              <Routes>
-                {/* <Route
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          {/* Check if logged in, else show Login */}
+          {userId ? (
+            <>
+              <NavBar userId={userId} handleLogout={handleLogout} />
+              {/* only want to b able to log OUT from navbar */}
+              {/* <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
+              <div className="App-container">
+                <Routes>
+                  {/* <Route
                   element={
                     <Skeleton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
                   }
                   path="/"
                 /> */}
-                <Route path="/" element={<Feed userId={userId} />} />
-                <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-          </>
-        ) : (
-          <Routes>
-            <Route path="*" element={<Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />} />
-          </Routes>
-        )}
+                  <Route path="/" element={<Feed userId={userId} />} />
+                  <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+            </>
+          ) : (
+            <Routes>
+              <Route
+                path="*"
+                element={
+                  <Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+                }
+              />
+            </Routes>
+          )}
+        </GoogleOAuthProvider>
       </BrowserRouter>
     </>
   );

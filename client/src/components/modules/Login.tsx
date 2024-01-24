@@ -1,25 +1,23 @@
+import { CredentialResponse, GoogleLogin, googleLogout, useGoogleLogin } from "@react-oauth/google";
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  googleLogout,
-  CredentialResponse,
-} from "@react-oauth/google";
-
 import "./Login.css";
 
-// This identifies your web application to Google's authentication service
-const GOOGLE_CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.googleusercontent.com";
+type Props = {
+  userId?: string;
+  handleLogin: (credentialResponse: CredentialResponse) => void;
+  handleLogout: () => void;
+};
 
-// type Props = {
-//   userId?: string;
-//   handleLogin: (credentialResponse: CredentialResponse) => void;
-//   handleLogout: () => void;
-// };
-
-const Login = (props) => {
+const Login = (props: Props) => {
   const { handleLogin, handleLogout } = props;
+
+  // Doesn't DIRECTLY return an id_token, not using it rn
+  // const login = useGoogleLogin({
+  //   onSuccess: handleLogin,
+  //   onError: console.warn,
+  // });
+
   return (
     // <div tabindex="-1" style="outline: none;">
     <div className="Login">
@@ -39,25 +37,7 @@ const Login = (props) => {
             </button>
             <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
-                <GoogleOAuthProvider>
-                  {props.userId ? (
-                    <GoogleLogout
-                      clientId={GOOGLE_CLIENT_ID}
-                      buttonText="Logout"
-                      onLogoutSuccess={props.handleLogout}
-                      onFailure={(err) => console.log(err)}
-                      className="Login-link Login-login"
-                    />
-                  ) : (
-                    <GoogleLogin
-                      clientId={GOOGLE_CLIENT_ID}
-                      buttonText="Login"
-                      onSuccess={props.handleLogin}
-                      onFailure={(err) => console.log(err)}
-                      className="Login-link Login-login"
-                    />
-                  )}
-                </GoogleOAuthProvider>
+                <GoogleLogin onSuccess={handleLogin} />
               </span>
             </button>
           </div>

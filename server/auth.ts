@@ -1,17 +1,17 @@
-import { OAuth2Client, TokenPayload } from "google-auth-library";
 import { NextFunction, Request, Response } from "express";
-import User from "./models/User";
+import { OAuth2Client, TokenPayload } from "google-auth-library";
 import UserInterface from "../shared/User";
+import { GOOGLE_CLIENT_ID } from "../shared/constants";
+import User from "./models/User";
 
 // create a new OAuth client used to verify google sign-in
-const CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.googleusercontent.com";
-const client = new OAuth2Client(CLIENT_ID);
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 const verify = (token: string) => {
   return client
     .verifyIdToken({
       idToken: token,
-      audience: CLIENT_ID,
+      audience: GOOGLE_CLIENT_ID,
     })
     .then((ticket) => ticket.getPayload());
 };

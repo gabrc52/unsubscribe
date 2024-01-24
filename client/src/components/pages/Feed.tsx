@@ -2,17 +2,8 @@ import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
 import Card from "../modules/Card.js";
 import { NewFoodevent } from "../modules/NewPostInput";
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  googleLogout,
-  CredentialResponse,
-} from "@react-oauth/google";
 
 import "./Feed.css";
-
-//TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
-const GOOGLE_CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.googleusercontent.com";
 
 // type Props = {
 //   userId?: string;
@@ -57,7 +48,9 @@ const Feed = (props) => {
         {/* https://stackoverflow.com/questions/40418024/how-to-replace-n-to-linebreaks-in-react-js */}
         <p className="email-body">{foodEventObj.content}</p>
         <div className="email-image-container">
-          {foodEventObj.photos.map((url) => <img src={url} className="email-image"/>)}
+          {foodEventObj.photos.map((url) => (
+            <img src={url} className="email-image" />
+          ))}
         </div>
       </div>
     ));

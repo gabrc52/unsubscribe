@@ -1,15 +1,12 @@
-import React from "react";
 import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  googleLogout,
   CredentialResponse,
+  GoogleLogin,
+  GoogleOAuthProvider,
+  googleLogout,
 } from "@react-oauth/google";
-
+import React from "react";
+import { GOOGLE_CLIENT_ID } from "../../../../shared/constants";
 import "./Skeleton.css";
-
-//TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
-const GOOGLE_CLIENT_ID = "981540632706-reasvi26mddkv30qenm2b8ka7ejrlqr0.apps.googleusercontent.com";
 
 type Props = {
   userId?: string;
