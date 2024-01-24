@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "./NewPostInput.css";
-import { post } from "../../../utilities";
+// import { post } from "../../../utilities";
 
 /**
  * create new food event
@@ -48,11 +48,7 @@ const NewPostInput = (props) => {
 
       <input>
         Content:
-        <textarea
-          value={content}
-          onChange={handleContentChange}
-          className="NewPostInput-input"
-        />
+        <textarea value={content} onChange={handleContentChange} className="NewPostInput-input" />
       </input>
 
       <input>

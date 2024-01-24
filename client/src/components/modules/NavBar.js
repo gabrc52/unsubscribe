@@ -1,6 +1,11 @@
 import React from "react";
-import { Link } from "@reach/router";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
+import { Link } from "react-router-dom";
+import {
+  GoogleOAuthProvider,
+  GoogleLogin,
+  googleLogout,
+  CredentialResponse,
+} from "@react-oauth/google";
 
 import "./NavBar.css";
 
@@ -35,23 +40,25 @@ const NavBar = (props) => {
         <Link to="/llm/" className="NavBar-link">
           LLM
         </Link> */}
-        {props.userId ? (
-          <GoogleLogout
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={props.handleLogout}
-            onFailure={(err) => console.log(err)}
-            className="NavBar-link NavBar-login"
-          />
-        ) : (
-          <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={props.handleLogin}
-            onFailure={(err) => console.log(err)}
-            className="NavBar-link NavBar-login"
-          />
-        )}
+        <GoogleOAuthProvider>
+          {props.userId ? (
+            <GoogleLogout
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Logout"
+              onLogoutSuccess={props.handleLogout}
+              onFailure={(err) => console.log(err)}
+              className="NavBar-link NavBar-login"
+            />
+          ) : (
+            <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Login"
+              onSuccess={props.handleLogin}
+              onFailure={(err) => console.log(err)}
+              className="NavBar-link NavBar-login"
+            />
+          )}
+        </GoogleOAuthProvider>
       </div>
     </nav>
   );
