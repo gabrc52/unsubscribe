@@ -2,6 +2,8 @@ import { simpleParser, ParsedMail, EmailAddress } from "mailparser";
 import { uploadFile } from "./file";
 import FoodEvent from "./models/FoodEvent";
 
+const FREE_FOOD_PREFIX = "[Free-food] ";
+
 // Why???? Does email really have all of these edge cases? Or is it just the library?
 function _getFullFrom(parsed: ParsedMail): EmailAddress | undefined {
   if (!parsed.from) {
@@ -31,7 +33,10 @@ function getEmailAddress(parsed: ParsedMail): string {
 
 export async function handleEmail(email: string): Promise<void> {
   const parsed = await simpleParser(email);
-  const subject = parsed.subject ?? "No subject";
+  const rawSubject = parsed.subject ?? "No subject";
+  const subject = rawSubject.startsWith(FREE_FOOD_PREFIX)
+    ? rawSubject.substring(FREE_FOOD_PREFIX.length)
+    : rawSubject;
   const address = getEmailAddress(parsed);
   const name = getSenderName(parsed);
   const body = parsed.text;
