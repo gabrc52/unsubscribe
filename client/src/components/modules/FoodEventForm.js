@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "./SingleFoodEvent.css";
-import { post } from "../../utilities";
+import { post } from "../../../utilities";
 
 /**
  * create new food event
