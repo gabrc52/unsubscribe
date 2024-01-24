@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { get, post } from "../utilities";
 import NavBar from "./modules/NavBar.js";
 import NotFound from "./pages/NotFound";
-import Feed from "./pages/Feed.js";
+import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
 // import Skeleton from "./pages/Skeleton";
 import { socket } from "../client-socket";

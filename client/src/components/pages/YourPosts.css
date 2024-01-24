@@ -1,8 +1,8 @@
-.Profile-avatarContainer {
+.YourPosts-avatarContainer {
   padding: 0 35%;
 }
 
-.Profile-avatar {
+.YourPosts-avatar {
   /* make it responsive */
   max-width: 100%;
   width: 100%;
@@ -32,25 +32,25 @@
   background-image: url("");
 }
 
-.Profile-name {
+.YourPosts-name {
   font-size: 40px;
   font-weight: 300;
 }
 
-.Profile-line {
+.YourPosts-line {
   border-color: var(--grey);
 }
 
-.Profile-subContainer {
+.YourPosts-subContainer {
   flex-grow: 1;
   flex-basis: 0;
 }
 
-.Profile-subContainer + .Profile-subContainer {
+.YourPosts-subContainer + .YourPosts-subContainer {
   margin-left: var(--m);
 }
 
-.Profile-subTitle {
+.YourPosts-subTitle {
   font-weight: 300;
   font-size: 24px;
   margin: var(--m) var(--s);
