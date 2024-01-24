@@ -40,5 +40,5 @@ export async function uploadFile(
  * Get a URL from a Matrix MXC
  */
 function getURLFromMXC(mxc: string): string {
-  return `${process.env.MATRIX_BASEURL}/_matrix/media/v3/download/${process.env.MATRIX_HOMESERVER}/${mxc}`;
+  return `${process.env.MATRIX_BASEURL}/_matrix/media/v3/download/${mxc.substring(6)}`;
 }
