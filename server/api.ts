@@ -36,7 +36,7 @@ router.get("/foodevents", (req, res) => {
 
 router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
   const newFoodEvent = new FoodEvent({
-    creator_id: req.body.creator_id,
+    creator_googleid: req.body.creator_googleid,
     food_type: req.body.food_type,
     photo: req.body.photo,
     content: req.body.content,
@@ -47,7 +47,7 @@ router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/comment", auth.ensureLoggedIn, (req, res) => {
   const newComment = new Comment({
-    creator_id: req.body.creator_id,
+    creator_googleid: req.body.creator_googleid,
     content: req.body.content,
   });
   newComment.save().then((comment) => res.send(comment));

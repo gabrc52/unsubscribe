@@ -1,12 +1,12 @@
 import { Schema, model, Document } from "mongoose";
 
 const CommentSchema = new Schema({
-  creator_id: String,
+  creator_googleid: String,
   content: String,
 });
 
 export interface Comment extends Document {
-  creator_id: string;
+  creator_googleid: string;
   content: string;
   _id: string;
 }
