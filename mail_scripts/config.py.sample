@@ -1,0 +1,4 @@
+# Replace with your real values
+
+TOKEN = "unsubscribe"
+ENDPOINT = "http://localhost:5050/api/receive_email"
