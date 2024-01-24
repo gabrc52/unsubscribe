@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 
 /**
  * story = single food event
  *
  * Proptypes
  * @param {string} _id of the food post
- * @param {string} creator_id
+ * @param {string} creator_googleid
  * @param {string} content of the story
  * @param {string} photo of food
  * @param {string} food_type
