@@ -1,1 +1,28 @@
 /* Fill me in :) */
+
+.email-container {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  background-color: white;
+  padding: 8px;
+  margin: 16px 8px;
+  border-radius: 8px;
+}
+
+.email-body {
+  white-space: pre-wrap;
+}
+
+/* TODO: actually make it look nice - this is for demo purposes and it is 3 am im tired */
+
+.email-image-container {
+  display: flex;
+  gap: 8px;
+}
+
+.email-image {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  justify-content: space-between;
+}
