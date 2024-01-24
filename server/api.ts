@@ -45,6 +45,14 @@ router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
   newFoodEvent.save().then((foodevent) => res.send(foodevent));
 });
 
+router.post("/comment", auth.ensureLoggedIn, (req, res) => {
+  const newComment = new Comment({
+    creator_id: req.body.creator_id,
+    content: req.body.content,
+  });
+  newComment.save().then((comment) => res.send(comment));
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;
