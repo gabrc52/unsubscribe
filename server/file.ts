@@ -29,7 +29,7 @@ export async function uploadFile(
     body: file,
   });
   if (!response.ok) {
-    console.error(`Error uploading ${filename} of ${contentType}:`, response);
+    console.error(`Error uploading ${filename} of ${contentType}:`, await response.json());
     throw Error(`Could not upload file ${filename}`);
   }
   const json = await response.json();
