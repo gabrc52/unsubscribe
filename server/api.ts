@@ -30,6 +30,20 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+router.get("/foodEvents", (req, res) => {
+  Story.find({}).then((stories) => res.send(stories));
+});
+
+router.post("/foodEvent", auth.ensureLoggedIn, (req, res) => {
+  const foodEvent = new Story({
+    creator_id: req.body.creator_id,
+    food_type: req.body.food_type,
+    photo: req.body.photo,
+    content: req.body.content
+  });
+
+  foodEvent.save().then((story) => res.send(story));
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
