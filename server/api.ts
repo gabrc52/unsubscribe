@@ -25,7 +25,7 @@ router.post("/receive_email", (req, res) => {
     console.warn("Error: /receive_email was called with an incorrect shared secret.");
     return res.status(StatusCodes.BAD_REQUEST).send({ error: "No email given." });
   }
-  handleEmail(JSON.parse(req.body["email"]))
+  handleEmail(req.body["email"])
     .then(() => res.status(StatusCodes.CREATED).send({}))
     .catch((e) => res.status(500).send({ error: `${e}` }));
 });
