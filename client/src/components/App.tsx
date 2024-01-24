@@ -4,7 +4,7 @@ import { CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { get, post } from "../utilities";
-import NavBar from "./modules/NavBar.js";
+import NavBar from "./modules/NavBar";
 import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
 import Feed from "./pages/Feed";
