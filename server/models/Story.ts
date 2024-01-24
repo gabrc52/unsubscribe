@@ -1,5 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 
+// TODO: rename - this is the name catbook used
+
 const StorySchema = new Schema({
   creator_id: String,
   food_type: String,
