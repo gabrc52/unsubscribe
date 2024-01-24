@@ -16,23 +16,23 @@ import { NewComment } from "./NewPostInput.js";
  * @param {ContentObject} foodevent
  */
 const CommentsBlock = (props) => {
-    return (
-      <div className="Card-commentSection">
-        <div className="story-comments">
-          {props.comments.map((comment) => (
-            <SingleComment
-              key={`SingleComment_${comment._id}`}
-              _id={comment._id}
-              creator_id={comment.creator_id}
-              content={comment.content}
-            />
-          ))}
-          {props.creator_id && (
-            <NewComment storyId={props.foodevent._id} addNewComment={props.addNewComment} />
-          )}
-        </div>
+  return (
+    <div className="Card-commentSection">
+      <div className="food-comments">
+        {props.comments.map((comment) => (
+          <SingleComment
+            key={`SingleComment_${comment._id}`}
+            _id={comment._id}
+            creator_googleid={comment.creator_googleid}
+            content={comment.content}
+          />
+        ))}
+        {props.creator_googleid && (
+          <NewComment foodeventId={props.foodevent._id} addNewComment={props.addNewComment} />
+        )}
       </div>
-    );
-  };
-  
-  export default CommentsBlock;
+    </div>
+  );
+};
+
+export default CommentsBlock;
