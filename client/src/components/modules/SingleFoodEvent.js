@@ -5,7 +5,7 @@ import { post } from "../../../utilities";
 
 /**
  * create new food event
- * TODO: handle API
+ *
  * Proptypes
  * @param {({foodType, content, photo}) => void} onSubmit
  */
@@ -29,6 +29,10 @@ const SingleFoodEvent = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     props.onSubmit && props.onSubmit({ foodType, content, photo });
+    post("/api/foodEvent", body).then((foodEvent) => {
+      // display this story on the screen
+      props.addSingleFoodEvent(foodEvent);
+    });
     setFoodType("");
     setContent("");
     setPhoto("");
@@ -74,6 +78,25 @@ const SingleFoodEvent = (props) => {
       </button>
     </div>
   );
+};
+
+/**
+ * New Comment is a New Post component for comments
+ *
+ * Proptypes
+ * @param {string} defaultText is the placeholder text
+ * @param {string} eventId to add comment to
+ */
+const NewComment = (props) => {
+  const addComment = (value) => {
+    const body = { parent: props.eventId, content: value };
+    post("/api/comment", body).then((comment) => {
+      // display this comment on the screen
+      props.addNewComment(comment);
+    });
+  };
+
+  return <FoodEvent defaultText="New Comment" onSubmit={addComment} />;
 };
 
 export default SingleFoodEvent;
