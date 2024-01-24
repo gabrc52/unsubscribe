@@ -65,7 +65,7 @@ const App = () => {
           {/* Check if logged in, else show Login */}
           {userId ? (
             <>
-              <NavBar userId={userId} handleLogout={handleLogout} />
+              <NavBar userId={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
               {/* only want to b able to log OUT from navbar */}
               {/* <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
               <div className="App-container">

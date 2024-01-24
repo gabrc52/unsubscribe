@@ -3,10 +3,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
+type Props = {
+  userId: string;
+  handleLogin: (credentialResponse: CredentialResponse) => void;
+  handleLogout: () => void;
+};
+
 /**
  * The navigation bar at the top of all pages. Takes no props.
  */
-const NavBar = (props) => {
+const NavBar = (props: Props) => {
   return (
     <nav className="NavBar-container">
       <div className="NavBar-title u-inlineBlock">Unsubscribe</div>
