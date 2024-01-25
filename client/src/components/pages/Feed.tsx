@@ -62,7 +62,7 @@ const Feed = (props) => {
       <Card
         key={`Card_${foodEventObj._id}`}
         _id={foodEventObj._id}
-        creator_id={foodEventObj.creator_googleid}
+        creator_id={foodEventObj.creator_userId}
         title={foodEventObj.title}
         food_type{foodEventObj.food_type}
         photos={foodEventObj.photos}

@@ -6,7 +6,7 @@ import Comment from "../../../../shared/Comment";
 type Props = {
   comments: Comment[];
   foodevent: Comment;
-  creator_googleid: string;
+  creator_userId: string;
   foodeventId: string;
   addNewComment: Function;
 };
@@ -22,11 +22,11 @@ const CommentsBlock = (props: Props) => {
           <SingleComment
             key={`SingleComment_${comment._id}`}
             _id={comment._id}
-            creator_googleid={comment.creator_googleid}
+            creator_userId={comment.creator_userId}
             content={comment.content}
           />
         ))}
-        {props.creator_googleid && (
+        {props.creator_userId && (
           <NewComment foodeventId={props.foodeventId} addNewComment={props.addNewComment} />
         )}
       </div>

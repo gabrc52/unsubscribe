@@ -10,7 +10,7 @@ import "./Card.css";
  *
  * Proptypes
  * @param {string} _id of the story
- * @param {string} creator_googleid
+ * @param {string} creator_userId
  * @param {string} content of the story
  */
 const Card = (props) => {
@@ -31,7 +31,7 @@ const Card = (props) => {
   return (
     <div className="Card-container">
       <SingleFoodEvent
-        creator_googleid={props.creator_googleid}
+        creator_userId={props.creator_userId}
         _id={props._id}
         title={props.title}
         photos={props.photos}
@@ -41,7 +41,7 @@ const Card = (props) => {
       <CommentsBlock
         story={props}
         comments={comments}
-        creator_googleid={props.creator_googleid}
+        creator_userId={props.creator_userId}
         addNewComment={addNewComment}
       />
     </div>
