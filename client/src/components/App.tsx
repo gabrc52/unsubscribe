@@ -66,14 +66,12 @@ const App = () => {
               {/* only want to b able to log OUT from navbar */}
               {/* TODO: so why is handleLogin there? */}
               <NavBar userId={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
-              <div className="App-container">
-                <Routes>
-                  <Route path="/" element={<Feed userId={userId} />} />
-                  <Route path="/resources" element={<Resources />} />
-                  <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </div>
+              <Routes>
+                <Route path="/" element={<Feed userId={userId} />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </>
           ) : (
             <Routes>

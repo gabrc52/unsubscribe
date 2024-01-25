@@ -6,7 +6,7 @@ const NotFound = () => {
     <div className="NotFound">
       <div className="u-hideOverflow NotFound-container">
         <div className="u-flexColumn NotFound-textContainer">
-        <h1>Page Not Found</h1>
+          <h1>Page Not Found</h1>
           <div>
             <div className="u-flex u-flex-justifyCenter u-flex-alignCenter">
               <center>
@@ -14,7 +14,8 @@ const NotFound = () => {
               </center>
             </div>
             <br></br>
-            Unfortunately, this page doesn't exist.<br></br>
+            Unfortunately, this page (<strong>{window.location.pathname}</strong>) doesn't exist.
+            <br></br>
             What you see below is what we've got!👇
           </div>
         </div>

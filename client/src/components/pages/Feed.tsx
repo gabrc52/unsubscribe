@@ -41,10 +41,12 @@ const Feed = (props) => {
   }
 
   return (
-    <span>
-      {props.userId && <NewFoodevent onSubmit={handleFoodEventSubmission} />}
-      {foodEventsList}
-    </span>
+    <div className="App-container">
+      <span>
+        {props.userId && <NewFoodevent onSubmit={handleFoodEventSubmission} />}
+        {foodEventsList}
+      </span>
+    </div>
   );
 };
 
