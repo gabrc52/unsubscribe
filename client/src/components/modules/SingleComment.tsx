@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 /**
  * Component to render a single comment
@@ -10,6 +9,7 @@ import { Link } from "react-router-dom";
  * @param {string} creator_googleid
  * @param {string} content of the comment
  */
+// TODO: add type but is this dead code?
 const SingleComment = (props) => {
   return (
     <div className="Card-commentBody">

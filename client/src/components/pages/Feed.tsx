@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
-import Card from "../modules/Card.js";
 import { NewFoodevent } from "../modules/NewPostInput";
 
 import "./Feed.css";
