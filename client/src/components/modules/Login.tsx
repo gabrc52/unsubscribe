@@ -31,7 +31,7 @@ const Login = (props: Props) => {
             <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
                 <GoogleLogin
-                  ux_mode="redirect"
+                  // ux_mode="redirect"
                   type="standard"
                   text="continue_with"
                   size="large"

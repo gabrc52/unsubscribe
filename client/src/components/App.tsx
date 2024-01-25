@@ -45,7 +45,7 @@ const App = () => {
     const decodedCredential = jwt_decode(userToken as string) as { name: string; email: string };
     console.log("decodedCredential is", decodedCredential);
     console.log(`Logged in as ${decodedCredential.name}`);
-    post("/api/login", { token: userToken }).then((user) => {
+    post("/api/login/google", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
     });
