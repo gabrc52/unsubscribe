@@ -28,7 +28,7 @@ const Login = (props: Props) => {
             <h1>Unsubscribe.</h1>
           </div>
           <div className="u-flexColumn u-flex-alignCenter u-flex-justifyCenter u-flex-alignSelfCenter">
-            <h2 className="Login-prompt">Sign in to Continue</h2>
+            <h2 className="Login-prompt">Say goodbye to dormspam clutter...</h2>
             <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
                 {/* <img src="" alt="MIT Logo"> */}
@@ -37,23 +37,37 @@ const Login = (props: Props) => {
             </button>
             <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
-                <GoogleLogin onSuccess={handleLogin} />
+                <GoogleLogin
+                  type="standard"
+                  text="continue_with"
+                  size="large"
+                  shape="pill"
+                  width="300px"
+                  onSuccess={handleLogin}
+                />
               </span>
             </button>
+            <h3 className="Login-about">
+              Discover free food, share surplus items, and be reunited with your lost belongings, all in one place!
+            </h3>
           </div>
         </div>
         <div className="Login-extraInfo">
-          <p>
-            <b>Credit:</b> Team&nbsp;
-            <a href="https://www.youtube.com/watch?v=_mEzEslivoM" target="_blank">
-              youtu.be/_mEzEslivoM
-            </a>
-            <br></br>(name, name, and name) for&nbsp;
-            <a href="https://weblab.mit.edu" target="_blank">
-              web.lab
-            </a>
-            .
-          </p>
+          <div className="scroll-container">
+            <div className="scroll-text">
+              <p>
+                <b>Credit:</b>&nbsp;  Team&nbsp;
+                <a href="https://www.youtube.com/watch?v=_mEzEslivoM" target="_blank">
+                  youtu.be/_mEzEslivoM
+                </a>
+                &nbsp;&nbsp;(Gabriel Rodríguez, Ari Peró, and Anna Kwon) &nbsp;for&nbsp;
+                <a href="https://weblab.mit.edu" target="_blank">
+                  web.lab
+                </a>
+                .
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,11 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"); */
 @import url("https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap");
+
+/* Credit to last Victory Yinka-Banjo, Nnamdi Obi (weblab 2023) for button design inspo */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
+  color: rgb(49, 58, 83);
   /* display: flex; */
 }
 
@@ -23,6 +27,14 @@
   /* position: relative; */
   /* overflow: hidden; */
   font-family: "Montserrat", sans-serif;
+  /* background-image: linear-gradient(to bottom right, #F65B65, #FAC725); */
+
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(250, 199, 37, 0.5),
+    rgba(246, 91, 101, 0.57)
+  );
+  /* background-image: url("../../public/holy_moly.jpg"); */
 }
 
 .Login-linkContainer {
@@ -71,14 +83,31 @@
   font-weight: 500;
   font-size: 60px;
   font-family: "Libre Barcode 128 Text", system-ui;
+  /* color: #f65b65; */
+  color: #caed68;
+  /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); */
+  text-shadow:
+    2px 2px 2px rgb(246, 91, 101),
+    0 0 1em rgb(246, 91, 101),
+    0 0 0.2em rgb(246, 91, 101);
+}
+
+h3.Login-about {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  position: relative;
+  margin: 50px 0 0 0;
+  padding: 0 390px;
 }
 
 h2.Login-prompt {
   font-weight: 300;
-  font-size: 48px;
+  font-size: 40px;
   line-height: 58px;
   text-align: center;
-  margin: 90px 0 20px 0;
+  margin: 97px 0 5px 0;
   padding: 0 20px;
 }
 
@@ -94,22 +123,25 @@ h2.Login-prompt {
 
 .Login-buttonPrompt > .Login-buttonContent {
   height: fit-content;
-  padding: 20px 25px;
+  padding: 20px 30px;
   margin: 10px 0;
   gap: 25px;
   border: none;
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 6px 0px rgba(0, 0, 0, 0.25);
   border-radius: 2px;
-  background: var(--primary--dim);
+  /* background: #CBDA74; */
+  background: #b5e670;
+  border-radius: 50px;
   transition:
     transform 0.1s,
     box-shadow 0.1s;
 }
 
 .Login-buttonPrompt:hover > .Login-buttonContent {
-  transform: translate(6px, 6px);
+  transform: translate(5px, 6px);
   box-shadow: none;
-  opacity: 0.8;
+  background: #dde894;
+  /* opacity: 0.8; */
   transition:
     transform 0.1s,
     box-shadow 0.1s;
@@ -117,9 +149,9 @@ h2.Login-prompt {
 }
 
 .Login-buttonContent p {
-  font-weight: 300;
+  font-weight: 400;
   margin: 0;
-  font-size: 40px;
+  font-size: 38px;
   line-height: 48px;
   text-align: center;
   color: #ffffff;
@@ -134,21 +166,23 @@ h2.Login-prompt {
   position: absolute;
   display: flex;
   justify-content: center;
-  bottom: 5px;
+  bottom: 10px;
   text-align: center;
   font-size: 1em;
+  /* width: 100vw; */
+  /* min-width: 100vw; */
 }
 
-.Login-extraInfo:hover {
-  color: gray;
-}
+/* .Login-extraInfo:hover {
+  color: rgb(246, 91, 101);
+} */
 
 .Login-extraInfo a {
-  color: black;
+  opacity: 1;
 }
 .Login-extraInfo a:hover {
   text-decoration: none;
-  color: gray;
+  color: rgb(246, 91, 101);
 }
 .Login-extraInfo b {
   font-weight: 600;
@@ -159,25 +193,77 @@ h2.Login-prompt {
   /* border-width: 20px; */
 }
 
-.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId {
-  font-family: "Libre Barcode 128 Text", system-ui;
-  font-variant: normal;
-  /* color: #0cf300; */
-  /* color: white; */
-  color: var(--primary--dim);
-  /* background-color: var(--primary--dim); */
-  border-color: var(--primary--dim);
+/* .nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId { */
+/* font-family: "Libre Barcode 128 Text", system-ui;
+  font-variant: normal; */
+/* color: #0cf300; */
+/* color: white; */
+/* color: var(--primary--dim); */
+/* background-color: var(--primary--dim); */
+/* border-color: var(--primary--dim);
   border-radius: 0%;
   border: 0px solid #0cf300;
   font-size: 30px;
   padding-top: 20px;
   padding-bottom: 20px;
   font-style: normal;
-  stroke-width: 10px;
-  /* border-width: -20px; */
-}
+  stroke-width: 10px; */
+/* border-width: -20px; */
+/* } */
 
 .nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb {
   font-family: "Libre Barcode 128 Text", system-ui;
   /* border-width: 20px; */
+}
+
+.scroll-container {
+  /* border: 3px solid black; */
+  border-radius: 5px;
+  width: 99.9%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.scroll-text {
+  /* animation properties */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+
+  -moz-animation: my-animation 15s linear infinite;
+  -webkit-animation: my-animation 15s linear infinite;
+  animation: my-animation 15s linear infinite;
+}
+
+/* for Firefox */
+@-moz-keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+  }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+  from {
+    -webkit-transform: translateX(100%);
+  }
+  to {
+    -webkit-transform: translateX(-100%);
+  }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
 }
