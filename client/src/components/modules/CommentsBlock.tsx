@@ -1,3 +1,5 @@
+/// TODO: IMPLEMENT COMMENTS
+
 import React from "react";
 import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
