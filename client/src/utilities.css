@@ -16,10 +16,17 @@
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-  --primary: #396dff;
-  --primary--dim: #6987db;
+  --text: rgb(49, 58, 83);
+  --darkertext: #131313;
+  --coral: rgb(246, 91, 101);
+  --yellow: rgb(250, 199, 37);
+  --green: #b5e670;
+  --green--dim: #dde894;
+  /* --primary: #396dff;
+  --primary--dim: #6987db; */
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
   --grey: #f7f7f7;
