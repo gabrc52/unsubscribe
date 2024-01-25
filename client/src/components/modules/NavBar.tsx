@@ -20,6 +20,9 @@ const NavBar = (props: Props) => {
         <Link to="/" className="NavBar-link">
           Home
         </Link>
+        <Link to="/resources" className="NavBar-link">
+          Resources
+        </Link>
         {props.userId ? (
           <a
             className="NavBar-link"
