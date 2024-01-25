@@ -93,7 +93,7 @@ const NewFoodevent = (props) => {
     });
   };
 
-  return <NewPostInput defaultText="New Foodevent" onSubmit={addFoodevent} />;
+  return <NewPostInput defaultText="New Food Event" onSubmit={addFoodevent} />;
 };
 
 export { NewComment, NewFoodevent };

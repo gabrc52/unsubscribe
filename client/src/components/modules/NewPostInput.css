@@ -1,0 +1,9 @@
+.center-text {
+  text-align: center;
+}
+
+.vertically-centered {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

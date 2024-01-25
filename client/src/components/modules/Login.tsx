@@ -17,7 +17,7 @@ const Login = (props: Props) => {
       <div className="u-hideOverflow u-maxHeight Login-container">
         <div className="u-flexColumn Login-textContainer">
           <div className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-header">
-            {/* <img src="" alt="Unsubscribe Logo"> */}
+            {/* <img src="../../public/unsub.png" alt="Unsubscribe Logo" /> */}
             <h1>Unsubscribe.</h1>
           </div>
           <div className="u-flexColumn u-flex-alignCenter u-flex-justifyCenter u-flex-alignSelfCenter">
@@ -31,6 +31,7 @@ const Login = (props: Props) => {
             <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
                 <GoogleLogin
+                  ux_mode="redirect"
                   type="standard"
                   text="continue_with"
                   size="large"
@@ -41,8 +42,8 @@ const Login = (props: Props) => {
               </span>
             </button>
             <h3 className="Login-about">
-              Discover free food, share surplus items, and be reunited with your lost belongings,
-              all in one place!
+              Discover free food, share surplus items, and be<br></br> reunited with your lost
+              belongings, all in one place!
             </h3>
           </div>
         </div>

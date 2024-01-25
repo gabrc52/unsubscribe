@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- * The navigation bar at the top of all pages. Takes no props.
+ * The navigation bar at the bottom of all pages. Takes no props.
  */
 const NavBar = (props: Props) => {
   return (
