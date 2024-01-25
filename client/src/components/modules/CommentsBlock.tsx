@@ -1,21 +1,20 @@
 import React from "react";
-import SingleComment from "./SingleComment.js";
+import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
+import Comment from "../../../../shared/Comment";
 
-/**
- * @typedef ContentObject
- * @property {string} _id of story/comment
- * @property {string} content of the story/comment
- */
+type Props = {
+  comments: Comment[];
+  foodevent: Comment;
+  creator_googleid: string;
+  foodeventId: string;
+  addNewComment: Function;
+};
 
 /**
  * Component that holds all the comments for a story
- *
- * Proptypes
- * @param {ContentObject[]} comments
- * @param {ContentObject} foodevent
  */
-const CommentsBlock = (props) => {
+const CommentsBlock = (props: Props) => {
   return (
     <div className="Card-commentSection">
       <div className="food-comments">
