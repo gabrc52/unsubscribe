@@ -12,14 +12,7 @@ type Props = {
 const Login = (props: Props) => {
   const { handleLogin, handleLogout } = props;
 
-  // Doesn't DIRECTLY return an id_token, not using it rn
-  // const login = useGoogleLogin({
-  //   onSuccess: handleLogin,
-  //   onError: console.warn,
-  // });
-
   return (
-    // <div tabindex="-1" style="outline: none;">
     <div className="Login">
       <div className="u-hideOverflow u-maxHeight Login-container">
         <div className="u-flexColumn Login-textContainer">
@@ -48,7 +41,8 @@ const Login = (props: Props) => {
               </span>
             </button>
             <h3 className="Login-about">
-              Discover free food, share surplus items, and be reunited with your lost belongings, all in one place!
+              Discover free food, share surplus items, and be reunited with your lost belongings,
+              all in one place!
             </h3>
           </div>
         </div>
@@ -56,7 +50,7 @@ const Login = (props: Props) => {
           <div className="scroll-container">
             <div className="scroll-text">
               <p>
-                <b>Credit:</b>&nbsp;  Team&nbsp;
+                <b>Credit:</b>&nbsp; Team&nbsp;
                 <a href="https://www.youtube.com/watch?v=_mEzEslivoM" target="_blank">
                   youtu.be/_mEzEslivoM
                 </a>

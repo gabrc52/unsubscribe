@@ -9,6 +9,7 @@
 }
 
 .email-body {
+  /* https://stackoverflow.com/questions/40418024/how-to-replace-n-to-linebreaks-in-react-js */
   white-space: pre-wrap;
 }
 

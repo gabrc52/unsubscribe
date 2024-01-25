@@ -4,7 +4,7 @@ import { Schema, model, Document } from "mongoose";
 // for posts imported from email, we use the available name (from the email)
 
 const FoodEventSchema = new Schema({
-  creator_googleid: String,
+  creator_userId: String,
   emailer_address: String,
   emailer_name: String,
   food_type: String,
@@ -15,7 +15,7 @@ const FoodEventSchema = new Schema({
 });
 
 export interface FoodEvent extends Document {
-  creator_googleid: string;
+  creator_userId: string;
   emailer_address: string;
   emailer_name: string;
   food_type: string;

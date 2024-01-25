@@ -9,7 +9,6 @@ import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
 import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
-// import Skeleton from "./pages/Skeleton";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
@@ -56,8 +55,6 @@ const App = () => {
     post("/api/logout");
   };
 
-  // NOTE:
-  // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
     <>
       <BrowserRouter>
@@ -65,17 +62,11 @@ const App = () => {
           {/* Check if logged in, else show Login */}
           {userId ? (
             <>
-              <NavBar userId={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
               {/* only want to b able to log OUT from navbar */}
-              {/* <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} /> */}
+              {/* TODO: so why is handleLogin there? */}
+              <NavBar userId={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
               <div className="App-container">
                 <Routes>
-                  {/* <Route
-                  element={
-                    <Skeleton handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-                  }
-                  path="/"
-                /> */}
                   <Route path="/" element={<Feed userId={userId} />} />
                   <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
                   <Route path="*" element={<NotFound />} />

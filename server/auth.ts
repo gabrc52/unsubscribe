@@ -17,7 +17,7 @@ const verify = (token: string) => {
 };
 
 const getOrCreateUser = (user: TokenPayload) => {
-  return User.findOne({ googleid: user.sub }).then(
+  return User.findOne({ userId: user.sub }).then(
     (existingUser: UserInterface | null | undefined) => {
       if (existingUser !== null && existingUser !== undefined) {
         // return existingUser;
@@ -28,7 +28,7 @@ const getOrCreateUser = (user: TokenPayload) => {
       }
       const newUser = new User({
         name: user.name,
-        googleid: user.sub,
+        userId: user.sub,
       });
       return newUser.save();
     }
