@@ -3,11 +3,12 @@ import { get } from "../../utilities";
 
 import "../../utilities.css";
 import "./YourPosts.css";
+import User from "../../../../shared/User";
 
 // TO DO: IMPORT POSTS FROM FEED OR DATABASE THAT BELONG TO USER
 
-const YourPosts = (props) => {
-  const [user, setUser] = useState();
+const YourPosts = (props: { userId: string }) => {
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     document.title = "Your Posts (and Profile)";
