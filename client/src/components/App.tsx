@@ -9,6 +9,7 @@ import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
 import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
+import Resources from "./pages/Resources";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
@@ -68,6 +69,7 @@ const App = () => {
               <div className="App-container">
                 <Routes>
                   <Route path="/" element={<Feed userId={userId} />} />
+                  <Route path="/resources" element={<Resources />} />
                   <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
