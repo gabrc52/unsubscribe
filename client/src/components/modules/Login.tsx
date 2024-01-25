@@ -22,12 +22,12 @@ const Login = (props: Props) => {
           </div>
           <div className="u-flexColumn u-flex-alignCenter u-flex-justifyCenter u-flex-alignSelfCenter">
             <h2 className="Login-prompt">Say goodbye to dormspam clutter...</h2>
-            <button className="Login-buttonPrompt u-pointer">
+            <a className="Login-buttonPrompt u-pointer" href="/api/login/touchstone/redirect">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
                 {/* <img src="" alt="MIT Logo"> */}
                 <p>MIT Touchstone</p>
               </span>
-            </button>
+            </a>
             <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
                 <GoogleLogin

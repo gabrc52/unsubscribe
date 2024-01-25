@@ -10,7 +10,7 @@ const UserSchema = new Schema({
 
 export interface User extends Document {
   name: string;
-  loginType: String;
+  loginType: LoginType;
   userId: string;
   _id: string;
 }

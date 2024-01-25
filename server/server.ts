@@ -5,7 +5,7 @@ import mongoose from "mongoose"; // Wrapper around MongoDB
 import dotenv from "dotenv"; // Allows us to use environmental variables
 import morgan from "morgan"; // Request logger (https://github.com/expressjs/morgan). Can be removed if you wish.
 import path from "path"; // Allows us to retrieve file paths
-import auth from "./auth"; // weblab authentication helper
+import { populateCurrentUser } from "./auth"; // weblab authentication helper
 import socketManager from "./server-socket"; // websockets
 import api from "./api";
 // Loads environmental variables
@@ -51,7 +51,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(auth.populateCurrentUser);
+app.use(populateCurrentUser);
 app.use("/api", api);
 
 // Health endpoint (for Render)

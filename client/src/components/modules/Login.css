@@ -119,6 +119,7 @@ h2.Login-prompt {
 .Login-buttonPrompt {
   background-color: transparent;
   border: none;
+  text-decoration: none;
 }
 
 .Login-buttonPrompt > .Login-buttonContent {

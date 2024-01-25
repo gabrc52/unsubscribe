@@ -1,7 +1,7 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import "process";
-import auth from "./auth"; // import authentication library
+import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
 
@@ -30,8 +30,12 @@ router.post("/receive_email", (req, res) => {
     .catch((e) => res.status(500).send({ error: `${e}` }));
 });
 
-router.post("/login", auth.login);
-router.post("/logout", auth.logout);
+router.post("/login/google", loginGoogle);
+router.post("/logout", logout);
+
+router.get("/login/touchstone/redirect", redirectOidc);
+router.get("/login/touchstone", loginTouchstone);
+
 router.get("/whoami", (req, res) => {
   if (!req.user) {
     // Not logged in.
@@ -51,11 +55,11 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
-router.get("/foodevents", auth.ensureLoggedIn, (req, res) => {
+router.get("/foodevents", ensureLoggedIn, (req, res) => {
   FoodEvent.find({}).then((foodevents) => res.send(foodevents));
 });
 
-router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
+router.post("/foodevent", ensureLoggedIn, (req, res) => {
   const newFoodEvent = new FoodEvent({
     creator_userId: req.body.creator_userId,
     title: req.body.title,
@@ -67,7 +71,7 @@ router.post("/foodevent", auth.ensureLoggedIn, (req, res) => {
   newFoodEvent.save().then((foodevent) => res.send(foodevent));
 });
 
-router.post("/comment", auth.ensureLoggedIn, (req, res) => {
+router.post("/comment", ensureLoggedIn, (req, res) => {
   const newComment = new Comment({
     creator_userId: req.body.creator_userId,
     content: req.body.content,
