@@ -16,6 +16,11 @@ import "../utilities.css";
 import "./App.css";
 import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
 
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme";
+import Album from "./modules/Album";
+import { CssBaseline, ScopedCssBaseline } from "@mui/material";
+
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
 
@@ -58,33 +63,28 @@ const App = () => {
 
   return (
     <>
-      <BrowserRouter>
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          {/* Check if logged in, else show Login */}
-          {userId ? (
-            <>
-              {/* only want to b able to log OUT from navbar */}
-              {/* TODO: so why is handleLogin there? */}
-              <NavBar userId={userId} handleLogin={handleLogin} handleLogout={handleLogout} />
-              <Routes>
-                <Route path="/" element={<Feed userId={userId} />} />
-                <Route path="/resources" element={<Resources />} />
-                <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </>
-          ) : (
-            <Routes>
-              <Route
-                path="*"
-                element={
-                  <Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-                }
-              />
-            </Routes>
-          )}
-        </GoogleOAuthProvider>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            {/* Check if logged in, else show Login */}
+            {userId ? (
+              <>
+                {/* only want to b able to log OUT from navbar */}
+                {/* TODO: so why is handleLogin there? */}
+                <NavBar userId={userId} handleLogout={handleLogout} />
+                <Routes>
+                  <Route path="/" element={<Feed userId={userId} />} />
+                  <Route path="/resources" element={<Resources />} />
+                  <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </>
+            ) : (
+              <Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+            )}
+          </GoogleOAuthProvider>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 };

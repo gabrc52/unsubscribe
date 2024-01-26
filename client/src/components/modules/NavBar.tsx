@@ -1,46 +1,41 @@
 import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import "./NavBar.css";
-
-type Props = {
-  userId: string;
-  handleLogin: (credentialResponse: CredentialResponse) => void;
-  handleLogout: () => void;
-};
+import { AppBar, Box, Button, IconButton, Toolbar, Typography, Link } from "@mui/material";
 
 /**
  * The navigation bar at the bottom of all pages. Takes no props.
  */
-const NavBar = (props: Props) => {
+const NavBar = (props: { userId: string; handleLogout: () => void }) => {
+  const navigate = useNavigate();
+
   return (
-    <nav className="NavBar-container">
-      <div className="NavBar-title u-inlineBlock">Unsubscribe</div>
-      <div className="NavBar-linkContainer u-inlineBlock">
-        <Link to="/" className="NavBar-link">
+    // TODO: for accessibility etc we might want a link instead of a button but I can't figure out how to do that
+    <AppBar position="sticky">
+      <Toolbar>
+        {/** TODO: logo */}
+        <Typography variant="h6" sx={{ paddingRight: 3 }}>
+          Unsubscribe
+        </Typography>
+        <Button onClick={() => navigate("/")} color="inherit">
           Home
-        </Link>
-        <Link to="/resources" className="NavBar-link">
+        </Button>
+        <Button onClick={() => navigate("/resources")} color="inherit">
           Resources
-        </Link>
-        {props.userId ? (
-          <a
-            className="NavBar-link"
-            onClick={(e) => {
-              e.preventDefault();
-              googleLogout();
-              props.handleLogout();
-            }}
-            href="#"
-          >
-            Logout
-          </a>
-        ) : (
-          // uhh this shouldn't happen, but ok
-          <GoogleLogin onSuccess={props.handleLogin} />
-        )}
-      </div>
-    </nav>
+        </Button>
+        <Box sx={{ flexGrow: 1 }}></Box>
+        <Button
+          onClick={() => {
+            googleLogout();
+            props.handleLogout();
+          }}
+          color="inherit"
+        >
+          Logout
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 
