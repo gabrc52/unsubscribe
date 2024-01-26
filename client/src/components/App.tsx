@@ -21,6 +21,7 @@ import theme from "../theme";
 import Album from "./modules/Album";
 import { CssBaseline, ScopedCssBaseline } from "@mui/material";
 import FoodPage from "./pages/FoodPage";
+import NewFoodPage from "./pages/NewFood";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -75,6 +76,8 @@ const App = () => {
                 <NavBar userId={userId} handleLogout={handleLogout} />
                 <Routes>
                   <Route path="/" element={<FoodPage />} />
+                  <Route path="/food" element={<FoodPage />} />
+                  <Route path="/food/new" element={<NewFoodPage />} />
                   <Route path="/resources" element={<Resources />} />
                   <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
                   <Route path="*" element={<NotFound />} />

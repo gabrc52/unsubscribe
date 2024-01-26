@@ -27,8 +27,8 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
         >
           Unsubscribe
         </Typography>
-        <Button onClick={() => navigate("/")} color="inherit">
-          Home
+        <Button onClick={() => navigate("/food")} color="inherit">
+          Food
         </Button>
         <Button onClick={() => navigate("/resources")} color="inherit">
           Resources
