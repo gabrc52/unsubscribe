@@ -14,8 +14,6 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import React from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
 import FoodEvent from "../../../../shared/FoodEvent";
 
 const FoodCard = (foodEvent: FoodEvent) => {
@@ -37,11 +35,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
       />
       {/* TODO: gallery / handle multiple photos */}
       {foodEvent.photos.length > 0 && (
-        <Carousel showArrows={true}>
-          {foodEvent.photos.map((photo) => (
-            <CardMedia component="img" height="200" image={photo} />
-          ))}
-        </Carousel>
+        <CardMedia component="img" height="200" image={foodEvent.photos[0]} />
       )}
       {/* TODO: change to suit our needs */}
       <CardContent>
