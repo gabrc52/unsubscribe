@@ -15,7 +15,16 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
     <AppBar position="sticky">
       <Toolbar>
         {/** TODO: logo */}
-        <Typography variant="h6" sx={{ paddingRight: 3 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            paddingRight: 3,
+            display: {
+              xs: "none",
+              sm: "block",
+            },
+          }}
+        >
           Unsubscribe
         </Typography>
         <Button onClick={() => navigate("/")} color="inherit">
