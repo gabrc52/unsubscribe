@@ -34,6 +34,7 @@ const NewPostInput = (props) => {
   };
 
   return (
+    // mayhaps change to form
     <div className="u-flex">
       <input
         type="text"
@@ -41,6 +42,7 @@ const NewPostInput = (props) => {
         value={food_type}
         onChange={handleFoodTypeChange}
         className="NewPostInput-input"
+        required
       />
       <input
         type="text"

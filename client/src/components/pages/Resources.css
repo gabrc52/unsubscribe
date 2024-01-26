@@ -1,6 +1,38 @@
 .Resources {
-    display: inline;
-    margin: 0 auto;
+  display: inline;
+  margin: 0 auto;
+}
+
+.Resources-container {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(250, 199, 37, 0.5),
+    rgba(246, 91, 101, 0.55)
+  );
+  padding: 20px 20px;
+}
+
+.Resources-textContainer p,
+.Resources-textContainer h1,
+.Resources-textContainer h2 {
+  line-height: 1.2;
+}
+
+.Resources-textContainer a {
+  font-weight: 550;
+  text-shadow:
+  /* 1px 1px 1px var(--white), */
+    0 0 1em var(--white),
+    0 0 0.1em var(--white);
+}
+
+.Resources-textContainer a:hover {
+  text-shadow:
+  /* 1px 1px 1px var(--white), */
+    0 0 1em rgb(246, 91, 101),
+    0 0 0.1em rgb(246, 91, 101);
 }
 
 ul {
@@ -9,10 +41,10 @@ ul {
 }
 
 ul.a {
-    margin-left: 30px;
-    list-style-position: inside;
-    line-height: 21px;
-  }
+  margin-left: 30px;
+  list-style-position: inside;
+  line-height: 21px;
+}
 
 li {
   margin-left: 10px;
