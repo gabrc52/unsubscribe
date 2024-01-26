@@ -4,3 +4,8 @@ client/dist/bundle.js.LICENSE.txt
 node_modules/
 .env
 __pycache__
+.DS_Store
+@types/
+client/.DS_Store
+client/src/.DS_Store
+client/src/public/.DS_Store

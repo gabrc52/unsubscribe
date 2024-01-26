@@ -3,6 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
+// declare module "*.png";
+import MITLogo from "../../public/MIT_logo.png";
+
 type Props = {
   userId?: string;
   handleLogin: (credentialResponse: CredentialResponse) => void;
@@ -24,8 +27,8 @@ const Login = (props: Props) => {
             <h2 className="Login-prompt">Say goodbye to dormspam clutter...</h2>
             <a className="Login-buttonPrompt u-pointer" href="/api/login/touchstone/redirect">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
-                {/* <img src="" alt="MIT Logo"> */}
-                <p>MIT Touchstone</p>
+                <img src={MITLogo} alt="MIT Logo" />
+                <p>Touchstone</p>
               </span>
             </a>
             <button className="Login-buttonPrompt u-pointer">
@@ -36,7 +39,7 @@ const Login = (props: Props) => {
                   text="continue_with"
                   size="large"
                   shape="pill"
-                  width="300px"
+                  width="341px"
                   onSuccess={handleLogin}
                 />
               </span>
