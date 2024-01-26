@@ -20,6 +20,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 import Album from "./modules/Album";
 import { CssBaseline, ScopedCssBaseline } from "@mui/material";
+import FoodPage from "./pages/FoodPage";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -73,7 +74,7 @@ const App = () => {
                 {/* TODO: so why is handleLogin there? */}
                 <NavBar userId={userId} handleLogout={handleLogout} />
                 <Routes>
-                  <Route path="/" element={<Feed userId={userId} />} />
+                  <Route path="/" element={<FoodPage />} />
                   <Route path="/resources" element={<Resources />} />
                   <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
                   <Route path="*" element={<NotFound />} />

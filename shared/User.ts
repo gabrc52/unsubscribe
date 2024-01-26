@@ -1,7 +1,6 @@
-/*
-Remember to share the interface between your mongoose models
-and frontend here.
-*/
 import { User } from "../server/models/User";
+import { PlainInterface } from "./util";
+
+export type IUser = PlainInterface<User>;
 
 export default User;
