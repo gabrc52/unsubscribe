@@ -3,11 +3,11 @@
 import React from "react";
 import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
-import Comment from "../../../../shared/Comment"; // IComment
+import IComment from "../../../../shared/Comment"; // IComment
 
 type Props = {
-  comments: Comment[]; // IComment
-  foodevent: Comment; // IComment
+  comments: IComment[]; // IComment
+  foodevent: IComment; // IComment
   creator_userId: string;
   foodeventId: string;
   addNewComment: Function;
