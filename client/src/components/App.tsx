@@ -79,7 +79,7 @@ const App = () => {
                   <Route path="/food" element={<FoodPage />} />
                   <Route path="/food/new" element={<NewFoodPage />} />
                   <Route path="/resources" element={<Resources />} />
-                  <Route path="/profile/:userId" element={<YourPosts userId={userId} />} />
+                  <Route path="/posts/:userId" element={<YourPosts userId={userId} />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </>
