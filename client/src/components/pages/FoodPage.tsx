@@ -22,12 +22,23 @@ const FoodPage = (props: Props) => {
   // https://mui.com/material-ui/react-card/#complex-interaction
   return (
     <Container maxWidth="md" sx={{ alignContent: "center" }}>
-      <Typography variant="h5" align="center" sx={{ pt: 2, pb: 1 }}>
+      {/* <Typography variant="h5" align="center" sx={{ pt: 2, pb: 1 }}>
         Free Food @ MIT
-      </Typography>
-      <Box display="flex" justifyContent="center" alignItems="center" sx={{ pb: 2 }}>
+      </Typography> */}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ pt: 2, pb: 2, gap: 3 }}
+      >
         <Button variant="contained" onClick={() => navigate("/food/new")}>
-          New Food
+          Submit a New Food
+        </Button>
+        <Typography variant="h5" align="center" sx={{ pt: 1, pb: 1 }}>
+          Free Food @ MIT
+        </Typography>
+        <Button variant="contained" onClick={() => navigate("/food/scheduled")}>
+          See scheduled foods
         </Button>
       </Box>
       <Grid container spacing={4}>
