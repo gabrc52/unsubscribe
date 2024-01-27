@@ -3,4 +3,4 @@ import { PlainInterface } from "./util";
 
 export type IUser = PlainInterface<User>;
 
-export default User;
+export default IUser;
