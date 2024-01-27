@@ -12,10 +12,10 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
 
   return (
     // TODO: for accessibility etc we might want a link instead of a button but I can't figure out how to do that
-    <AppBar position="sticky">
+    <AppBar className="NavBar-container" position="sticky">
       <Toolbar>
         {/** TODO: logo */}
-        <Typography
+        <Typography className="NavBar-link"
           variant="h6"
           sx={{
             paddingRight: 3,
