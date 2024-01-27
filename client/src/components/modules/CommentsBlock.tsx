@@ -3,11 +3,11 @@
 import React from "react";
 import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
-import Comment from "../../../../shared/Comment";
+import Comment from "../../../../shared/Comment"; // IComment
 
 type Props = {
-  comments: Comment[];
-  foodevent: Comment;
+  comments: Comment[]; // IComment
+  foodevent: Comment; // IComment
   creator_userId: string;
   foodeventId: string;
   addNewComment: Function;
@@ -24,6 +24,7 @@ const CommentsBlock = (props: Props) => {
           <SingleComment
             key={`SingleComment_${comment._id}`}
             _id={comment._id}
+            // get comment.creator_userId and use to query for creator name? ie, the name of the user whose id is creator_userId
             creator_userId={comment.creator_userId}
             content={comment.content}
           />
