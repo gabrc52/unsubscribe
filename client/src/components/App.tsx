@@ -71,8 +71,6 @@ const App = () => {
             {/* Check if logged in, else show Login */}
             {userId ? (
               <>
-                {/* only want to b able to log OUT from navbar */}
-                {/* TODO: so why is handleLogin there? */}
                 <NavBar userId={userId} handleLogout={handleLogout} />
                 <Routes>
                   <Route path="/" element={<FoodPage />} />

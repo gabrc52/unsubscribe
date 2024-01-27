@@ -81,7 +81,7 @@ const verifyGoogle = (token: string) => {
 
 const getOrCreateUser = (
   loginType: LoginType,
-  user: { sub: string; name?: string | undefined }
+  user: { sub: string; name?: string | undefined; picture?: string | undefined }
 ) => {
   return User.findOne({ userId: user.sub }).then(
     (existingUser: UserInterface | null | undefined) => {
@@ -90,10 +90,18 @@ const getOrCreateUser = (
         if (user.name !== undefined) {
           existingUser!.name = user.name;
         }
-        existingUser!.save();
+        console.log(`what!`);
+        console.log(user.name, user.sub, user.picture);
+        console.log(`what!`);
+        if (user.picture !== undefined) {
+          existingUser!.picture = user.picture;
+        }
+        return existingUser!.save();
       }
+      console.log(`Creating new user ${user.name} (${user.sub})`);
       const newUser = new User({
         name: user.name,
+        picture: user.picture,
         userId: user.sub,
         loginType: loginType,
       });

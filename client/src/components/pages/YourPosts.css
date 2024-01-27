@@ -1,5 +1,6 @@
 .YourPosts-avatarContainer {
-  padding: 0 35%;
+  padding: 0 45%;
+  padding-top: 3%;
 }
 
 .YourPosts-avatar {
@@ -9,7 +10,7 @@
   height: auto;
   display: block;
   /* div height to be the same as width*/
-  padding-top: 100%;
+  /* padding-top: 100%; */
 
   /* make it a circle */
   border-radius: 50%;
@@ -20,7 +21,7 @@
   background-repeat: no-repeat;
 
   /* it makes the clue thing, takes smaller dimension to fill div */
-  background-size: cover;
+  /* background-size: cover; */
 
   /* it is optional, for making this div centered in parent*/
   margin: 0 auto;
@@ -29,7 +30,7 @@
   right: 0;
   bottom: 0;
   /* google/mit acc img */
-  background-image: url("https://static-00.iconduck.com/assets.00/mail-unsubscribe-icon-2048x2048-t7rlwesg.png");
+  /* background-image: url("https://static-00.iconduck.com/assets.00/mail-unsubscribe-icon-2048x2048-t7rlwesg.png"); */
 }
 
 .YourPosts-name {
