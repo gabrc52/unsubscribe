@@ -4,23 +4,24 @@
 }
 
 .Resources-container {
+  color: var(--text);
   min-width: 100vw;
   min-height: 100vh;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to bottom right,
     rgba(250, 199, 37, 0.5),
     rgba(246, 91, 101, 0.55)
-  );
-  padding: 20px 20px;
+  ); */
+  padding: 30px 30px;
 }
 
 .Resources-textContainer p,
-.Resources-textContainer h1,
-.Resources-textContainer h2 {
+.Resources-textContainer h1 {
   line-height: 1.2;
 }
 
 .Resources-textContainer a {
+  color: var(--text);
   font-weight: 550;
   text-shadow:
   /* 1px 1px 1px var(--white), */
@@ -33,6 +34,10 @@
   /* 1px 1px 1px var(--white), */
     0 0 1em rgb(246, 91, 101),
     0 0 0.1em rgb(246, 91, 101);
+}
+
+.Resources-textContainer a:visited {
+  text-shadow: none;
 }
 
 ul {

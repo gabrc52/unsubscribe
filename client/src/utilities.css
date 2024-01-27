@@ -99,3 +99,8 @@ form {
 .u-link:hover {
   color: var(--primary--dim);
 }
+
+.u-link:visited {
+  color: var(--coral);
+  text-decoration: none;
+}
