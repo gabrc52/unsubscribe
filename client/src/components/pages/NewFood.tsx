@@ -37,35 +37,29 @@ export const NewFoodPage = () => {
         autoComplete="off"
       >
         <h2>Submit a New Food Event</h2>
-        <div>
-          <TextField
-            sx={{ m: 1 }}
-            required
-            id="outlined-required"
-            label="Food Type"
-            helperText="Cuisine or dish type (pizza, sandwiches, etc.)"
-          />
-        </div>
-        <div>
-          <TextField
-            sx={{ m: 1 }}
-            required
-            id="outlined-helperText"
-            label="Location"
-            helperText="Builing + room number or name"
-          />
-        </div>
-        <div>
-          <TextField
-            // sx={{ m: 1, width: '50ch' }}
-            sx={{ m: 1 }}
-            id="outlined-multiline-static"
-            label="Description"
-            multiline
-            rows={4}
-            helperText="Any other details about quantity, quality, age of food event, location, etc."
-          />
-        </div>
+        <TextField
+          sx={{ m: 1 }}
+          required
+          id="outlined-required"
+          label="Food Type"
+          helperText="Cuisine or dish type (pizza, sandwiches, etc.)"
+        />
+        <TextField
+          sx={{ m: 1 }}
+          required
+          id="outlined-helperText"
+          label="Location"
+          helperText="Builing + room number or name"
+        />
+        <TextField
+          // sx={{ m: 1, width: '50ch' }}
+          sx={{ m: 1 }}
+          id="outlined-multiline-static"
+          label="Description"
+          multiline
+          rows={4}
+          helperText="Any other details about quantity, quality, age of food event, location, etc."
+        />
         <MuiFileInput
           multiple
           value={value}
