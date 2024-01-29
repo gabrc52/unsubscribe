@@ -20,7 +20,7 @@ import {
 import { red } from "@mui/material/colors";
 import FoodEvent from "../../../../shared/FoodEvent";
 import CommentsBlock from "./CommentsBlock";
-import IComment from "../../../../shared/Comment"; // must import if using IComment
+import Comment from "../../../../shared/Comment"; // must import if using IComment
 // ^^^ also change in CommentsBlock.tsx
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -39,7 +39,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const FoodCard = (foodEvent: FoodEvent) => {
-  const [comments, setComments] = useState<IComment[]>([]); // or <IComment[]> ??
+  const [comments, setComments] = useState<Comment[]>([]); // or <IComment[]> ??
 
   useEffect(() => {
     get("/api/comment", { parent: foodEvent.creator_userId }).then((comments) => {
