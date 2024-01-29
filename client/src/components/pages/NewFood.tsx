@@ -1,86 +1,92 @@
 import React, { useState, useEffect } from "react";
 import { Container, TextField, Box } from "@mui/material";
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import CloseIcon from '@mui/icons-material/Close';
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
-import { NewFoodevent } from "../modules/NewPostInput";
-import { post } from "../../utilities"; 
+import { post } from "../../utilities";
 
 export const NewFoodPage = () => {
   // TODO close button
   // TODO SAVE IMAGES TO DATABASE(?)
 
-  const [value, setValue] = React.useState<File[]>([])
+  const [value, setValue] = React.useState<File[]>([]);
 
   const handleChange = (newValue: File[]) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   const addNewFoodevent = (foodevent) => {
     post("/api/foodevent", foodevent).then(() => {});
   };
-  
+
   return (
     <>
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '50ch' },
-        height: "100%", display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        maxWidth: '100%', paddingTop: '30px'
-      }}
-      noValidate
-      autoComplete="off"
-    >
-
-<h2>Submit a New Food Event</h2>
-      <div>
-        <TextField  sx={{ m: 1 }}
-          required
-          id="outlined-required"
-          label="Food Type"
-          helperText="Cuisine or dish type (pizza, sandwiches, etc.)"
-        />
-      </div>
-      <div>
-        <TextField  sx={{ m: 1 }}
-          required
-          id="outlined-helperText"
-          label="Location"
-          helperText="Builing + room number or name"
-        />
-      </div>
-      <div>
-        <TextField
-          // sx={{ m: 1, width: '50ch' }}
-           sx={{ m: 1 }}
-          id="outlined-multiline-static"
-          label="Description"
-          multiline
-          rows={4}
-          helperText="Any other details about quantity, quality, age of food event, location, etc."
-        />
-      </div>
-      <MuiFileInput multiple value={value} onChange={handleChange} InputProps={{
-        inputProps: {
-          accept: 'image/*, video/*'
-        },
-        startAdornment: <AttachFileIcon />
-        }} 
-        clearIconButtonProps={{
-          title: "Remove",
-          children: <CloseIcon fontSize="small" />
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "50ch" },
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "100%",
+          paddingTop: "30px",
         }}
-        placeholder="Insert photo(s)"
-        getInputText={(value) => value ? 'Thanks!' : ''}
-        helperText="Click above! For multiple photos, please select and upload all at once." />
-      {/* replace with handle submit button + input handling
-      from NewPostInput */}
-      <NewFoodevent addNewFoodevent={addNewFoodevent} />
-    </Box>
+        noValidate
+        autoComplete="off"
+      >
+        <h2>Submit a New Food Event</h2>
+        <div>
+          <TextField
+            sx={{ m: 1 }}
+            required
+            id="outlined-required"
+            label="Food Type"
+            helperText="Cuisine or dish type (pizza, sandwiches, etc.)"
+          />
+        </div>
+        <div>
+          <TextField
+            sx={{ m: 1 }}
+            required
+            id="outlined-helperText"
+            label="Location"
+            helperText="Builing + room number or name"
+          />
+        </div>
+        <div>
+          <TextField
+            // sx={{ m: 1, width: '50ch' }}
+            sx={{ m: 1 }}
+            id="outlined-multiline-static"
+            label="Description"
+            multiline
+            rows={4}
+            helperText="Any other details about quantity, quality, age of food event, location, etc."
+          />
+        </div>
+        <MuiFileInput
+          multiple
+          value={value}
+          onChange={handleChange}
+          InputProps={{
+            inputProps: {
+              accept: "image/*, video/*",
+            },
+            startAdornment: <AttachFileIcon />,
+          }}
+          clearIconButtonProps={{
+            title: "Remove",
+            children: <CloseIcon fontSize="small" />,
+          }}
+          placeholder="Insert photo(s)"
+          getInputText={(value) => (value ? "Thanks!" : "")}
+          helperText="Click above! For multiple photos, please select and upload all at once."
+        />
+      </Box>
     </>
   );
-}
+};
 
 export default NewFoodPage;
