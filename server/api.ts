@@ -4,7 +4,7 @@ import "process";
 import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
-const ragManager = require("./rag");
+// import ragManager from "./rag";
 
 // import models so we can interact with the database
 import Comment from "./models/Comment";
@@ -79,33 +79,36 @@ router.post("/foodevent", ensureLoggedIn, (req, res) => {
   newFoodEvent.save().then((foodevent) => res.send(foodevent));
 });
 
-router.post("/comment", ensureLoggedIn, (req, res) => {
-  const newComment = new Comment({
-    creator_userId: req.body.creator_userId,
-    content: req.body.content,
-  });
-  newComment.save().then((comment) => res.send(comment));
-});
-
 router.get("/comment", (req, res) => {
   Comment.find({ parent: req.query.parent }).then((comments) => {
     res.send(comments);
   });
 });
 
-router.post("/query", (req, res) => {
-  const makeQuery = async () => {
-    try {
-      const queryresponse = await ragManager.retrievalAugmentedGeneration(req.body.query);
-      res.send({ queryresponse });
-    } catch (error) {
-      console.log("error:", error);
-      res.status(500);
-      res.send({});
-    }
-  };
-  makeQuery();
+router.post("/comment", ensureLoggedIn, (req, res) => {
+  const newComment = new Comment({
+    creator_userId: req.body.creator_userId,
+    parent: req.body.parent,
+    content: req.body.content,
+  });
+  newComment.save().then((comment) => res.send(comment));
 });
+
+// MUST FIX rag.ts TO USE THIS
+
+// router.post("/query", (req, res) => {
+//   const makeQuery = async () => {
+//     try {
+//       const queryresponse = await ragManager.retrievalAugmentedGeneration(req.body.query);
+//       res.send({ queryresponse });
+//     } catch (error) {
+//       console.log("error:", error);
+//       res.status(500);
+//       res.send({});
+//     }
+//   };
+//   makeQuery();
+// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
