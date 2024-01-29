@@ -27,7 +27,7 @@ const Feed = (props) => {
     foodEventsList = foodEvents.map((foodEventObj) => (
       <div key={`FoodEvent_${foodEventObj._id}`} className="email-container">
         <h3>{foodEventObj.title}</h3>
-        <p>{foodEventObj.food_type}</p>
+        <p>{foodEventObj.food_description}</p>
         <p className="email-body">{foodEventObj.content}</p>
         <div className="email-image-container">
           {foodEventObj.photos.map((url) => (

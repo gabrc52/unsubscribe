@@ -7,7 +7,7 @@ const FoodEventSchema = new Schema({
   creator_userId: String,
   emailer_address: String,
   emailer_name: String,
-  food_type: String,
+  food_description: String, // Cuisine or dish type (pizza, sandwiches, etc.)
   scheduled: Boolean, // true if a future scheduled event, false if available now
   photos: [String],
   title: String, // for email subject
@@ -18,7 +18,7 @@ export interface FoodEvent extends Document {
   creator_userId: string;
   emailer_address: string;
   emailer_name: string;
-  food_type: string;
+  food_description: string;
   scheduled: boolean;
   photos: string[];
   title: string;

@@ -73,7 +73,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
           </IconButton>
         }
         title={foodEvent.title}
-        subheader={foodEvent.emailer_name ?? "TODO: Get sender in backend"}
+        subheader={foodEvent.creator ?? "Unknown"}
       />
       {/* TODO: gallery / handle multiple photos */}
       {foodEvent.photos.length > 0 && (
