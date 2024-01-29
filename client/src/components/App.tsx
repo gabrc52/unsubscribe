@@ -18,7 +18,6 @@ import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
 
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
-import Album from "./modules/Album";
 import { CssBaseline, ScopedCssBaseline } from "@mui/material";
 import FoodPage from "./pages/FoodPage";
 import NewFoodPage from "./pages/NewFood";
