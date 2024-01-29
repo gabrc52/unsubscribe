@@ -24,6 +24,7 @@ const NewPostInput = (props) => {
     setPhotos([event.target.value]);
   };
 
+  // called when the user hits "Submit" for a new post (food event)
   const handleSubmit = (event) => {
     event.preventDefault();
     props.onSubmit && props.onSubmit({ food_type, title, content, photos });
@@ -76,15 +77,51 @@ const NewPostInput = (props) => {
   );
 };
 
+const NewCommentInput = (props) => {
+  const [value, setValue] = useState("");
+
+  // called whenever the user types in the new comment input box
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  // called when the user hits "Submit" for a new post
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.onSubmit && props.onSubmit(value);
+    setValue("");
+  };
+
+  return (
+    <div className="u-flex">
+      <input
+        type="text"
+        placeholder={props.defaultText}
+        value={value}
+        onChange={handleChange}
+        className="NewPostInput-input"
+      />
+      <button
+        type="submit"
+        className="NewPostInput-button u-pointer"
+        value="Submit"
+        onClick={handleSubmit}
+      >
+        Submit
+      </button>
+    </div>
+  );
+};
+
 const NewComment = (props) => {
-  const addComment = ({ food_type, title, content, photos }) => {
-    const body = { parent: props.foodeventId, food_type, title, content, photos };
+  const addComment = (value) => {
+    const body = { parent: props.foodeventId, content: value };
     post("/api/comment", body).then((comment) => {
       props.addNewComment(comment);
     });
   };
 
-  return <NewPostInput defaultText="New Comment" onSubmit={addComment} />;
+  return <NewCommentInput defaultText="New Comment" onSubmit={addComment} />;
 };
 
 const NewFoodevent = (props) => {
