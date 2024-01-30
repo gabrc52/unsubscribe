@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, TextField, Box, Autocomplete, CssBaseline, Button } from "@mui/material";
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
@@ -19,6 +24,21 @@ export const NewFoodPage = () => {
   const handleChange = (newValue: File[]) => {
     setFileInputValue(newValue);
   };
+
+  const [scheduledState, setScheduledState] = React.useState({
+    yes: false,
+    no: true,
+  });
+
+  const handleScheduledChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setScheduledState({
+      ...scheduledState,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const { yes, no } = scheduledState;
+  const error = [yes, no].filter((v) => v).length !== 1;
 
   const addNewFoodevent = (foodevent) => {
     post("/api/foodevent", foodevent).then(() => {});
@@ -112,6 +132,29 @@ export const NewFoodPage = () => {
           getInputText={(value) => (value ? "Thanks!" : "")}
           helperText="Click above! For multiple photos, please select and upload all at once."
         />
+        <FormControl
+          required
+          error={error}
+          component="fieldset"
+          sx={{ m: 2, display: 'flex' }}
+          variant="standard"
+        >
+          <FormLabel component="legend">Pick one</FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox checked={yes} onChange={handleScheduledChange} name="yes" />
+              }
+              label="Yes"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={no} onChange={handleScheduledChange} name="no" />
+              }
+              label="No"
+              />
+          </FormGroup>
+        </FormControl>
         <Button variant="contained" onClick={onSubmit}>
           Submit Food
         </Button>
