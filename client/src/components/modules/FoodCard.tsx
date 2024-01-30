@@ -72,7 +72,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={foodEvent.title}
+        title={foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`}
         subheader={foodEvent.creator ?? "Unknown"}
       />
       {/* TODO: gallery / handle multiple photos */}
