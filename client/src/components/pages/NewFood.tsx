@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Container,
   TextField,
@@ -41,12 +41,34 @@ export const NewFoodPage = () => {
   // TODO SAVE IMAGES TO DATABASE(?)
   const navigate = useNavigate();
 
-  const [fileInputValue, setFileInputValue] = React.useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  // blob URLs are temporary URLs for <img> to get a preview of images before user uploads
+  const [blobUrls, setBlobUrls] = React.useState<string[]>([]);
+
+  // For showing a preview of the pictures
+  useEffect(() => {
+    const revokeCurrentURLs = () => {
+      for (const blob of blobUrls) {
+        URL.revokeObjectURL(blob);
+      }
+    };
+
+    // revoke selected files first
+    revokeCurrentURLs();
+
+    // get the blob URLs now
+    setBlobUrls(selectedFiles.map((file) => URL.createObjectURL(file)));
+
+    // revoke blob URLs when destroying the component
+    return revokeCurrentURLs;
+  }, [selectedFiles]);
+
   // type from https://www.robinwieruch.de/typescript-react-useref/
   const foodCategoryRef = useRef<HTMLInputElement>(null);
   const foodTypeRef = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
+  const datePickerRef = useRef<HTMLInputElement>(null);
 
   const [scheduledState, setScheduledState] = React.useState<string | null>("yes");
 
@@ -60,22 +82,28 @@ export const NewFoodPage = () => {
   };
 
   const handleFileInputChange = (newValue: File[]) => {
-    setFileInputValue(newValue);
+    setSelectedFiles(newValue);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    console.log("submitting!");
+    const photos = await Promise.all(selectedFiles.map((file) => file.arrayBuffer())); //.map((buffer) => buffer.);
+    console.log("photos acquired", photos);
     const foodEvent = {
       food_category: foodCategoryRef.current!.value as FoodCategory,
       food_type: foodTypeRef.current!.value,
       location: locationRef.current!.value,
       content: descriptionRef.current!.value,
-      scheduled: scheduledState === "yes",
-      photos: [], // TODO: figure out
-      // scheduledDate: // TODO this
+      scheduled: scheduledState === "no",
+      photos: photos,
+      scheduledDate: datePickerRef?.current?.value,
     };
-    post("/api/foodevent", foodEvent)
-      .then(() => navigate("/food"))
-      .catch(console.log);
+    try {
+      await post("/api/foodevent", foodEvent);
+      navigate("/food");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -139,7 +167,7 @@ export const NewFoodPage = () => {
         />
         <MuiFileInput
           multiple
-          value={fileInputValue}
+          value={selectedFiles}
           onChange={handleFileInputChange}
           InputProps={{
             inputProps: {
@@ -152,10 +180,13 @@ export const NewFoodPage = () => {
             children: <CloseIcon fontSize="small" />,
           }}
           placeholder="Insert photo(s)"
-          getInputText={(value) => (value ? `Thanks!` : "")}
+          getInputText={(fileList) => (fileList ? `Thanks!` : "")}
           helperText="Click above! For multiple photos, please select and upload all at once."
-          // TODO: photo preview
         />
+        {/* IMAGE PREVIEW - TODO may need styling */}
+        {blobUrls.map((url) => (
+          <img src={url} width="100%"></img>
+        ))}
         <FormControl
           required
           sx={{ m: 2, display: "flex", alignItems: "center" }}
@@ -180,7 +211,7 @@ export const NewFoodPage = () => {
         {showDatePicker && (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoItem label={<Label componentName="Schedule date/time" />}>
-              <DateTimePicker />
+              <DateTimePicker inputRef={datePickerRef} />
             </DemoItem>
           </LocalizationProvider>
         )}
