@@ -108,53 +108,32 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
 
     // Parse the incoming form data
     // const [fields, files] = await form.parse(req);
-    form.parse(req, async (err, fields, files) => {
+    form.parse(req, async (err, fields: formidable.Fields, files: formidable.Files) => {
       if (err) {
         console.error("Error parsing form data:", err);
         res.status(StatusCodes.BAD_REQUEST).send({ error: "Error parsing form data" });
         return;
       }
 
-      // // Ensure 'photo' field is present in the form data
-      // const photos = Array.isArray(files.photo) ? files.photo : [files.photo];
-
-      // Explicitly type 'photos' as formidable.File[]
-      // const photos: formidable.File[] = Array.isArray(files.photo) ? files.photo : [files.photo];
-      const photos: formidable.File[] = (Array.isArray(files.photo) ? files.photo : [files.photo]).filter(
-        (file): file is formidable.File => file !== undefined
-      );
-
-      // Access the fields and files
+      // For Debugging
       console.log("Fields:", fields);
       console.log("Files:", files);
 
-      // Check if 'photo' field is present in the form data
-      // if (!files.photo) {
-      //   res.status(StatusCodes.BAD_REQUEST).send({ error: "No photo uploaded" });
-      //   return;
-      // }
-      if (!photos || photos.length === 0) {
-        res.status(StatusCodes.BAD_REQUEST).send({ error: "No photo uploaded" });
+      // Check that food_event is set before uploading images and stuff
+      if (!("food_event" in fields)) {
+        console.error("Fields does not have a food_event");
+        res.status(StatusCodes.BAD_REQUEST).send({ error: "food_event not passed!" });
         return;
       }
 
-      // // Get the file details
-      // const photoFile = files.photo;
-      // const photoFilePath = photoFile.path;
-      // const photoFileName = photoFile.name;
-      // const photoFileType = photoFile.type;
-      // const uploadedFilePath = await uploadFile(photoFilePath, photoFileName, photoFileType);
+      // TODO: potentially validate other fields,
+      // see fdd4ddd9e5e5611a622a97b48ad5f970ddc95d53 for a template/example
 
-      // // TODO: Validate other fields as needed
-      // const newFoodEvent = new FoodEvent({
-      //   creator_userId,
-      //   ...fields,
-      //   // Add the file path or URL to the 'photo' field
-      //   photo: uploadedFilePath,
-      // });
+      const photos = files.photo ?? [];
 
       // Process each uploaded photo
-      const processedPhotos = await Promise.all(
+      // TODO: check that they are images with a mime type library
+      const photoUrls = await Promise.all(
         photos.map(async (photoFile: formidable.File) => {
           // Get the file details from Formidable's file object
           const photoFilePath = photoFile.filepath;
@@ -162,16 +141,7 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
           const photoFileType = photoFile.mimetype || "application/octet-stream"; // Provide a default value
 
           // Read the file content as a Buffer
-          // const fileContent = await fs.readFile(photoFilePath);
-          const fileContent = await new Promise<Buffer>((resolve, reject) => {
-            fs.readFile(photoFilePath, (err, data) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(data);
-              }
-            });
-          });
+          const fileContent = await fs.promises.readFile(photoFilePath);
 
           // Use the existing uploadFile function for file upload
           const uploadedFilePath = await uploadFile(fileContent, photoFileName, photoFileType);
@@ -180,39 +150,14 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
         })
       );
 
-      // TODO: Validate other fields as needed
-      function validateFields(fields: any) {
-        // Example validation: Check if 'location' is provided
-        if (!fields.location) {
-          throw new Error("Location is required.");
-        }
+      // has everything minus the images
+      const submittedFoodEvent = JSON.parse(fields.food_event!.at(0)!);
 
-        // TODO: Add more validation checks for other fields...
-
-        // If all validations pass, return true or perform additional processing
-        return true;
-      }
-
-      // // Assuming 'fields' is the object containing form fields
-      // if (validateFields(fields)) {
-      //   // Validation successful, proceed to create FoodEvent
-      //   const newFoodEvent = new FoodEvent({
-      //     creator_userId,
-      //     ...fields,
-      //     photos: processedPhotos,
-      //   });
-        
-      //   // Perform any additional processing or save the newFoodEvent to the database
-      // } else {
-      //   // Handle validation errors or prevent the creation of the FoodEvent
-      //   console.error("Validation failed. FoodEvent not created.");
-      // }
-      
       const newFoodEvent = new FoodEvent({
         creator_userId,
-        ...fields, // ...req.body,
-        // Add the array of file paths or URLs to the 'photos' field
-        photos: processedPhotos,
+        ...submittedFoodEvent,
+        // so add the images
+        photos: photoUrls,
       });
 
       // Save the new food event
@@ -272,7 +217,9 @@ router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Post not found" });
     }
     if (post.creator_userId !== userId) {
-      return res.status(StatusCodes.UNAUTHORIZED).send({ error: "You are not authorized to delete this post" });
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .send({ error: "You are not authorized to delete this post" });
     }
 
     await FoodEvent.findByIdAndDelete(postId);
@@ -282,8 +229,6 @@ router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
-
-
 
 // MUST FIX rag.ts TO USE THIS
 
