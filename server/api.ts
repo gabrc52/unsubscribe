@@ -262,6 +262,29 @@ router.post("/comment", ensureLoggedIn, (req, res) => {
   newComment.save().then((comment) => res.send(comment));
 });
 
+router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const userId = req.user!.userId;
+
+    const post = await FoodEvent.findById(postId);
+    if (!post) {
+      return res.status(StatusCodes.NOT_FOUND).send({ error: "Post not found" });
+    }
+    if (post.creator_userId !== userId) {
+      return res.status(StatusCodes.UNAUTHORIZED).send({ error: "You are not authorized to delete this post" });
+    }
+
+    await FoodEvent.findByIdAndDelete(postId);
+    res.status(StatusCodes.OK).send({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
+  }
+});
+
+
+
 // MUST FIX rag.ts TO USE THIS
 
 // router.post("/query", (req, res) => {
