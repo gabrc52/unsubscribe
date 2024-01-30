@@ -51,9 +51,14 @@ router.get("/whoami", (req, res) => {
 });
 
 router.get("/user", (req, res) => {
-  User.findById(req.query.userid).then((user) => {
-    res.send(user);
-  });
+  if (typeof req.query.userid === "string") {
+    User.findOne({ userId: req.query.userid }).then((user) => {
+      res.send(user);
+    });
+  } else {
+    res.status(StatusCodes.BAD_REQUEST);
+    res.send({ error: "Please provide the user ID (and only one)" });
+  }
 });
 
 router.get("/user/posts", ensureLoggedIn, async (req, res) => {

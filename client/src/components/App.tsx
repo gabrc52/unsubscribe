@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { get, post } from "../utilities";
+import { UserIdContext, get, post } from "../utilities";
 import NavBar from "./modules/NavBar";
 import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
@@ -36,7 +36,7 @@ const App = () => {
         if (user._id) {
           console.log("whoami returned a user", user);
           // They are registed in the database and currently logged in.
-          setUserId(user._id);
+          setUserId(user.userId);
         }
       })
       .then(() =>
@@ -54,7 +54,7 @@ const App = () => {
     console.log("decodedCredential is", decodedCredential);
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login/google", { token: userToken }).then((user) => {
-      setUserId(user._id);
+      setUserId(user.userId);
       post("/api/initsocket", { socketid: socket.id });
     });
   };
@@ -71,7 +71,7 @@ const App = () => {
           <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             {/* Check if logged in, else show Login */}
             {userId ? (
-              <>
+              <UserIdContext.Provider value={userId}>
                 <NavBar userId={userId} handleLogout={handleLogout} />
                 <Routes>
                   <Route path="/" element={<FoodPage />} />
@@ -83,7 +83,7 @@ const App = () => {
                   <Route path="/scheduled" element={<Scheduled />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </>
+              </UserIdContext.Provider>
             ) : (
               <Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
             )}

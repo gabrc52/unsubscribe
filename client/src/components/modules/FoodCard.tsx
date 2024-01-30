@@ -3,7 +3,6 @@ import { get, post } from "../../utilities";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
 import {
@@ -21,6 +20,7 @@ import { red } from "@mui/material/colors";
 import FoodEvent from "../../../../shared/FoodEvent";
 import CommentsBlock from "./CommentsBlock";
 import Comment from "../../../../shared/Comment"; // must import if using IComment
+import OptionsButton from "./OptionsButton";
 // ^^^ also change in CommentsBlock.tsx
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -67,11 +67,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
             {foodEvent.creator.at(0)}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        action={<OptionsButton {...foodEvent} />}
         title={foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`}
         subheader={foodEvent.creator ?? "Unknown"}
       />
