@@ -4,11 +4,12 @@ import React, { useState, useEffect } from "react";
 import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
 import Comment from "../../../../shared/Comment"; // IComment
+import FoodEvent from "../../../../shared/FoodEvent";
 
 type Props = {
   comments: Comment[]; // IComment
-  foodevent: Comment; // IComment
-  creator_userId: string;
+  foodevent: FoodEvent;
+  creator_userId: string | undefined;
   foodeventId: string;
   addNewComment: Function;
 };
@@ -17,10 +18,6 @@ type Props = {
  * Component that holds all the comments for a story
  */
 const CommentsBlock = (props: Props) => {
-  useEffect(() => {
-    console.log(JSON.stringify(props.creator_userId));
-  });
-
   return (
     <div className="Card-commentSection">
       <div className="food-comments">
@@ -33,9 +30,7 @@ const CommentsBlock = (props: Props) => {
             content={comment.content}
           />
         ))}
-        {props.creator_userId && (
-          <NewComment foodeventId={props.foodeventId} addNewComment={props.addNewComment} />
-        )}
+        <NewComment foodeventId={props.foodeventId} addNewComment={props.addNewComment} />
       </div>
     </div>
   );
