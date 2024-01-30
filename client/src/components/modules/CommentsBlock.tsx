@@ -5,6 +5,7 @@ import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
 import Comment from "../../../../shared/Comment"; // IComment
 import FoodEvent from "../../../../shared/FoodEvent";
+import { get } from "../../utilities";
 
 type Props = {
   comments: Comment[]; // IComment
@@ -18,14 +19,30 @@ type Props = {
  * Component that holds all the comments for a story
  */
 const CommentsBlock = (props: Props) => {
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const fetchedComments = await get("/api/comments", { parent: props.foodeventId });
+        setComments(fetchedComments);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, [props.foodeventId]);
   return (
     <div className="Card-commentSection">
       <div className="food-comments">
-        {props.comments.map((comment) => (
+        {/* Used to be: */}
+        {/* {props.comments.map((comment) => ( */}
+        {comments.map((comment) => (
           <SingleComment
             key={`SingleComment_${comment._id}`}
             _id={comment._id}
-            // get comment.creator_userId and use to query for creator name? ie, the name of the user whose id is creator_userId
+            creator={comment.creator} // Use the creator property from comments [this was commented out before]
             creator_userId={comment.creator_userId}
             content={comment.content}
           />

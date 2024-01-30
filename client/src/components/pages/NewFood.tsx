@@ -217,6 +217,7 @@ export const NewFoodPage = () => {
             <DemoItem label={<Label componentName="Schedule date/time" />}>
               <DateTimePicker inputRef={datePickerRef} />
             </DemoItem>
+            <div> &nbsp; </div> {/* DO NOT REMOVE LINE! for toggling spacing  */}
           </LocalizationProvider>
         )}
         <Button sx={{ m: 0 }} variant="contained" onClick={onSubmit}>

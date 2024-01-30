@@ -228,10 +228,29 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/comment", (req, res) => {
+router.get("/comment", async (req, res) => {
   Comment.find({ parent: req.query.parent }).then((comments) => {
     res.send(comments);
   });
+});
+
+router.get("/comments", async (req, res) => {
+  // Comment.find({ parent: req.query.parent }).then((comments) => {
+  //   res.send(comments);
+  // });
+  try {
+    const comments = await Comment.find({ parent: req.query.parent });
+    const populatedComments = await Promise.all(
+      comments.map(async (comment) => {
+        const creator = await getCreatorName(comment.creator_userId, undefined); // should i make parent function to getCreatorName or is this fine enough for now
+        return { ...comment.toObject(), creator };
+      })
+    );
+    res.send(populatedComments);
+  } catch (error) {
+    console.error("Error retrieving comments:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 router.post("/comment", ensureLoggedIn, (req, res) => {

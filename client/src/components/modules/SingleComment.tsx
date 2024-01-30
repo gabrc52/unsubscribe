@@ -7,7 +7,7 @@ import React from "react";
  *
  * Proptypes
  * @param {string} _id of comment
- * param {string} creator_name RETRIEVED FROM USER STATE IN DATABASE
+ * @param {string} creator RETRIEVED FROM USER STATE IN DATABASE
  * @param {string} creator_userId
  * @param {string} content of the comment
  */
@@ -15,8 +15,8 @@ import React from "react";
 const SingleComment = (props) => {
   return (
     <div className="Card-commentBody">
-      {/* <p>{props.creator_userId}</p> ... in theory this is where name would go but we'd need to retrieve it */}
-      <span>{" | " + props.content}</span>
+      <p>{props.creator || "Unknown"}:</p>
+      <span>{" " + props.content}</span>
     </div>
   );
 };
