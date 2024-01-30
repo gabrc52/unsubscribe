@@ -42,7 +42,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
   const [comments, setComments] = useState<Comment[]>([]); // or <IComment[]> ??
 
   useEffect(() => {
-    get("/api/comment", { parent: foodEvent.creator_userId }).then((comments) => {
+    get("/api/comment", { parent: foodEvent._id }).then((comments) => {
       setComments(comments);
     });
   }, []);
@@ -114,8 +114,10 @@ const FoodCard = (foodEvent: FoodEvent) => {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Comments</Typography>
+        <CardContent sx={{ pt: 0, mt: 0 }}>
+          <Typography paragraph variant="overline">
+            Comments
+          </Typography>
           <CommentsBlock
             comments={comments}
             foodevent={foodEvent}
