@@ -43,6 +43,10 @@
   font-weight: 300;
 }
 
+.YourPosts-congratulatory-message {
+  justify-content: center;
+}
+
 .YourPosts-line {
   border-color: var(--grey);
 }
