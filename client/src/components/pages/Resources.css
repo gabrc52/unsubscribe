@@ -1,12 +1,14 @@
 .Resources {
-  display: inline;
-  margin: 0 auto;
+  /* display: inline; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .Resources-container {
   color: var(--text);
-  min-width: 100vw;
-  min-height: 100vh;
+  /* min-width: 100vw;
+  min-height: 100vh; */
   /* background-image: linear-gradient(
     to bottom right,
     rgba(250, 199, 37, 0.5),

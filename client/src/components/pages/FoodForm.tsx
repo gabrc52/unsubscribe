@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NewFoodevent } from "../modules/NewPostInput";
 import { post } from "../../utilities"; 
+
 const NewFoodeventPage = () => {
+  useEffect(() => {
+    document.title = "New Food Event Form";
+  }, []);
   const addNewFoodevent = (foodevent) => {
     post("/api/foodevent", foodevent).then(() => {});
   };

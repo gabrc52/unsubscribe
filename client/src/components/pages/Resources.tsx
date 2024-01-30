@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Resources.css";
 
 // Masterlist of resources for food insecurity at MIT, with links to each resource's website.
 
 const Resources = () => {
+  useEffect(() => {
+    document.title = "Resources Page";
+  }, []);
   return (
     <div className="Resources">
       <div className="u-hideOverflow Resources-container">
