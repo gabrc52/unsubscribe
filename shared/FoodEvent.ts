@@ -1,5 +1,7 @@
 import { PlainInterface } from "./util";
-import { FoodEvent } from "../server/models/FoodEvent";
+import { FoodEvent, FoodCategory as WhyIsJavascriptLikeThis } from "../server/models/FoodEvent";
+
+export type FoodCategory = WhyIsJavascriptLikeThis;
 
 /// NOTE: The backend returns `creator` but it is not explicitly in the database
 /// It gets the emailer name or user name conditionally

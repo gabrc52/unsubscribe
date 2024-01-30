@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
-import UserInterface from "../shared/User";
 import { GOOGLE_CLIENT_ID } from "../shared/constants";
-import User from "./models/User";
+import UserModel from "./models/User";
+import { User as UserInterface } from "./models/User";
 import { Issuer, UserinfoResponse } from "openid-client";
 import { StatusCodes } from "http-status-codes";
 
@@ -83,23 +83,19 @@ const getOrCreateUser = (
   loginType: LoginType,
   user: { sub: string; name?: string | undefined; picture?: string | undefined }
 ) => {
-  return User.findOne({ userId: user.sub }).then(
+  return UserModel.findOne({ userId: user.sub }).then(
     (existingUser: UserInterface | null | undefined) => {
       if (existingUser !== null && existingUser !== undefined) {
-        // return existingUser;
         if (user.name !== undefined) {
           existingUser!.name = user.name;
         }
-        // console.log(`what!`);
-        // console.log(user.name, user.sub, user.picture);
-        // console.log(`what!`);
         if (user.picture !== undefined) {
           existingUser!.picture = user.picture;
         }
         return existingUser!.save();
       }
       console.log(`Creating new user ${user.name} (${user.sub})`);
-      const newUser = new User({
+      const newUser = new UserModel({
         name: user.name,
         picture: user.picture,
         userId: user.sub,
