@@ -4,6 +4,14 @@ import FoodEvent from "./models/FoodEvent";
 
 const FREE_FOOD_PREFIX = "[Free-food] ";
 
+const FREE_FOODS_FOOTER = `
+_______________________________________________
+Free-foods mailing list
+Free-foods@mit.edu
+https://mailman.mit.edu/mailman/listinfo/free-foods`;
+
+// TODO: would be nice to remove "get outlook for ios", and other similar footers
+
 // Why???? Does email really have all of these edge cases? Or is it just the library?
 function _getFullFrom(parsed: ParsedMail): EmailAddress | undefined {
   if (!parsed.from) {
@@ -39,7 +47,14 @@ export async function handleEmail(email: string): Promise<void> {
     : rawSubject;
   const address = getEmailAddress(parsed);
   const name = getSenderName(parsed);
-  const body = parsed.text;
+
+  // remove "free-foods" banner from body:
+  const rawBody = parsed.text ?? "";
+  const trimmedBody = rawBody.trim();
+  const body = trimmedBody.endsWith(FREE_FOODS_FOOTER)
+    ? trimmedBody.substring(0, trimmedBody.length - FREE_FOODS_FOOTER.length - 1)
+    : trimmedBody;
+
   const images = parsed.attachments.filter((attachment) =>
     attachment.contentType.includes("image")
   );
