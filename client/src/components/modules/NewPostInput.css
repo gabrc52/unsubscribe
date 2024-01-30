@@ -3,14 +3,14 @@
 }
 
 .vertically-centered {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .NewPostInput-input,
 .NewPostInput-button {
-  font-family: "Open Sans";
+  font-family: "Montserrat";
   font-size: 14px;
   padding: var(--s) var(--m);
 }
@@ -23,19 +23,21 @@
 }
 
 .NewPostInput-input:focus-within {
-  border-color: var(--primary--dim);
+  border-color: var(--coral);
   box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
 }
 
 .NewPostInput-button {
-  color: var(--primary);
-  border: var(--primary) 1px solid;
+  color: var(--coral);
+  border: var(--coral) 1px solid;
   border-radius: 0 var(--xs) var(--xs) 0;
   background: none;
-  transition: color 0.1s, background 0.1s;
+  transition:
+    color 0.1s,
+    background 0.1s;
 }
 
 .NewPostInput-button:hover {
   color: var(--white);
-  background-color: var(--primary);
+  background-color: var(--coral);
 }
