@@ -19,20 +19,6 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
 import { post } from "../../utilities";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-
-function Label({ componentName }: { componentName: string }) {
-  const content = (
-    <span>
-      <strong>{componentName}</strong> for future food event
-    </span>
-  );
-
-  return content;
-}
 
 export const NewFoodPage = () => {
   // TODO close button
@@ -80,10 +66,11 @@ export const NewFoodPage = () => {
 
   return (
     <>
-      <Box
+      <Container
         component="form"
+        maxWidth="sm"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "50ch" },
+          "& .MuiTextField-root": { width: "100%" },
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -96,24 +83,21 @@ export const NewFoodPage = () => {
         autoComplete="off"
       >
         <h2>Submit a New Food Event</h2>
-        <CssBaseline />
 
-        {/* using a box (glorified div) just in case the style isn't passed through the text field (i don't think it is anyway)*/}
-        <Box sx={{ m: 1 }}>
-          {/* TODO allow multiple values - see https://mui.com/material-ui/react-autocomplete/#multiple-values*/}
-          <Autocomplete
-            // TODO: fix weird styling issue - hard to debug since the items are gone (ask in OH how to debug in the first place)
-            // TODO: don't hardcode
-            options={[
-              { label: "Meal" },
-              { label: "Snack" },
-              { label: "Drink" },
-              { label: "Groceries" },
-            ]}
-            renderInput={(params) => <TextField {...params} label="Category" />}
-            ref={foodTypeRef}
-          />
-        </Box>
+        {/* TODO allow multiple values - see https://mui.com/material-ui/react-autocomplete/#multiple-values*/}
+        <Autocomplete
+          sx={{ width: "100%" }}
+          // TODO: fix weird styling issue - hard to debug since the items are gone (ask in OH how to debug in the first place)
+          // TODO: don't hardcode
+          options={[
+            { label: "Meal" },
+            { label: "Snack" },
+            { label: "Drink" },
+            { label: "Groceries" },
+          ]}
+          renderInput={(params) => <TextField {...params} label="Category" />}
+          ref={foodTypeRef}
+        />
         <TextField
           sx={{ m: 1 }}
           required
@@ -155,7 +139,6 @@ export const NewFoodPage = () => {
           placeholder="Insert photo(s)"
           getInputText={(value) => (value ? `Thanks!` : "")}
           helperText="Click above! For multiple photos, please select and upload all at once."
-          // TODO: photo preview
         />
         <FormControl
           required
@@ -178,17 +161,10 @@ export const NewFoodPage = () => {
             />
           </RadioGroup>
         </FormControl>
-        {showDatePicker && (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoItem label={<Label componentName="Schedule date/time" />}>
-              <DateTimePicker />
-            </DemoItem>
-          </LocalizationProvider>
-        )}
-        <Button sx={{ m: 0 }} variant="contained" onClick={onSubmit}>
+        <Button variant="contained" onClick={onSubmit}>
           Submit Food
         </Button>
-      </Box>
+      </Container>
     </>
   );
 };
