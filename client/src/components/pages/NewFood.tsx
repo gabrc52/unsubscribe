@@ -19,21 +19,20 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
 import { post } from "../../utilities";
+import FoodEvent, { FoodCategory } from "../../../../shared/FoodEvent";
+import { useNavigate } from "react-router";
 
 export const NewFoodPage = () => {
   // TODO close button
   // TODO SAVE IMAGES TO DATABASE(?)
+  const navigate = useNavigate();
 
   const [fileInputValue, setFileInputValue] = React.useState<File[]>([]);
   // type from https://www.robinwieruch.de/typescript-react-useref/
+  const foodCategoryRef = useRef<HTMLInputElement>(null);
   const foodTypeRef = useRef<HTMLInputElement>(null);
-  const foodDescriptionRef = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
-
-  const handleChange = (newValue: File[]) => {
-    setFileInputValue(newValue);
-  };
 
   const [scheduledState, setScheduledState] = React.useState<string | null>("yes");
 
@@ -46,22 +45,23 @@ export const NewFoodPage = () => {
     setScheduledState(newScheduledState);
   };
 
-  // const handleScheduledChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setScheduledState((event.target as HTMLInputElement).scheduledState);
-  // };
-
-  const addNewFoodevent = (foodevent) => {
-    post("/api/foodevent", foodevent).then(() => {});
+  const handleFileInputChange = (newValue: File[]) => {
+    setFileInputValue(newValue);
   };
 
   const onSubmit = () => {
-    console.log(foodDescriptionRef);
-    // TODO: these are undefined, fix
-    // i thought it was working with getElementById so at least we could do that even if it isn't very react-y
-    console.log("Type", foodTypeRef.current?.value);
-    console.log("Food Description", foodDescriptionRef.current?.value);
-    console.log("Location", locationRef.current?.value);
-    console.log("Description", descriptionRef.current?.value);
+    const foodEvent = {
+      food_category: foodCategoryRef.current!.value as FoodCategory,
+      food_type: foodTypeRef.current!.value,
+      location: locationRef.current!.value,
+      content: descriptionRef.current!.value,
+      scheduled: scheduledState === "yes",
+      photos: [], // TODO: figure out
+      // scheduledDate: // TODO this
+    };
+    post("/api/foodevent", foodEvent)
+      .then(() => navigate("/food"))
+      .catch(console.log);
   };
 
   return (
@@ -95,22 +95,23 @@ export const NewFoodPage = () => {
             { label: "Drink" },
             { label: "Groceries" },
           ]}
-          renderInput={(params) => <TextField {...params} label="Category" />}
-          ref={foodTypeRef}
+          renderInput={(params) => (
+            <TextField inputRef={foodCategoryRef} {...params} label="Category" />
+          )}
         />
         <TextField
           sx={{ m: 1 }}
           required
           label="Food Type"
           helperText="Cuisine or dish type (pizza, Flour sandwiches, etc.)"
-          ref={foodDescriptionRef}
+          inputRef={foodTypeRef}
         />
         <TextField
           sx={{ m: 1 }}
           required
           label="Location"
           helperText="Builing + room number or name"
-          ref={locationRef}
+          inputRef={locationRef}
         />
         <TextField
           // sx={{ m: 1, width: '50ch' }}
@@ -120,12 +121,12 @@ export const NewFoodPage = () => {
           multiline
           rows={4}
           helperText="Any other details about quantity, quality, age of food event, location, etc."
-          ref={descriptionRef}
+          inputRef={descriptionRef}
         />
         <MuiFileInput
           multiple
           value={fileInputValue}
-          onChange={handleChange}
+          onChange={handleFileInputChange}
           InputProps={{
             inputProps: {
               accept: "image/*, video/*",
