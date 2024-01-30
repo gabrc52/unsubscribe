@@ -69,7 +69,7 @@ export const NewFoodPage = () => {
       food_type: foodTypeRef.current!.value,
       location: locationRef.current!.value,
       content: descriptionRef.current!.value,
-      scheduled: scheduledState === "yes",
+      scheduled: scheduledState === "no",
       photos: [], // TODO: figure out
       // scheduledDate: // TODO this
     };
