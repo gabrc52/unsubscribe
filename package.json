@@ -10,6 +10,7 @@
   "author": "johanc",
   "license": "MIT",
   "devDependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/react-dom": "^18.0.10",
     "@types/webpack": "^5.28.0",
     "@types/webpack-env": "^1.18.0",
@@ -51,6 +52,7 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
     "express-session": "^1.17.1",
+    "formidable": "^3.5.1",
     "google-auth-library": "^6.1.4",
     "http-status-codes": "^2.3.0",
     "jwt-decode": "^3.1.2",

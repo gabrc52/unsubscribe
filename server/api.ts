@@ -1,6 +1,8 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
 import "process";
+// an actually async multipart/form-data
+import formidable, { errors as formidableErrors } from "formidable";
 import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
@@ -98,11 +100,21 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
 router.post("/foodevent", ensureLoggedIn, async (req, res) => {
   try {
     const creator_userId = req.user!.userId;
+    const form = formidable({});
+    const [fields, files] = await form.parse(req);
+    console.log(fields, files);
+
+    // TODO: implement this uwu
+    res.status(StatusCodes.NOT_IMPLEMENTED);
+    res.send({ error: "NOT IMPLEMENTED" });
+    return;
+
     // TODO: ideally validate this lol
     const newFoodEvent = new FoodEvent({
       creator_userId,
       ...req.body,
     });
+
     const savedEvent = await newFoodEvent.save();
     res.send(savedEvent);
   } catch (error) {
