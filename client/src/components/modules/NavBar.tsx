@@ -32,7 +32,7 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
         </Button>
         <Button
           sx={{ paddingRight: 1.6 }}
-          onClick={() => navigate("/posts/:userId")}
+          onClick={() => navigate("/yourposts")}
           color="inherit"
         >
           Your Posts
