@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
 import Resources from "./pages/Resources";
+import About from "./pages/About";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
@@ -75,6 +76,7 @@ const App = () => {
                   <Route path="/" element={<FoodPage />} />
                   <Route path="/food" element={<FoodPage />} />
                   <Route path="/food/new" element={<NewFoodPage />} />
+                  <Route path="/about" element={<About />} />
                   <Route path="/resources" element={<Resources />} />
                   <Route path="/yourposts" element={<YourPosts />} />
                   <Route path="*" element={<NotFound />} />

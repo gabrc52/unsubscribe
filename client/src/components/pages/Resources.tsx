@@ -15,7 +15,7 @@ const Resources = () => {
               Here are some resources for food insecurity at MIT. If you know of any other resources
               that should be added to this list, please let us know at{" "}
               <strong>
-                <a href="mailto:unsubscribe@mit.edu">Unsubscribe@mit.edu</a>
+                <a href="mailto:unsubscribe-admin@mit.edu">Unsubscribe-admin@mit.edu</a>
               </strong>
               .
             </p>

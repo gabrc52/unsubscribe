@@ -15,22 +15,6 @@ const YourPosts = (props: {}) => {
   // const [userPosts, setUserPosts] = useState([]); // State to store the user's posts
   const [userPosts, setUserPosts] = useState<FoodEvent[]>([]); // Specify the type
 
-  // useEffect(() => {
-  //   document.title = "Your Posts";
-
-  //   get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
-
-  // get(`/api/user`, { userid: props.userId }).then((userObj) => {
-  //   setUser(userObj);
-  //   // Fetch the posts made by the current user
-  //   get(`/api/user/posts`, { userId: props.userId }).then((posts) => {
-  //     setUserPosts(posts);
-  //   });
-
-  // Fetch user posts
-  // get(`/api/user/posts?userId=${props.userId}`).then((posts) => setUserPosts(posts));
-  // }, []);
-
   useEffect(() => {
     document.title = "Your Posts";
     // Fetch user information

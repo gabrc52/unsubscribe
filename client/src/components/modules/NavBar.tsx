@@ -15,7 +15,8 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
     <AppBar className="NavBar-container" position="sticky">
       <Toolbar>
         {/** TODO: logo */}
-        <Typography className="NavBar-link"
+        <Typography
+          className="NavBar-link"
           variant="h6"
           sx={{
             paddingRight: 3,
@@ -30,15 +31,14 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
         <Button sx={{ paddingRight: 1.6 }} onClick={() => navigate("/food")} color="inherit">
           Food
         </Button>
-        <Button
-          sx={{ paddingRight: 1.6 }}
-          onClick={() => navigate("/yourposts")}
-          color="inherit"
-        >
+        <Button sx={{ paddingRight: 1.6 }} onClick={() => navigate("/yourposts")} color="inherit">
           Your Posts
         </Button>
         <Button onClick={() => navigate("/resources")} color="inherit">
           Resources @ MIT
+        </Button>
+        <Button sx={{ paddingRight: 1.6 }} onClick={() => navigate("/about")} color="inherit">
+          About
         </Button>
         <Box sx={{ flexGrow: 1 }}></Box>
         <Button
