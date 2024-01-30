@@ -60,9 +60,21 @@
   text-shadow: none;
 }
 
+.About-profilesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* margin: 0 0; */
+  gap: 0px;
+}
+
 .About-subContainer {
-  flex-grow: 1;
+  flex-grow: 5;
   flex-basis: 0;
+}
+
+.About-subContainerGutter {
+  flex-grow: 1;
 }
 
 .About-subContainer + .About-subContainer {

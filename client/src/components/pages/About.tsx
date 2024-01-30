@@ -61,7 +61,8 @@ const About = () => {
           <h2>
             <a href="mailto: unsubscribe-admin@mit.edu">Our Team:</a>
           </h2>
-          <div className="u-flex">
+          <div className="About-profilesContainer">
+            <div className="About-subContainerGutter"/>
             <div className="About-subContainer u-textCenter">
               <h4 className="About-subTitle">Ari Peró</h4>
               <img className="About-avatar" src={ari} alt="Photo of Ari Peró" />
@@ -74,6 +75,7 @@ const About = () => {
               <h4 className="About-subTitle">Anna Kwon</h4>
               <img className="About-avatar" src={anna} alt="Photo of Anna Kwon" />
             </div>
+            <div className="About-subContainerGutter"/>
           </div>
           <div className="About-thanksContainer">
             <h2>Special Thanks to:</h2>
