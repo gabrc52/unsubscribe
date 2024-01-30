@@ -90,18 +90,26 @@ const FoodCard = (foodEvent: FoodEvent) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        {/* <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
-        </IconButton>
+        </IconButton> */}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
+          <Typography
+            // makes it not be upside down
+            sx={{
+              transform: expanded ? "scale(-1, -1)" : undefined,
+            }}
+          >
+            {expanded ? "Hide" : "Show"} comments
+          </Typography>{" "}
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
