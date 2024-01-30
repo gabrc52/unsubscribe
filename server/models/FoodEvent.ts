@@ -16,6 +16,10 @@ const FoodEventSchema = new Schema({
   photos: [String],
   title: String, // for email subject //mapped to food type
   content: String, // description / email body
+  postedDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export interface FoodEvent extends Document {
@@ -30,6 +34,7 @@ export interface FoodEvent extends Document {
   title: string;
   content: string;
   _id: string;
+  postedDate: Date;
 }
 
 const FoodEventModel = model<FoodEvent>("FoodEvent", FoodEventSchema);
