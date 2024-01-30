@@ -7,8 +7,8 @@
   min-height: 100vh; */
   background-image: linear-gradient(
     to bottom right,
-    rgba(250, 199, 37, 0.5),
-    rgba(246, 91, 101, 0.55)
+    rgba(250, 199, 37, 0.2),
+    rgba(246, 91, 101, 0.25)
   );
   z-index: -1;
 }
