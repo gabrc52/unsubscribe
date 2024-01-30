@@ -184,7 +184,7 @@ export const NewFoodPage = () => {
             children: <CloseIcon fontSize="small" />,
           }}
           placeholder="Insert photo(s)"
-          getInputText={(fileList) => (fileList ? `Thanks!` : "")}
+          getInputText={(fileList) => fileList.map((file) => file.name).join(", ")}
           helperText="Click above! For multiple photos, please select and upload all at once."
         />
         {/* IMAGE PREVIEW - TODO may need styling */}
