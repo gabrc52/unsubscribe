@@ -91,7 +91,6 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
       ...req.body,
     });
     const savedEvent = await newFoodEvent.save();
-    // TODO add toObject() if necessary
     res.send(savedEvent);
   } catch (error) {
     console.error("Error creating food event:", error);
