@@ -71,7 +71,7 @@ const Login = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="back-shapes">
+        {/* <div className="back-shapes">
           <span
             className="floating icecream"
             style={{
@@ -348,7 +348,7 @@ const Login = (props: Props) => {
           >
             <LunchDiningRoundedIcon fontSize="large" />
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
