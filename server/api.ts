@@ -4,6 +4,7 @@ import "process";
 import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
+import { getCreatorName } from "./util";
 // import ragManager from "./rag";
 
 // import models so we can interact with the database
@@ -63,20 +64,40 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
-router.get("/foodevents", ensureLoggedIn, (req, res) => {
-  FoodEvent.find({}).then((foodevents) => res.send(foodevents));
+router.get("/foodevents", ensureLoggedIn, async (req, res) => {
+  // TODO: ideally do this in one mongo query. since we are on a deadline, we can do it later
+  // it might cause performance issues down the line, but we could use pagination anyway/instead/in addition
+  try {
+    const foodevents = await FoodEvent.find({});
+    const populatedEvents = await Promise.all(
+      foodevents.map(async (event) => {
+        const creator = await getCreatorName(event.creator_userId, event.emailer_name);
+        return { ...event.toObject(), creator };
+      })
+    );
+    res.send(populatedEvents);
+  } catch (error) {
+    console.error("Error retrieving food events:", error);
+    res.send();
+  }
 });
 
-router.post("/foodevent", ensureLoggedIn, (req, res) => {
-  const newFoodEvent = new FoodEvent({
-    creator_userId: req.body.creator_userId,
-    title: req.body.title,
-    food_type: req.body.food_type,
-    photos: req.body.photos,
-    content: req.body.content,
-  });
-
-  newFoodEvent.save().then((foodevent) => res.send(foodevent));
+router.post("/foodevent", ensureLoggedIn, async (req, res) => {
+  try {
+    const creator_userId = req.user!.userId;
+    // TODO: ideally validate this lol
+    const newFoodEvent = new FoodEvent({
+      creator_userId,
+      ...req.body,
+    });
+    const savedEvent = await newFoodEvent.save();
+    // TODO add toObject() if necessary
+    res.send(savedEvent);
+  } catch (error) {
+    console.error("Error creating food event:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.send({ error: `${error}` });
+  }
 });
 
 router.get("/comment", (req, res) => {

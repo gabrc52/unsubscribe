@@ -1,86 +1,123 @@
-import React, { useState, useEffect } from "react";
-import { Container, TextField, Box } from "@mui/material";
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useState, useEffect, useRef } from "react";
+import { Container, TextField, Box, Autocomplete, CssBaseline, Button } from "@mui/material";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
-import { NewFoodevent } from "../modules/NewPostInput";
-import { post } from "../../utilities"; 
+import { post } from "../../utilities";
 
 export const NewFoodPage = () => {
   // TODO close button
   // TODO SAVE IMAGES TO DATABASE(?)
 
-  const [value, setValue] = React.useState<File[]>([])
+  const [fileInputValue, setFileInputValue] = React.useState<File[]>([]);
+  // type from https://www.robinwieruch.de/typescript-react-useref/
+  const foodTypeRef = useRef<HTMLInputElement>(null);
+  const foodDescriptionRef = useRef<HTMLInputElement>(null);
+  const locationRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (newValue: File[]) => {
-    setValue(newValue)
-  }
+    setFileInputValue(newValue);
+  };
 
   const addNewFoodevent = (foodevent) => {
     post("/api/foodevent", foodevent).then(() => {});
   };
-  
+
+  const onSubmit = () => {
+    console.log(foodDescriptionRef);
+    // TODO: these are undefined, fix
+    // i thought it was working with getElementById so at least we could do that even if it isn't very react-y
+    console.log("Type", foodTypeRef.current?.value);
+    console.log("Food Description", foodDescriptionRef.current?.value);
+    console.log("Location", locationRef.current?.value);
+    console.log("Description", descriptionRef.current?.value);
+  };
+
   return (
     <>
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '50ch' },
-        height: "100%", display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        maxWidth: '100%', paddingTop: '30px'
-      }}
-      noValidate
-      autoComplete="off"
-    >
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "50ch" },
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "100%",
+          paddingTop: "30px",
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <h2>Submit a New Food Event</h2>
+        <CssBaseline />
 
-<h2>Submit a New Food Event</h2>
-      <div>
-        <TextField  sx={{ m: 1 }}
+        {/* using a box (glorified div) just in case the style isn't passed through the text field (i don't think it is anyway)*/}
+        <Box sx={{ m: 1 }}>
+          {/* TODO allow multiple values - see https://mui.com/material-ui/react-autocomplete/#multiple-values*/}
+          <Autocomplete
+            // TODO: fix weird styling issue - hard to debug since the items are gone (ask in OH how to debug in the first place)
+            // TODO: don't hardcode
+            options={[
+              { label: "Meal" },
+              { label: "Snack" },
+              { label: "Drink" },
+              { label: "Groceries" },
+            ]}
+            renderInput={(params) => <TextField {...params} label="Food Type" />}
+            ref={foodTypeRef}
+          />
+        </Box>
+        <TextField
+          sx={{ m: 1 }}
           required
-          id="outlined-required"
-          label="Food Type"
+          label="Food Description"
           helperText="Cuisine or dish type (pizza, sandwiches, etc.)"
+          ref={foodDescriptionRef}
         />
-      </div>
-      <div>
-        <TextField  sx={{ m: 1 }}
+        <TextField
+          sx={{ m: 1 }}
           required
-          id="outlined-helperText"
           label="Location"
           helperText="Builing + room number or name"
+          ref={locationRef}
         />
-      </div>
-      <div>
         <TextField
           // sx={{ m: 1, width: '50ch' }}
-           sx={{ m: 1 }}
-          id="outlined-multiline-static"
+          // TODO: both are called description: rename one at least in the front end
+          sx={{ m: 1 }}
           label="Description"
           multiline
           rows={4}
           helperText="Any other details about quantity, quality, age of food event, location, etc."
+          ref={descriptionRef}
         />
-      </div>
-      <MuiFileInput multiple value={value} onChange={handleChange} InputProps={{
-        inputProps: {
-          accept: 'image/*, video/*'
-        },
-        startAdornment: <AttachFileIcon />
-        }} 
-        clearIconButtonProps={{
-          title: "Remove",
-          children: <CloseIcon fontSize="small" />
-        }}
-        placeholder="Insert photo(s)"
-        getInputText={(value) => value ? 'Thanks!' : ''}
-        helperText="Click above! For multiple photos, please select and upload all at once." />
-      {/* replace with handle submit button + input handling
-      from NewPostInput */}
-      <NewFoodevent addNewFoodevent={addNewFoodevent} />
-    </Box>
+        <MuiFileInput
+          multiple
+          value={fileInputValue}
+          onChange={handleChange}
+          InputProps={{
+            inputProps: {
+              accept: "image/*, video/*",
+            },
+            startAdornment: <AttachFileIcon />,
+          }}
+          clearIconButtonProps={{
+            title: "Remove",
+            children: <CloseIcon fontSize="small" />,
+          }}
+          placeholder="Insert photo(s)"
+          getInputText={(value) => (value ? "Thanks!" : "")}
+          helperText="Click above! For multiple photos, please select and upload all at once."
+        />
+        <Button variant="contained" onClick={onSubmit}>
+          Submit Food
+        </Button>
+      </Box>
     </>
   );
-}
+};
 
 export default NewFoodPage;

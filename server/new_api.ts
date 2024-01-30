@@ -64,46 +64,49 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 router.get("/foodevents", ensureLoggedIn, async (req, res) => {
-    try {
-      const foodevents = await FoodEvent.find({});
-      const populatedEvents = await Promise.all(foodevents.map(async (event) => {
+  try {
+    const foodevents = await FoodEvent.find({});
+    const populatedEvents = await Promise.all(
+      foodevents.map(async (event) => {
         const creator = await getCreatorName(event.creator_userId, event.emailer_name);
         return { ...event.toObject(), creator };
-      }));
-      res.send(populatedEvents);
-    } catch (error) {
-      console.error("Error retrieving food events:", error);
-    }
+      })
+    );
+    res.send(populatedEvents);
+  } catch (error) {
+    console.error("Error retrieving food events:", error);
+    res.send();
+  }
 });
-  
+
 router.post("/foodevent", ensureLoggedIn, async (req, res) => {
-try {
+  try {
     const { creator_userId, emailer_name } = req.body;
     const creator = await getCreatorName(creator_userId, emailer_name);
     const newFoodEvent = new FoodEvent({
-    creator_userId,
-    emailer_name,
-    ...req.body,
+      creator_userId,
+      emailer_name,
+      ...req.body,
     });
     const savedEvent = await newFoodEvent.save();
     res.send({ ...savedEvent.toObject(), creator });
-} catch (error) {
+  } catch (error) {
     console.error("Error creating food event:", error);
-}
+  }
 });
 
 async function getCreatorName(userId: string, emailName: string): Promise<string> {
-try {
+  try {
     if (userId) {
-    const user = await User.findById(userId);
-    return user ? user.name : "Unknown";
+      const user = await User.findById(userId);
+      return user ? user.name : "Unknown";
     } else {
-    return emailName || "Unknown";
+      return emailName || "Unknown";
     }
-} catch (error) {
+  } catch (error) {
     console.error("Error getting creator name:", error);
     return "Unknown";
-}
+  }
 }
 
 router.post("/comment", ensureLoggedIn, (req, res) => {

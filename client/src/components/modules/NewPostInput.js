@@ -3,7 +3,7 @@ import "./NewPostInput.css";
 import { post } from "../../utilities";
 
 const NewPostInput = (props) => {
-  const [food_type, setFoodType] = useState("");
+  const [food_description, setFoodType] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [photos, setPhotos] = useState([]);
@@ -27,7 +27,7 @@ const NewPostInput = (props) => {
   // called when the user hits "Submit" for a new post (food event)
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.onSubmit && props.onSubmit({ food_type, title, content, photos });
+    props.onSubmit && props.onSubmit({ food_description, title, content, photos });
     setFoodType("");
     setTitle("");
     setContent("");
@@ -40,7 +40,7 @@ const NewPostInput = (props) => {
       <input
         type="text"
         placeholder="Food Type"
-        value={food_type}
+        value={food_description}
         onChange={handleFoodTypeChange}
         className="NewPostInput-input"
         required
@@ -125,8 +125,8 @@ const NewComment = (props) => {
 };
 
 const NewFoodevent = (props) => {
-  const addFoodevent = ({ food_type, title, content, photos }) => {
-    const body = { food_type, title, content, photos };
+  const addFoodevent = ({ food_description, title, content, photos }) => {
+    const body = { food_description, title, content, photos };
     post("/api/foodevent", body).then((foodevent) => {
       props.addNewFoodevent(foodevent);
     });
