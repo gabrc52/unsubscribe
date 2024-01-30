@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, TextField, Box, Autocomplete, CssBaseline, Button } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Box,
+  Autocomplete,
+  CssBaseline,
+  Button,
+  Typography,
+} from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import Radio from "@mui/material/Radio";
@@ -29,8 +37,10 @@ export const NewFoodPage = () => {
 
   const [scheduledState, setScheduledState] = React.useState<string | null>("yes");
 
+  const showDatePicker = scheduledState === "no";
+
   const handleScheduledChange = (
-    event: React.MouseEvent<HTMLElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
     newScheduledState: string | null
   ) => {
     setScheduledState(newScheduledState);
@@ -129,7 +139,7 @@ export const NewFoodPage = () => {
             children: <CloseIcon fontSize="small" />,
           }}
           placeholder="Insert photo(s)"
-          getInputText={(value) => (value ? "Thanks!" : "")}
+          getInputText={(value) => (value ? `Thanks!` : "")}
           helperText="Click above! For multiple photos, please select and upload all at once."
         />
         <FormControl
@@ -137,10 +147,20 @@ export const NewFoodPage = () => {
           sx={{ m: 2, display: "flex", alignItems: "center" }}
           // variant="standard"
         >
+          {/* TODO: change accent color - this is red when selected because of the accent */}
           <FormLabel component="legend">Is this food available right now?</FormLabel>
           <RadioGroup row value={scheduledState} onChange={handleScheduledChange}>
-            <FormControlLabel value="yes" control={<Radio />} label="Yes" sx={{ mr: 5 }} />
-            <FormControlLabel value="no" control={<Radio />} label="No" />
+            <FormControlLabel
+              value="yes"
+              control={<Radio />}
+              label="Yes, right meow"
+              sx={{ mr: 5 }}
+            />
+            <FormControlLabel
+              value="no"
+              control={<Radio />}
+              label="No, schedule an event instead"
+            />
           </RadioGroup>
         </FormControl>
         <Button variant="contained" onClick={onSubmit}>
