@@ -1,6 +1,9 @@
 import User from "./models/User";
 
-export async function getCreatorName(userId: string, emailName: string): Promise<string> {
+export async function getCreatorName(
+  userId: string | undefined,
+  emailName: string | undefined
+): Promise<string> {
   console.log("trying to get creator name", userId, emailName);
   try {
     if (userId) {
