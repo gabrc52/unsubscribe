@@ -21,6 +21,20 @@ import { MuiFileInput } from "mui-file-input";
 import { post } from "../../utilities";
 import FoodEvent, { FoodCategory } from "../../../../shared/FoodEvent";
 import { useNavigate } from "react-router";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
+function Label({ componentName }: { componentName: string }) {
+  const content = (
+    <span>
+      <strong>{componentName}</strong> for future food event
+    </span>
+  );
+
+  return content;
+}
 
 export const NewFoodPage = () => {
   // TODO close button
@@ -140,6 +154,7 @@ export const NewFoodPage = () => {
           placeholder="Insert photo(s)"
           getInputText={(value) => (value ? `Thanks!` : "")}
           helperText="Click above! For multiple photos, please select and upload all at once."
+          // TODO: photo preview
         />
         <FormControl
           required
@@ -162,7 +177,14 @@ export const NewFoodPage = () => {
             />
           </RadioGroup>
         </FormControl>
-        <Button variant="contained" onClick={onSubmit}>
+        {showDatePicker && (
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoItem label={<Label componentName="Schedule date/time" />}>
+              <DateTimePicker />
+            </DemoItem>
+          </LocalizationProvider>
+        )}
+        <Button sx={{ m: 0 }} variant="contained" onClick={onSubmit}>
           Submit Food
         </Button>
       </Container>
