@@ -87,15 +87,15 @@ export const NewFoodPage = () => {
               { label: "Drink" },
               { label: "Groceries" },
             ]}
-            renderInput={(params) => <TextField {...params} label="Food Type" />}
+            renderInput={(params) => <TextField {...params} label="Category" />}
             ref={foodTypeRef}
           />
         </Box>
         <TextField
           sx={{ m: 1 }}
           required
-          label="Food Description"
-          helperText="Cuisine or dish type (pizza, sandwiches, etc.)"
+          label="Food Type"
+          helperText="Cuisine or dish type (pizza, Flour sandwiches, etc.)"
           ref={foodDescriptionRef}
         />
         <TextField
