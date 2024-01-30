@@ -52,6 +52,19 @@ router.get("/user", (req, res) => {
   });
 });
 
+router.get("/user/posts", ensureLoggedIn, async (req, res) => {
+  try {
+    const userId = req.user!.userId;
+    console.log("logged in user id is", userId);
+    const userPosts = await FoodEvent.find({ creator_userId: userId });
+    res.send(userPosts);
+  } catch (error) {
+    console.error("Error retrieving user posts:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    res.send({ error: `${error}` });
+  }
+});
+
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
   if (req.user) {
