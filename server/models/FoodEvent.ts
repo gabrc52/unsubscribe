@@ -10,8 +10,8 @@ const FoodEventSchema = new Schema({
   food_description: String, // Cuisine or dish type (pizza, sandwiches, etc.)
   scheduled: Boolean, // true if a future scheduled event, false if available now
   photos: [String],
-  title: String, // for email subject
-  content: String,
+  title: String, // for email subject //mapped to food type
+  content: String, //mapped to location
 });
 
 export interface FoodEvent extends Document {
