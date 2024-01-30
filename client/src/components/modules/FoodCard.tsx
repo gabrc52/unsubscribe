@@ -64,7 +64,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {foodEvent.emailer_name?.at(0) ?? "F"}
+            {foodEvent.creator.at(0)}
           </Avatar>
         }
         action={
