@@ -1,6 +1,6 @@
 /// TODO: IMPLEMENT COMMENTS
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SingleComment from "./SingleComment";
 import { NewComment } from "./NewPostInput.js";
 import IComment from "../../../../shared/Comment"; // IComment
@@ -17,6 +17,10 @@ type Props = {
  * Component that holds all the comments for a story
  */
 const CommentsBlock = (props: Props) => {
+  useEffect(() => {
+    console.log(JSON.stringify(props.creator_userId));
+  });
+
   return (
     <div className="Card-commentSection">
       <div className="food-comments">

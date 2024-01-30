@@ -93,7 +93,7 @@ const NewCommentInput = (props) => {
   };
 
   return (
-    <div className="u-flex">
+    <div className="NewPostInput-container u-flex">
       <input
         type="text"
         placeholder={props.defaultText}
