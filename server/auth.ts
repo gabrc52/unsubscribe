@@ -90,9 +90,9 @@ const getOrCreateUser = (
         if (user.name !== undefined) {
           existingUser!.name = user.name;
         }
-        console.log(`what!`);
-        console.log(user.name, user.sub, user.picture);
-        console.log(`what!`);
+        // console.log(`what!`);
+        // console.log(user.name, user.sub, user.picture);
+        // console.log(`what!`);
         if (user.picture !== undefined) {
           existingUser!.picture = user.picture;
         }

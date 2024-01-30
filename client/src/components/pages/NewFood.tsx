@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Container, TextField, Box, Autocomplete, CssBaseline, Button } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
@@ -26,20 +27,18 @@ export const NewFoodPage = () => {
     setFileInputValue(newValue);
   };
 
-  const [scheduledState, setScheduledState] = React.useState({
-    yes: true,
-    no: false,
-  });
+  const [scheduledState, setScheduledState] = React.useState<string | null>("yes");
 
-  const handleScheduledChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setScheduledState({
-      ...scheduledState,
-      [event.target.name]: event.target.checked,
-    });
+  const handleScheduledChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newScheduledState: string | null
+  ) => {
+    setScheduledState(newScheduledState);
   };
 
-  const { yes, no } = scheduledState;
-  const error = [yes, no].filter((v) => v).length !== 1;
+  // const handleScheduledChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setScheduledState((event.target as HTMLInputElement).scheduledState);
+  // };
 
   const addNewFoodevent = (foodevent) => {
     post("/api/foodevent", foodevent).then(() => {});
@@ -135,23 +134,14 @@ export const NewFoodPage = () => {
         />
         <FormControl
           required
-          error={error}
-          component="fieldset"
-          sx={{ m: 1, display: "flex", alignItems: "left" }}
-          variant="standard"
+          sx={{ m: 2, display: "flex", alignItems: "center" }}
+          // variant="standard"
         >
           <FormLabel component="legend">Is this food available right now?</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox checked={yes} onChange={handleScheduledChange} name="yes" />}
-              label="Yes"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={no} onChange={handleScheduledChange} name="no" />}
-              label="No"
-            />
-          </FormGroup>
-          <FormHelperText>Please select one.</FormHelperText>
+          <RadioGroup row value={scheduledState} onChange={handleScheduledChange}>
+            <FormControlLabel value="yes" control={<Radio />} label="Yes" sx={{ mr: 5 }} />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
+          </RadioGroup>
         </FormControl>
         <Button variant="contained" onClick={onSubmit}>
           Submit Food
