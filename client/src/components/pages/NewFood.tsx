@@ -47,6 +47,7 @@ export const NewFoodPage = () => {
   const foodTypeRef = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
+  const datePickerRef = useRef<HTMLInputElement>(null);
 
   const [scheduledState, setScheduledState] = React.useState<string | null>("yes");
 
@@ -71,7 +72,7 @@ export const NewFoodPage = () => {
       content: descriptionRef.current!.value,
       scheduled: scheduledState === "no",
       photos: [], // TODO: figure out
-      // scheduledDate: // TODO this
+      scheduledDate: datePickerRef.current!.value,
     };
     post("/api/foodevent", foodEvent)
       .then(() => navigate("/food"))
@@ -180,7 +181,7 @@ export const NewFoodPage = () => {
         {showDatePicker && (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoItem label={<Label componentName="Schedule date/time" />}>
-              <DateTimePicker />
+              <DateTimePicker inputRef={datePickerRef} />
             </DemoItem>
           </LocalizationProvider>
         )}
