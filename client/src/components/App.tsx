@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
 import Resources from "./pages/Resources";
+import Scheduled from "./pages/Scheduled";
 import About from "./pages/About";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
@@ -79,6 +80,7 @@ const App = () => {
                   <Route path="/about" element={<About />} />
                   <Route path="/resources" element={<Resources />} />
                   <Route path="/yourposts" element={<YourPosts />} />
+                  <Route path="/scheduled" element={<Scheduled />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </>
