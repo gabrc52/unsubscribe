@@ -46,7 +46,7 @@ export const get = (endpoint: string, params: object = {}) => {
 export const post = (endpoint: string, params: object = {}) => {
   return fetch(endpoint, {
     method: "post",
-    headers: { "Content-type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(params),
   })
     .then(convertToJSON) // convert result to JSON object
@@ -54,4 +54,13 @@ export const post = (endpoint: string, params: object = {}) => {
       // give a useful error message
       throw `POST request to ${endpoint} failed with error:\n${error}`;
     });
+};
+
+// Similar helper but for multiform data
+export const postMultiform = (endpoint: string, formData: FormData) => {
+  return fetch(endpoint, {
+    method: "post",
+    headers: { "Content-Type": "multipart/form-data" },
+    body: formData,
+  }).then(convertToJSON);
 };

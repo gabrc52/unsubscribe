@@ -18,7 +18,7 @@ import Checkbox from "@mui/material/Checkbox";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
-import { post } from "../../utilities";
+import { post, postMultiform } from "../../utilities";
 import FoodEvent, { FoodCategory } from "../../../../shared/FoodEvent";
 import { useNavigate } from "react-router";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -86,20 +86,24 @@ export const NewFoodPage = () => {
   };
 
   const onSubmit = async () => {
-    console.log("submitting!");
-    const photos = await Promise.all(selectedFiles.map((file) => file.arrayBuffer())); //.map((buffer) => buffer.);
-    console.log("photos acquired", photos);
+    // https://stackoverflow.com/a/48291476/5031798
+    const formData = new FormData();
     const foodEvent = {
       food_category: foodCategoryRef.current!.value as FoodCategory,
       food_type: foodTypeRef.current!.value,
       location: locationRef.current!.value,
       content: descriptionRef.current!.value,
       scheduled: scheduledState === "no",
-      photos: photos,
       scheduledDate: datePickerRef?.current?.value,
     };
+    formData.append("food_event", JSON.stringify(foodEvent));
+    for (const file of selectedFiles) {
+      formData.append("photo", file);
+    }
+    console.log("form data is", formData);
     try {
-      await post("/api/foodevent", foodEvent);
+      const result = await postMultiform("/api/foodevent", formData);
+      console.log(result);
       navigate("/food");
     } catch (e) {
       console.log(e);
