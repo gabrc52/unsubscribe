@@ -4,7 +4,7 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiFileInput } from "mui-file-input";
 import { post } from "../../utilities";
-import FoodEvent from "./models/FoodEvent";
+import FoodEvent from "../../../../shared/FoodEvent";
 
 export const NewFoodPage = () => {
   // TODO close button
@@ -30,23 +30,22 @@ export const NewFoodPage = () => {
     const newFoodEvent = {
       title: foodTypeRef.current?.value,
       content: locationRef.current?.value,
-      food_description: foodDescriptionRef.current?.value,
+      food_type: foodDescriptionRef.current?.value,
       photos: fileInputValue,
       scheduled: false,
     };
     addNewFoodevent(newFoodEvent);
     */
-    const event = new FoodEvent({
-      title: foodTypeRef.current?.value,
-      content: locationRef.current?.value,
-      scheduled: false, // except for farm stand, community dinner (TODO: handle)
-      photos: fileInputValue,
-      food_description: foodDescriptionRef.current?.value
-    });
-    event.save();
+    // You can't use MongoDB from the frontend...
+    // const event = new FoodEvent({
+    //   title: foodTypeRef.current?.value,
+    //   content: locationRef.current?.value,
+    //   scheduled: false, // except for farm stand, community dinner (TODO: handle)
+    //   photos: fileInputValue,
+    //   food_type: foodDescriptionRef.current?.value,
+    // });
+    // event.save();
   };
-  
-  
 
   return (
     <>
