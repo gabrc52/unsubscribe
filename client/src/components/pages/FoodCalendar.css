@@ -1,4 +1,28 @@
-.fc .fc-col-header-cell-cushion { /* needs to be same precedence */
-    padding-top: 2px; /* default */
-    padding-bottom: 2px; /* default */
-  }
+.fc .fc-col-header-cell-cushion {
+  /* needs to be same precedence */
+  padding-top: 2px; /* default */
+  padding-bottom: 2px; /* default */
+}
+
+.fc .fc-widget-header .fc-header-toolbar .fc-toolbar .fc-toolbar-ltr .btn-group .fc-toolbar-chunk {
+  background-color: var(--blue);
+  color: var(--coral);
+}
+.fc .fc-daygrid-day-frame {
+  background-color: #fff;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--blue);
+  border-color: var(--fc-button-active-border-color);
+}
+
+.fc .fc-button-primary {
+  background-color: var(--dimmerblue);
+  border-color: var(--dimmerblue);
+}
+
+a:-webkit-any-link {
+  color: var(--brighterblue);
+  cursor: pointer;
+}

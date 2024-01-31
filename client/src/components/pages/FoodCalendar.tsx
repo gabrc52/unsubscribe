@@ -14,12 +14,12 @@ import "./FoodCalendar.css";
 const categoryToColor = (category: FoodCategory | undefined) => {
   // TODO(ari) choose better colors
   if (category === "Groceries") {
-    return "green";
+    return "#b5e670";
   } else if (category === "Meal") {
-    return "orange";
+    return "#ffac31";
   } else {
     // snack or drink
-    return "purple";
+    return "#819ff1";
   }
 };
 
@@ -37,6 +37,7 @@ const convertToCalendarEvent = (foodEvent: FoodEvent): EventInput => {
     url: `${window.location.origin}/food/scheduled/#${foodEvent._id}`,
     start: startTime,
     end: endTime,
+    textColor: "#283857",
     color: categoryToColor(foodEvent.food_category),
   };
 };

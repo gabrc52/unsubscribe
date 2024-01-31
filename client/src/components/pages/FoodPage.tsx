@@ -6,41 +6,8 @@ import FoodCard from "../modules/FoodCard";
 import { useNavigate } from "react-router";
 import { socket } from "../../client-socket";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { MaterialUISwitch } from "../modules/CalendarToggle";
 import FoodCalendar from "./FoodCalendar";
-
-// TODO: replace (from https://mui.com/material-ui/react-switch/#customization)
-const Android12Switch = styled(Switch)(({ theme }) => ({
-  padding: 8,
-  "& .MuiSwitch-track": {
-    borderRadius: 22 / 2,
-    "&::before, &::after": {
-      content: '""',
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
-      width: 16,
-      height: 16,
-    },
-    "&::before": {
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
-      )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-      left: 12,
-    },
-    "&::after": {
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
-      )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-      right: 12,
-    },
-  },
-  "& .MuiSwitch-thumb": {
-    boxShadow: "none",
-    width: 16,
-    height: 16,
-    margin: 2,
-  },
-}));
 
 type Props =
   // lol prettier, why is there an or operator at the BEGINNING
@@ -99,6 +66,11 @@ const FoodPage = (props: Props) => {
           sx={{
             pt: 1,
             pb: 1,
+            pl: 3,
+            justifySelf: "center",
+            alignSelf: "center",
+            justifyItems: "center",
+            alignItems: "center",
             display: {
               xs: "none",
               sm: "flex",
@@ -112,10 +84,10 @@ const FoodPage = (props: Props) => {
          *
          * TODO (ari): either replace switch with the one with icons or fix vertical alignment
          */}
+         <Box sx={{ display: "flex", my: 0 }}>
         {props.time === "scheduled" && (
-          <Box sx={{ display: "flex", my: 0 }}>
-            <CalendarMonthIcon />
-            <Android12Switch
+          // <Box sx={{ display: "flex", my: 0 }}>
+            <MaterialUISwitch
               checked={props.view === "calendar"}
               onChange={() => {
                 if (props.view === "grid") {
@@ -124,8 +96,9 @@ const FoodPage = (props: Props) => {
                   navigate("/food/scheduled");
                 }
               }}
+              sx={{ mr: 1 }}
             />
-          </Box>
+          // </Box>
         )}
         <Button
           variant="contained"
@@ -134,6 +107,7 @@ const FoodPage = (props: Props) => {
         >
           See {oppositeTime} foods
         </Button>
+        </Box>
       </Box>
       {props.view === "grid" && (
         <Grid container spacing={4}>

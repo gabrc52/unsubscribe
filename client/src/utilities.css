@@ -25,8 +25,12 @@
   /* --coral: #f45761; */
   --coral: #f4575b;
   --blue: #001e3c;
-  --brighterblue: #003c77;
-  --yellow: rgb(250, 199, 37);
+  --brighterblue: #003a77;
+  --dimmerblue: #283857;
+  --brighteryellow: #ffc338;
+  --yellow: #fac725;
+  --mediumyellow: #fdb73e;
+  --darkyellow: #eb9a18;
   --green: #b5e670;
   --green--dim: #dde894;
   --primary: #396dff;
@@ -35,6 +39,7 @@
   --medgrey: #e0e0e0;
   --grey: #f7f7f7;
   --white: #fff;
+  --thing: #2c3e50a6;
 
   --xs: 4px;
   --s: 8px;
