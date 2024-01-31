@@ -113,7 +113,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
   };
 
   return (
-    <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Card id={foodEvent._id} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardHeader
         avatar={
           // <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
