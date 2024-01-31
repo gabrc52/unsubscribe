@@ -183,8 +183,11 @@ const FoodCard = (foodEvent: FoodEvent) => {
           aria-expanded={expanded}
           aria-label="show/hide comments"
           sx={{
-            paddingBottom: 0,
+            // DO NOT CHANGE THESE!!!!!!!!
             paddingRight: 0,
+            paddingBottom: expanded ? 1 : 0,
+            paddingTop: expanded ? 0 : "auto",
+            paddingLeft: expanded ? 1 : "auto",
             borderRadius: "16px 16px 16px 16px",
           }}
         >
