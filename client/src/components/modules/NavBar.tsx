@@ -1,11 +1,25 @@
 import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { AppBar, Box, Button, IconButton, Toolbar, Typography, Link, Avatar } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+  Link,
+  Avatar,
+  BottomNavigation,
+  BottomNavigationAction,
+} from "@mui/material";
 import { get } from "../../utilities";
 import User from "../../../../shared/User";
 import { MaterialUISwitch } from "./DarkToggle";
 import "./NavBar.css";
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const navigationOptions = [
   { title: "Food", destination: "/food/latest" },
@@ -18,12 +32,18 @@ const navigationOptions = [
 /**
  * The navigation links (home, calendar, etc)
  */
-const AppBarLinks = () => {
+const AppBarLinksDesktop = () => {
   const navigate = useNavigate();
 
   return navigationOptions.map((option) => (
     <Button
-      sx={{ marginRight: 1, fontWeight: 550 }}
+      sx={{
+        marginRight: {
+          xs: 0,
+          sm: 1,
+        },
+        fontWeight: 550,
+      }}
       onClick={() => navigate(option.destination)}
       color="inherit"
     >
@@ -66,52 +86,63 @@ const NavBar = (props: {
     }
   };
 
+  // TODO: for accessibility etc we might want a link instead of a button but I can't figure out
+  // how to do that
   return (
-    // TODO: for accessibility etc we might want a link instead of a button but I can't figure out how to do that
-    <AppBar className="NavBar-container" position="sticky">
-      <Toolbar>
-        <Box>
-          <img className="Navbar-logo" src={props.logo} alt="Unsubscribe logo" height={34.5} />
-        </Box>
-        &nbsp;&nbsp;
-        <Typography
-          className="NavBar-title"
-          fontSize={34}
-          variant="h6"
-          color="secondary"
-          // fontFamily={"Libre Barcode 128 Text"}
-          sx={{
-            paddingRight: 2.5,
-            display: {
-              xs: "none",
-              sm: "block",
-            },
-          }}
-        >
-          <Box className="NavBar-title">Unsubscribe</Box>
-        </Typography>
-        <AppBarLinks />
-        <Box sx={{ flexGrow: 1 }}></Box>
-        <MaterialUISwitch
-          className="u-pointer"
-          checked={props.themeMode === "dark"}
-          onChange={() => props.setThemeMode(props.themeMode === "light" ? "dark" : "light")}
-        />
-        {user && (
-          <Button
-            className="u-pointer"
-            onClick={() => {
-              googleLogout();
-              props.handleLogout();
-            }}
+    <>
+      <AppBar className="NavBar-container" position="sticky">
+        <Toolbar>
+          <Box>
+            <img className="Navbar-logo" src={props.logo} alt="Unsubscribe logo" height={34.5} />
+          </Box>
+          &nbsp;&nbsp;
+          <Typography
+            className="NavBar-title"
+            fontSize={34}
+            variant="h6"
             color="secondary"
-            sx={{ fontWeight: 550 }}
+            // fontFamily={"Libre Barcode 128 Text"}
+            sx={{
+              paddingRight: 2.5,
+              textOverflow: "clip",
+              display: {
+                xs: "none",
+                sm: "flex",
+              },
+            }}
           >
-            Logout &nbsp;&nbsp; {renderAvatar(user)}
-          </Button>
-        )}
-      </Toolbar>
-    </AppBar>
+            <Box className="NavBar-title">Unsubscribe</Box>
+          </Typography>
+          <Box
+            sx={{
+              overflowX: "auto",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <AppBarLinksDesktop />
+          </Box>
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <MaterialUISwitch
+            className="u-pointer"
+            checked={props.themeMode === "dark"}
+            onChange={() => props.setThemeMode(props.themeMode === "light" ? "dark" : "light")}
+          />
+          {user && (
+            <Button
+              className="u-pointer"
+              onClick={() => {
+                googleLogout();
+                props.handleLogout();
+              }}
+              color="secondary"
+              sx={{ fontWeight: 550 }}
+            >
+              Logout &nbsp;&nbsp; {renderAvatar(user)}
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 
