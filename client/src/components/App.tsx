@@ -16,11 +16,12 @@ import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
 import "./App.css";
+import { red } from "@mui/material/colors";
 import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
+import { MaterialUISwitch } from "./modules/DarkToggle";
 
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme";
-import { CssBaseline, ScopedCssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline, ScopedCssBaseline, Container, Switch } from "@mui/material";
 import FoodPage from "./pages/FoodPage";
 import NewFoodPage from "./pages/NewFood";
 
@@ -64,15 +65,37 @@ const App = () => {
     post("/api/logout");
   };
 
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: "#f4575b",
+      },
+      secondary: {
+        main: "#001e3c",
+      },
+      error: {
+        main: red.A400,
+      },
+    },
+    typography: {
+      fontFamily: "Montserrat, Roboto, -apple-system, Segoe UI, sans-serif",
+    },
+  });
+
   return (
     <>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             {/* Check if logged in, else show Login */}
             {userId ? (
               <>
-                <NavBar userId={userId} handleLogout={handleLogout} />
+                {/* <MaterialUISwitch checked={darkMode} onChange={() => setDarkMode(!darkMode)} /> */}
+                <NavBar darkMode={darkMode} setDarkMode={setDarkMode} userId={userId} handleLogout={handleLogout} />
                 <Routes>
                   <Route path="/" element={<FoodPage />} />
                   <Route path="/food" element={<FoodPage />} />
