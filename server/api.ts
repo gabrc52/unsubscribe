@@ -177,41 +177,41 @@ router.post("/foodevents/new", ensureLoggedIn, async (req, res) => {
   }
 });
 
-// TODO: what is the difference between GET /comment and GET /comments?
-router.get("/comment", async (req, res) => {
-  Comment.find({ parent: req.query.parent }).then((comments) => {
-    res.send(comments);
-  });
-});
-
-// TODO: rename to /foodevents/:postId/comments
-router.get("/comments", async (req, res) => {
-  // Comment.find({ parent: req.query.parent }).then((comments) => {
-  //   res.send(comments);
-  // });
+router.get("/foodevents/:postId/comments", async (req, res) => {
   try {
-    const comments = await Comment.find({ parent: req.query.parent });
+    const comments = await Comment.find({ parent: req.params.postId });
     const populatedComments = await Promise.all(
       comments.map(async (comment) => {
-        const creator = await getCreatorName(comment.creator_userId, undefined); // should i make parent function to getCreatorName or is this fine enough for now
+        // - should i make parent function to getCreatorName or is this fine enough for now
+        // - i'm not sure what you're asking but it's probably fine?
+        const creator = await getCreatorName(comment.creator_userId, undefined);
         return { ...comment.toObject(), creator };
       })
     );
     res.send(populatedComments);
   } catch (error) {
     console.error("Error retrieving comments:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
 
-// TODO: rename to /foodevents/:postId/comments/new
-router.post("/comment", ensureLoggedIn, (req, res) => {
+router.post("/foodevents/:postId/comments/new", ensureLoggedIn, (req, res) => {
+  console.log("Attempt to add new comment");
+  console.log("post id", req.params.postId);
   const newComment = new Comment({
-    creator_userId: req.body.creator_userId,
-    parent: req.body.parent,
+    creator_userId: req.user!.userId,
+    parent: req.params.postId,
     content: req.body.content,
   });
-  newComment.save().then((comment) => res.send(comment));
+  console.log(newComment);
+  newComment
+    .save()
+    .then((comment) => res.send(comment))
+    .catch((error) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      console.error(error);
+      res.send({ error: `${error}` });
+    });
 });
 
 router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {

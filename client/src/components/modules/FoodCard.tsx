@@ -43,11 +43,15 @@ const FoodCard = (foodEvent: FoodEvent) => {
   const [comments, setComments] = useState<Comment[]>([]); // or <IComment[]> ??
   const [markedGone, setMarkedGone] = useState(false);
   const [markedGoneBy, setMarkedGoneBy] = useState("");
+
   useEffect(() => {
-    get("/api/comment", { parent: foodEvent._id }).then((comments) => {
-      setComments(comments);
-    });
+    get(`/api/foodevents/${foodEvent._id}/comments`)
+      .then((comments) => {
+        setComments(comments);
+      })
+      .catch(console.warn);
   }, []);
+
   const handleMarkAsGone = () => {
     setMarkedGone(!markedGone);
 
@@ -63,7 +67,13 @@ const FoodCard = (foodEvent: FoodEvent) => {
   // this gets called when the user pushes "Submit", so their
   // post gets added to the screen right away
   const addNewComment = (commentObj) => {
-    setComments(comments.concat([commentObj]));
+    // TODO: what if instead of doing this we trigger a refresh
+    // I really don't like mutating it here because it can cause inconsistencies
+    // and lead the user to believe their comment was posted even if there is an error
+    // In theory, this shouldn't even be needed once we implement sockets
+    // ~rgabriel
+    //
+    // setComments(comments.concat([commentObj]));
   };
 
   const [expanded, setExpanded] = React.useState(false);
@@ -110,11 +120,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
             Mark as gone?
           </Button>
         )}
-        {markedGone && (
-          <Typography variant="body2">
-            Marked gone by {markedGoneBy}
-          </Typography>
-        )}
+        {markedGone && <Typography variant="body2">Marked gone by {markedGoneBy}</Typography>}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
