@@ -175,7 +175,7 @@ export const NewFoodPage = () => {
           onChange={handleFileInputChange}
           InputProps={{
             inputProps: {
-              accept: "image/*, video/*",
+              accept: "image/*",
             },
             startAdornment: <AttachFileIcon />,
           }}
