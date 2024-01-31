@@ -29,7 +29,10 @@ export const redirectOidc = (req: Request, res: Response) => {
   oidcClientPromise
     .then((client) => {
       // https://www.npmjs.com/package/openid-client has a code challenge, is it necessary?
-      const url = client.authorizationUrl({ scope: "openid profile email" });
+      const url = client.authorizationUrl({
+        scope: "openid profile email",
+        state: req.headers.referer,
+      });
       res.redirect(url);
     })
     .catch((e) => res.send(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: `${e}` }));
@@ -38,7 +41,7 @@ export const redirectOidc = (req: Request, res: Response) => {
 const getUserInfo = async (req: Request): Promise<UserinfoResponse> => {
   const client = await oidcClientPromise;
   const params = client.callbackParams(req);
-  const tokenSet = await client.callback(OIDC_REDIRECT_URI, params);
+  const tokenSet = await client.callback(OIDC_REDIRECT_URI, { code: params.code });
   const userinfo = await client.userinfo(tokenSet.access_token!);
   return userinfo;
 };
@@ -50,14 +53,14 @@ export const loginTouchstone = (req: Request, res: Response) => {
       if (user === undefined) return;
       return getOrCreateUser("touchstone", user);
     })
-    .then((user) => {
+    .then(async (user) => {
       if (user === null || user === undefined) {
         throw new Error("Unable to retrieve user.");
       }
       req.session.user = user;
-      // TODO: don't hardcode - ideally be able to redirect to where URL actually indicates
-      // (so that sharing direct URLs works)
-      res.redirect("/food/latest");
+      const oidcState = req.query.state?.toString();
+      const url = oidcState || "/food/latest";
+      res.redirect(url);
     })
     .catch((err) => {
       console.log(`Failed to login: ${err}`);
