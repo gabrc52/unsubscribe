@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
 import {
   Avatar,
   Card,
@@ -40,12 +41,24 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const FoodCard = (foodEvent: FoodEvent) => {
   const [comments, setComments] = useState<Comment[]>([]); // or <IComment[]> ??
-
+  const [markedGone, setMarkedGone] = useState(false);
+  const [markedGoneBy, setMarkedGoneBy] = useState("");
   useEffect(() => {
     get("/api/comment", { parent: foodEvent._id }).then((comments) => {
       setComments(comments);
     });
   }, []);
+  const handleMarkAsGone = () => {
+    setMarkedGone(!markedGone);
+
+    if (!markedGone) {
+      get("/api/whoami").then((user) => {
+        if (user.name) {
+          setMarkedGoneBy(user.name);
+        }
+      });
+    }
+  };
 
   // this gets called when the user pushes "Submit", so their
   // post gets added to the screen right away
@@ -92,6 +105,16 @@ const FoodCard = (foodEvent: FoodEvent) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
+        {!markedGone && (
+          <Button variant="contained" onClick={handleMarkAsGone}>
+            Mark as gone?
+          </Button>
+        )}
+        {markedGone && (
+          <Typography variant="body2">
+            Marked gone by {markedGoneBy}
+          </Typography>
+        )}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
