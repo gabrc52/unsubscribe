@@ -43,11 +43,24 @@ export default function OptionsButton(foodEvent: FoodEvent) {
     handleClose();
   };
 
-  const copyLink = () => {
+  const shareLink = () => {
     const postLink = `${window.location.origin}/food/#${foodEvent._id}`;
-    navigator.clipboard.writeText(postLink).then(() => {
-      alert("Link copied to clipboard!");
-    });
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+    if (!navigator.canShare) {
+      // Desktop
+      navigator.clipboard.writeText(postLink).then(() => {
+        alert("Link copied to clipboard!");
+      });
+    } else {
+      // In practice, the title isn't actually rendered (at least on Android)
+      const title = foodEvent.title ?? `${foodEvent.food_category} in ${foodEvent.location}`;
+      // Mobile
+      navigator.share({
+        title: title,
+        text: `${title}. Sent by ${foodEvent.creator || foodEvent.emailer_name}. Check it out on Unsubscribe App!`,
+        url: postLink,
+      });
+    }
     handleClose();
   };
 
@@ -88,16 +101,16 @@ export default function OptionsButton(foodEvent: FoodEvent) {
               &nbsp;Delete post
             </MenuItem>
           )}
+          <MenuItem onClick={shareLink}>
+            <ShareIcon />
+            &nbsp;Share post
+          </MenuItem>
           {foodEvent.isGone === true && (
             <MenuItem onClick={unmarkGone}>
               <UndoIcon />
               &nbsp;Unmark gone
             </MenuItem>
           )}
-          <MenuItem onClick={copyLink}>
-            <ShareIcon />
-            &nbsp;Share post
-          </MenuItem>
         </Menu>
       )}
     </div>
