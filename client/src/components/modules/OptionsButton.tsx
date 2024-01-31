@@ -3,6 +3,9 @@ import FoodEvent from "../../../../shared/FoodEvent";
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { post, useUserId } from "../../utilities";
+import UndoIcon from '@mui/icons-material/Undo';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ShareIcon from '@mui/icons-material/Share';
 
 // https://mui.com/material-ui/react-menu/#basic-menu
 // ngl if you have to do the accessibility of it yourself and this level of state management,
@@ -72,9 +75,10 @@ export default function OptionsButton(foodEvent: FoodEvent) {
         >
           {/** TODO: FIX FUCKED UP STYLING */}
           {foodEvent.creator_userId === userId && (
-            <MenuItem onClick={handlePostDelete}>Delete post</MenuItem>
+            <MenuItem onClick={handlePostDelete}><DeleteIcon/>Delete post</MenuItem>
           )}
-          {foodEvent.isGone === true && <MenuItem onClick={unmarkGone}>Unmark gone</MenuItem>}
+          {/* <MenuItem onClick={copyLink}><ShareIcon/>Share post</MenuItem> */}
+          {foodEvent.isGone === true && <MenuItem onClick={unmarkGone}><UndoIcon/>Unmark gone</MenuItem>}
         </Menu>
       )}
     </div>
