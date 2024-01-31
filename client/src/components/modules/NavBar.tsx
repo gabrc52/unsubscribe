@@ -18,11 +18,7 @@ const NavBar = (props: { handleLogout: () => void }) => {
     get(`/api/whoami`).then((userObj) => setUser(userObj));
   }, []);
 
-  if (!user) {
-    return <div> Loading! </div>;
-  }
-
-  const renderAvatar = () => {
+  const renderAvatar = (user: User) => {
     // Handle Google avatars
     if (user.picture) {
       return <Avatar alt="Avatar" src={user.picture} sx={{ width: 36, height: 36 }} />;
@@ -67,15 +63,17 @@ const NavBar = (props: { handleLogout: () => void }) => {
           About
         </Button>
         <Box sx={{ flexGrow: 1 }}></Box>
-        <Button
-          onClick={() => {
-            googleLogout();
-            props.handleLogout();
-          }}
-          color="inherit"
-        >
-          {renderAvatar()} &nbsp; Logout
-        </Button>
+        {user && (
+          <Button
+            onClick={() => {
+              googleLogout();
+              props.handleLogout();
+            }}
+            color="inherit"
+          >
+            {renderAvatar(user)} &nbsp; Logout
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );
