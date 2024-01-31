@@ -101,16 +101,16 @@ export default function OptionsButton(foodEvent: FoodEvent) {
               &nbsp;Delete post
             </MenuItem>
           )}
-          <MenuItem onClick={shareLink}>
-            <ShareIcon />
-            &nbsp;Share post
-          </MenuItem>
           {foodEvent.isGone === true && (
             <MenuItem onClick={unmarkGone}>
               <UndoIcon />
               &nbsp;Unmark gone
             </MenuItem>
           )}
+          <MenuItem onClick={shareLink}>
+            <ShareIcon />
+            &nbsp;Share post
+          </MenuItem>
         </Menu>
       )}
     </div>
