@@ -9,7 +9,6 @@ import { red } from "@mui/material/colors";
 import { get } from "../../utilities";
 import User from "../../../../shared/User";
 import { MaterialUISwitch } from "./DarkToggle";
-import logo from "../../public/blue_logo.png";
 import "./NavBar.css";
 
 /**
@@ -31,7 +30,7 @@ const NavBar = (props: {
   const renderAvatar = (user: User) => {
     // Handle Google avatars
     if (user.picture) {
-      return <Avatar alt="Avatar" src={user.picture} sx={{ width: 36, height: 36 }} />;
+      return <Avatar alt="Avatar" src={user.picture} sx={{ width: 34, height: 34 }} />;
     } else {
       // Default avatar or placeholder if login type is unknown
       return (
