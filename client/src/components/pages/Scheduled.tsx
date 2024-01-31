@@ -44,7 +44,7 @@ export default function DemoApp() {
         //   right: "dayGridMonth,dayGridWeek", // user can switch between the two
         left: "title",
         center: "prev,addEventButton,next",
-        right: "today dayGridMonth,dayGridWeek", // user can switch between the two
+        right: "today dayGridMonth,dayGridWeek,dayGridDay", // user can switch between the two
       }}
       // https://fullcalendar.io/docs/date-formatting
       //   titleFormat={{ // will produce something like "Tuesday, September 18, 2018"
