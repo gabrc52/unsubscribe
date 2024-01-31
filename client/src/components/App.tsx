@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { UserIdContext, get, post } from "../utilities";
 import NavBar from "./modules/NavBar";
@@ -74,8 +74,10 @@ const App = () => {
               <UserIdContext.Provider value={userId}>
                 <NavBar handleLogout={handleLogout} />
                 <Routes>
-                  <Route path="/" element={<FoodPage />} />
-                  <Route path="/food" element={<FoodPage />} />
+                  {/* LLMs are actually helpful! https://chat.openai.com/share/5c529995-8331-43b3-82fa-6ee9dcd5c253 */}
+                  <Route path="/" element={<Navigate to="/food/latest" replace />} />
+                  <Route path="/food" element={<Navigate to="/food/latest" replace />} />
+                  <Route path="/food/latest" element={<FoodPage />} />
                   <Route path="/food/new" element={<NewFoodPage />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/resources" element={<Resources />} />
