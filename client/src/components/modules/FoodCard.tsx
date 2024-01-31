@@ -62,21 +62,19 @@ const FoodCard = (foodEvent: FoodEvent) => {
         }
       });
     }
-  
+
     if (!markedGone) {
       const reallyMarkAsGone = confirm(
         `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
       );
       if (reallyMarkAsGone) {
         setMarkedGone(!markedGone);
-        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, 
-        {
-          method: 'POST'
-        }).catch(console.error)
+        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
+          method: "POST",
+        }).catch(console.error);
       }
     }
   };
-  
 
   // this gets called when the user pushes "Submit", so their
   // post gets added to the screen right away
@@ -158,7 +156,9 @@ const FoodCard = (foodEvent: FoodEvent) => {
             Mark as gone?
           </Button>
         )}
-        {foodEvent.isGone && <Typography variant="body2">Marked gone by ${foodEvent.markedGoneBy}</Typography>}
+        {foodEvent.isGone && (
+          <Typography variant="body2">Marked gone by {foodEvent.markedGoneName}</Typography>
+        )}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
