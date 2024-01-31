@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
 import tim from "../../public/adventure-tim.png";
 import FoodCard from "../modules/FoodCard"; // Import the FoodCard component
-import { Avatar } from "@mui/material";
+import { Avatar, Grid } from "@mui/material";
 import { red } from "@mui/material/colors";
 import "../../utilities.css";
 import "./YourPosts.css";
@@ -29,18 +29,7 @@ const YourPosts = (props: {}) => {
     return <div> Loading! </div>;
   }
 
-  // const renderAvatar = () => {
-  //   // Handle Google or Touchstone avatars
-  //   console.log(user.picture);
-  //   if (user.picture) {
-  //     return <img className="YourPosts-avatar" src={user.picture} alt="Avatar" />;
-  //   } else {
-  //     // Default avatar or placeholder if login type is unknown
-  //     return <img className="YourPosts-avatar" src={tim} />;
-  //   }
-  // };
-
-  const renderAvatar = () => {
+  const renderAvatar = (user: User) => {
     // Handle Google avatars
     if (user.picture) {
       return <Avatar alt="Avatar" src={user.picture} />;
@@ -103,17 +92,21 @@ const YourPosts = (props: {}) => {
       <div className="YourPosts-container">
         <div>
           <h1 className="YourPosts-name u-flex u-flex-alignCenter">
-            {renderAvatar()} &nbsp;{user.name}
+            {renderAvatar(user)} &nbsp;{user.name}
           </h1>
-          <p className="YourPosts-congratulatory-message u-flex u-flex-alignCenter">
+          <p className="YourPosts-congratulatory-message u-flex u-textCenter u-flex-alignCenter">
             {getPersonalMessage()}
           </p>
         </div>
         <hr className="YourPosts-linejj" />
-        <div className="YourPosts-feed u-flex">
+        <div className="YourPosts-feed u-flex u-flex-alignCenter">
+        <Grid container spacing={2.5}>
           {userPosts.map((post) => (
-            <FoodCard key={post._id} {...post} />
+            <Grid item key={post._id} xs={12} sm={12} md={3}>
+              <FoodCard {...post} />
+            </Grid>
           ))}
+        </Grid>
         </div>
       </div>
     </>

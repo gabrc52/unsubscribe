@@ -36,6 +36,7 @@
 .YourPosts-name {
   /* display: flex; */
   /* align-items: center; */
+  margin-bottom: 0;
   justify-content: center;
   /* align-self: center; */
   /* align-content: center; */
@@ -45,6 +46,7 @@
 
 .YourPosts-congratulatory-message {
   justify-content: center;
+  margin-bottom: 17.5px;
 }
 
 .YourPosts-line {
@@ -64,4 +66,15 @@
   font-weight: 300;
   font-size: 24px;
   margin: var(--m) var(--s);
+}
+
+.YourPosts-feed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  align-items: center;
+  align-content: center;
+  padding: var(--m) var(--l);
 }
