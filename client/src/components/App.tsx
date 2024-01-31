@@ -9,7 +9,7 @@ import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
 import YourPosts from "./pages/YourPosts";
 import Resources from "./pages/Resources";
-import Scheduled from "./pages/Scheduled";
+import Scheduled from "./pages/FoodCalendar";
 import About from "./pages/About";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";

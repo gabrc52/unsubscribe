@@ -6,6 +6,7 @@ import FoodCard from "../modules/FoodCard";
 import { useNavigate } from "react-router";
 import { socket } from "../../client-socket";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import FoodCalendar from "./FoodCalendar";
 
 // TODO: replace (from https://mui.com/material-ui/react-switch/#customization)
 const Android12Switch = styled(Switch)(({ theme }) => ({
@@ -143,7 +144,7 @@ const FoodPage = (props: Props) => {
           ))}
         </Grid>
       )}
-      {props.view === "calendar" && <p>Pretend this is a calendar :D</p>}
+      {props.view === "calendar" && <FoodCalendar foodEvents={foodEvents} />}
     </Container>
   );
 };
