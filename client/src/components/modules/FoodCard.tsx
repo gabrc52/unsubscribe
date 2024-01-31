@@ -82,7 +82,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
         }
         action={<OptionsButton {...foodEvent} />}
         title={foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`}
-        subheader={foodEvent.creator ?? "Unknown"}
+        subheader={`${foodEvent.creator ?? "Unknown"} - ${foodEvent.postedDate ?? "Unknown Date"}`}
       />
       {/* TODO: gallery / handle multiple photos */}
       {foodEvent.photos.length > 0 && (
