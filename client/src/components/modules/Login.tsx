@@ -49,7 +49,7 @@ const Login = (props: Props) => {
               </span>
             </button>
             <h3 className="Login-about">
-              Discover free food, share surplus items, and be<br></br> reunited with your lost
+              Discover free food, share surplus items, and be reunited with your lost
               belongings, all in one place!
             </h3>
           </div>
@@ -71,7 +71,7 @@ const Login = (props: Props) => {
             </div>
           </div>
         </div>
-        {/* <div className="back-shapes">
+        <div className="back-shapes">
           <span
             className="floating icecream"
             style={{
@@ -348,7 +348,7 @@ const Login = (props: Props) => {
           >
             <LunchDiningRoundedIcon fontSize="large" />
           </span>
-        </div> */}
+        </div>
       </div>
     </div>
   );

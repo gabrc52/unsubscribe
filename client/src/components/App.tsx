@@ -115,6 +115,7 @@ const App = () => {
   const lightTheme = createTheme({
     palette: {
       mode: "light",
+      info: { main: "rgb(49, 58, 83)",},
       primary: {
         main: "#f4575b",
         contrastText: "#fff",
@@ -135,6 +136,7 @@ const App = () => {
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
+      info: { main: "#fff",},
       primary: {
         main: "#f4575b",
         light: "#f4575b",
