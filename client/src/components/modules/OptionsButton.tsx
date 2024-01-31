@@ -73,7 +73,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
       >
         Dashboard
       </Button> */}
-      <Menu
+      {(foodEvent.creator_userId === userId || foodEvent.isGone === true) && (<Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -90,6 +90,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
           <MenuItem onClick={unmarkGone}>Unmark gone</MenuItem>
         )}
       </Menu>
+      )}
     </div>
   );
 }
