@@ -44,7 +44,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
   };
 
   const shareLink = () => {
-    const postLink = `${window.location.origin}/food/#${foodEvent._id}`;
+    const postLink = `${window.location.origin}/food/${foodEvent.scheduled ? "scheduled" : "latest"}/#${foodEvent._id}`;
     // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
     if (!navigator.canShare) {
       // Desktop
@@ -53,7 +53,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
       });
     } else {
       // In practice, the title isn't actually rendered (at least on Android)
-      const title = foodEvent.title ?? `${foodEvent.food_category} in ${foodEvent.location}`;
+      const title = foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`;
       // Mobile
       navigator.share({
         title: title,

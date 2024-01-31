@@ -188,7 +188,9 @@ router.post("/foodevents/new", ensureLoggedIn, async (req, res) => {
 
       // Notify listeners (sockets) about the change :D
       socketManager.getIo().emit("FoodEventsUpdate");
-      socketManager.getIo().emit("NewFoodEvent", savedEvent.toObject());
+      if (!savedEvent.scheduled) {
+        socketManager.getIo().emit("NewFoodEvent", savedEvent.toObject());
+      }
     });
   } catch (error) {
     console.error("Error creating food event:", error);

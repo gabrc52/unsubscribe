@@ -155,7 +155,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
   };
 
   return (
-    <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Card id={foodEvent._id} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardHeader
         avatar={
           // <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -211,7 +211,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
-        {!foodEvent.isGone && (
+        {!foodEvent.scheduled && !foodEvent.isGone && (
           <Button
             variant="contained"
             onClick={handleMarkAsGone}
@@ -220,18 +220,18 @@ const FoodCard = (foodEvent: FoodEvent) => {
             Mark as gone?
           </Button>
         )}
-        {foodEvent.isGone && (
+        {!foodEvent.scheduled && foodEvent.isGone && (
           <Typography
-            className="isGone u-flex u-flexRow"
-            variant="body2"
-            color="secondary"
-            sx={{ overflow: "auto", maxWidth: "100%" }}
-          >
-            <p>
-              <b>Marked gone</b> by {foodEvent.markedGoneName}
-            </p>{" "}&nbsp;
-            {markedGoneByPicGetter()}
-          </Typography>
+          className="isGone u-flex u-flexRow"
+          variant="body2"
+          color="secondary"
+          sx={{ overflow: "auto", maxWidth: "100%" }}
+        >
+          <p>
+            <b>Marked gone</b> by {foodEvent.markedGoneName}
+          </p>{" "}&nbsp;
+          {markedGoneByPicGetter()}
+        </Typography>
         )}
         <ExpandMore
           expand={expanded}
