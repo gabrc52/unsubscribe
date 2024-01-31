@@ -129,7 +129,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
     } else if (foodEvent.markedGoneName) {
       // Default avatar or placeholder if login type is unknown
       return (
-        <Avatar className="Card-avatarGradient" sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }} aria-label="recipe">
+        <Avatar className="Card-avatarGradient" sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center", fontSize: "12px" }} aria-label="recipe">
           {foodEvent.markedGoneName.at(0)}
         </Avatar>
       );
@@ -225,7 +225,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
             className="isGone u-flex u-flexRow"
             variant="body2"
             color="secondary"
-            sx={{ overflow: "hidden", maxWidth: "100%" }}
+            sx={{ overflow: "auto", maxWidth: "100%" }}
           >
             <p>
               <b>Marked gone</b> by {foodEvent.markedGoneName}
