@@ -27,6 +27,7 @@ const FoodEventSchema = new Schema({
   },
   // date the food event is scheduled to (if scheduled is true)
   scheduledDate: Date,
+  isGone: Boolean
 });
 
 export interface FoodEvent extends Document {
@@ -43,6 +44,7 @@ export interface FoodEvent extends Document {
   _id: string;
   postedDate: Date;
   scheduledDate: Date;
+  isGone: Boolean
 }
 
 const FoodEventModel = model<FoodEvent>("FoodEvent", FoodEventSchema);
