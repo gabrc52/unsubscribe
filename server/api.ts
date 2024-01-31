@@ -250,12 +250,12 @@ router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
 });
 
 
-router.post("/foodevents/markAsGone", ensureLoggedIn, async (req, res) => {
+router.post("/foodevents/markAsGone/:postId", ensureLoggedIn, async (req, res) => {
   try {
-    const eventId = req.body.eventId;
+    const postId = req.params.postId;
 
     const updatedEvent = await FoodEvent.findByIdAndUpdate(
-      eventId,
+      postId,
       { isGone: true }, 
     );
 
@@ -270,12 +270,12 @@ router.post("/foodevents/markAsGone", ensureLoggedIn, async (req, res) => {
   }
 });
 
-router.post("/foodevents/unmarkAsGone", ensureLoggedIn, async (req, res) => {
+router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res) => {
   try {
-    const eventId = req.body.eventId;
+    const postId = req.params.postId;
 
     const updatedEvent = await FoodEvent.findByIdAndUpdate(
-      eventId,
+      postId,
       { isGone: false }, 
     );
 
