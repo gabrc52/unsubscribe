@@ -69,21 +69,8 @@ const FoodCard = (foodEvent: FoodEvent) => {
       );
       if (reallyMarkAsGone) {
         fetch('/foodevents/markAsGone', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ eventId: foodEvent._id })
-        })
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          console.log('Event marked as gone:', data);
-        })
-        .catch(error => {
-          console.error('Error marking event as gone:', error);
-        });
+          method: 'POST'
+        }).catch(console.error)
       }
     }
   };
