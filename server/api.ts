@@ -64,7 +64,7 @@ router.get("/user/me/posts", ensureLoggedIn, async (req, res) => {
   try {
     const userId = req.user!.userId;
     console.log("logged in user id is", userId);
-    const userPosts = await FoodEvent.find({ creator_userId: userId });
+    const userPosts = await FoodEvent.find({ creator_userId: userId }).sort({ postedDate: "asc" });
     const populatedEvents = await populateFoodEvents(userPosts);
     res.send(populatedEvents);
   } catch (error) {
@@ -100,9 +100,17 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
   // TODO: ideally do this in one mongo query. since we are on a deadline, we can do it later
   // it might cause performance issues down the line, but we could use pagination anyway/instead/in addition
   try {
-    const foodEvents = await FoodEvent.find({
+    const query = FoodEvent.find({
       scheduled: getFutureEventsInstead,
     });
+    if (getFutureEventsInstead) {
+      // If scheduled, sort by ascending scheduled date (first = soonest)
+      query.sort({ scheduledDate: "asc" });
+    } else {
+      // If not scheduled, sort by descending posted date (first = latest food)
+      query.sort({ postedDate: "desc" });
+    }
+    const foodEvents = await query.exec();
     const populatedEvents = await populateFoodEvents(foodEvents);
     res.send(populatedEvents);
   } catch (error) {
