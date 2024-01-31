@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FoodEvent from "../../../../shared/FoodEvent";
 import { get } from "../../utilities";
-import { NewFoodevent } from "../modules/NewPostInput";
 import "./Feed.css";
 
 // const Feed = (props: Props) => {
@@ -43,7 +42,7 @@ const Feed = (props) => {
   return (
     <div className="App-container">
       <span>
-        {props.userId && <NewFoodevent onSubmit={handleFoodEventSubmission} />}
+        {props.userId && `<NewFoodevent onSubmit={handleFoodEventSubmission} />`}
         {foodEventsList}
       </span>
     </div>

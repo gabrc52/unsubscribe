@@ -18,21 +18,16 @@ import "./NavBar.css";
 const NavBar = (props: {
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-  userId: string;
   handleLogout: () => void;
 }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    get(`/api/whoami`).then((userObj) => setUser(userObj));
   }, []);
 
-  if (!user) {
-    return <div> Loading! </div>;
-  }
-
-  const renderAvatar = () => {
+  const renderAvatar = (user: User) => {
     // Handle Google avatars
     if (user.picture) {
       return <Avatar alt="Avatar" src={user.picture} sx={{ width: 36, height: 36 }} />;
@@ -84,6 +79,7 @@ const NavBar = (props: {
           checked={props.darkMode}
           onChange={() => props.setDarkMode(!props.darkMode)}
         />
+        {user && (
         <Button className="u-pointer"
           onClick={() => {
             googleLogout();
@@ -91,8 +87,9 @@ const NavBar = (props: {
           }}
           color="secondary"
         >
-          Logout &nbsp;&nbsp; {renderAvatar()}
+          Logout &nbsp;&nbsp; {renderAvatar(user)}
         </Button>
+        )}
       </Toolbar>
     </AppBar>
     // </ColorModeContext.Provider>

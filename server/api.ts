@@ -50,13 +50,17 @@ router.get("/whoami", (req, res) => {
   res.send(req.user);
 });
 
-router.get("/user", (req, res) => {
-  User.findById(req.query.userid).then((user) => {
-    res.send(user);
-  });
+router.get("/user/:userId", ensureLoggedIn, (req, res) => {
+  User.findOne({ userId: req.params.userId })
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((e) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${e}` });
+    });
 });
 
-router.get("/user/posts", ensureLoggedIn, async (req, res) => {
+router.get("/user/me/posts", ensureLoggedIn, async (req, res) => {
   try {
     const userId = req.user!.userId;
     console.log("logged in user id is", userId);
@@ -81,11 +85,23 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+/**
+ * GET /foodevents
+ *
+ * Optional query parameters
+ *  * scheduled: boolean - set to true to return scheduled (future) events. if false will return present/past events
+ */
 router.get("/foodevents", ensureLoggedIn, async (req, res) => {
+  console.log(req.query);
+  // whether to get the future events (as opposed to present/past food events)
+  const getFutureEventsInstead =
+    typeof req.query.scheduled === "string" ? req.query.scheduled.toLowerCase() === "true" : false;
   // TODO: ideally do this in one mongo query. since we are on a deadline, we can do it later
   // it might cause performance issues down the line, but we could use pagination anyway/instead/in addition
   try {
-    const foodevents = await FoodEvent.find({});
+    const foodevents = await FoodEvent.find({
+      scheduled: getFutureEventsInstead,
+    });
     const populatedEvents = await Promise.all(
       foodevents.map(async (event) => {
         const creator = await getCreatorName(event.creator_userId, event.emailer_name);
@@ -99,7 +115,7 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
   }
 });
 
-router.post("/foodevent", ensureLoggedIn, async (req, res) => {
+router.post("/foodevents/new", ensureLoggedIn, async (req, res) => {
   try {
     const creator_userId = req.user!.userId;
 
@@ -108,53 +124,32 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
 
     // Parse the incoming form data
     // const [fields, files] = await form.parse(req);
-    form.parse(req, async (err, fields, files) => {
+    form.parse(req, async (err, fields: formidable.Fields, files: formidable.Files) => {
       if (err) {
         console.error("Error parsing form data:", err);
         res.status(StatusCodes.BAD_REQUEST).send({ error: "Error parsing form data" });
         return;
       }
 
-      // // Ensure 'photo' field is present in the form data
-      // const photos = Array.isArray(files.photo) ? files.photo : [files.photo];
-
-      // Explicitly type 'photos' as formidable.File[]
-      // const photos: formidable.File[] = Array.isArray(files.photo) ? files.photo : [files.photo];
-      const photos: formidable.File[] = (Array.isArray(files.photo) ? files.photo : [files.photo]).filter(
-        (file): file is formidable.File => file !== undefined
-      );
-
-      // Access the fields and files
+      // For Debugging
       console.log("Fields:", fields);
       console.log("Files:", files);
 
-      // Check if 'photo' field is present in the form data
-      // if (!files.photo) {
-      //   res.status(StatusCodes.BAD_REQUEST).send({ error: "No photo uploaded" });
-      //   return;
-      // }
-      if (!photos || photos.length === 0) {
-        res.status(StatusCodes.BAD_REQUEST).send({ error: "No photo uploaded" });
+      // Check that food_event is set before uploading images and stuff
+      if (!("food_event" in fields)) {
+        console.error("Fields does not have a food_event");
+        res.status(StatusCodes.BAD_REQUEST).send({ error: "food_event not passed!" });
         return;
       }
 
-      // // Get the file details
-      // const photoFile = files.photo;
-      // const photoFilePath = photoFile.path;
-      // const photoFileName = photoFile.name;
-      // const photoFileType = photoFile.type;
-      // const uploadedFilePath = await uploadFile(photoFilePath, photoFileName, photoFileType);
+      // TODO: potentially validate other fields,
+      // see fdd4ddd9e5e5611a622a97b48ad5f970ddc95d53 for a template/example
 
-      // // TODO: Validate other fields as needed
-      // const newFoodEvent = new FoodEvent({
-      //   creator_userId,
-      //   ...fields,
-      //   // Add the file path or URL to the 'photo' field
-      //   photo: uploadedFilePath,
-      // });
+      const photos = files.photo ?? [];
 
       // Process each uploaded photo
-      const processedPhotos = await Promise.all(
+      // TODO: check that they are images with a mime type library
+      const photoUrls = await Promise.all(
         photos.map(async (photoFile: formidable.File) => {
           // Get the file details from Formidable's file object
           const photoFilePath = photoFile.filepath;
@@ -162,16 +157,7 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
           const photoFileType = photoFile.mimetype || "application/octet-stream"; // Provide a default value
 
           // Read the file content as a Buffer
-          // const fileContent = await fs.readFile(photoFilePath);
-          const fileContent = await new Promise<Buffer>((resolve, reject) => {
-            fs.readFile(photoFilePath, (err, data) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(data);
-              }
-            });
-          });
+          const fileContent = await fs.promises.readFile(photoFilePath);
 
           // Use the existing uploadFile function for file upload
           const uploadedFilePath = await uploadFile(fileContent, photoFileName, photoFileType);
@@ -180,39 +166,14 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
         })
       );
 
-      // TODO: Validate other fields as needed
-      function validateFields(fields: any) {
-        // Example validation: Check if 'location' is provided
-        if (!fields.location) {
-          throw new Error("Location is required.");
-        }
+      // has everything minus the images
+      const submittedFoodEvent = JSON.parse(fields.food_event!.at(0)!);
 
-        // TODO: Add more validation checks for other fields...
-
-        // If all validations pass, return true or perform additional processing
-        return true;
-      }
-
-      // // Assuming 'fields' is the object containing form fields
-      // if (validateFields(fields)) {
-      //   // Validation successful, proceed to create FoodEvent
-      //   const newFoodEvent = new FoodEvent({
-      //     creator_userId,
-      //     ...fields,
-      //     photos: processedPhotos,
-      //   });
-        
-      //   // Perform any additional processing or save the newFoodEvent to the database
-      // } else {
-      //   // Handle validation errors or prevent the creation of the FoodEvent
-      //   console.error("Validation failed. FoodEvent not created.");
-      // }
-      
       const newFoodEvent = new FoodEvent({
         creator_userId,
-        ...fields, // ...req.body,
-        // Add the array of file paths or URLs to the 'photos' field
-        photos: processedPhotos,
+        ...submittedFoodEvent,
+        // so add the images
+        photos: photoUrls,
       });
 
       // Save the new food event
@@ -228,41 +189,44 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/comment", async (req, res) => {
-  Comment.find({ parent: req.query.parent }).then((comments) => {
-    res.send(comments);
-  });
-});
-
-router.get("/comments", async (req, res) => {
-  // Comment.find({ parent: req.query.parent }).then((comments) => {
-  //   res.send(comments);
-  // });
+router.get("/foodevents/:postId/comments", async (req, res) => {
   try {
-    const comments = await Comment.find({ parent: req.query.parent });
+    const comments = await Comment.find({ parent: req.params.postId });
     const populatedComments = await Promise.all(
       comments.map(async (comment) => {
-        const creator = await getCreatorName(comment.creator_userId, undefined); // should i make parent function to getCreatorName or is this fine enough for now
+        // - should i make parent function to getCreatorName or is this fine enough for now
+        // - i'm not sure what you're asking but it's probably fine?
+        const creator = await getCreatorName(comment.creator_userId, undefined);
         return { ...comment.toObject(), creator };
       })
     );
     res.send(populatedComments);
   } catch (error) {
     console.error("Error retrieving comments:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
 
-router.post("/comment", ensureLoggedIn, (req, res) => {
+router.post("/foodevents/:postId/comments/new", ensureLoggedIn, (req, res) => {
+  console.log("Attempt to add new comment");
+  console.log("post id", req.params.postId);
   const newComment = new Comment({
-    creator_userId: req.body.creator_userId,
-    parent: req.body.parent,
+    creator_userId: req.user!.userId,
+    parent: req.params.postId,
     content: req.body.content,
   });
-  newComment.save().then((comment) => res.send(comment));
+  console.log(newComment);
+  newComment
+    .save()
+    .then((comment) => res.send(comment))
+    .catch((error) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+      console.error(error);
+      res.send({ error: `${error}` });
+    });
 });
 
-router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
+router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
   try {
     const postId = req.params.postId;
     const userId = req.user!.userId;
@@ -272,7 +236,9 @@ router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Post not found" });
     }
     if (post.creator_userId !== userId) {
-      return res.status(StatusCodes.UNAUTHORIZED).send({ error: "You are not authorized to delete this post" });
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .send({ error: "You are not authorized to delete this post" });
     }
 
     await FoodEvent.findByIdAndDelete(postId);
@@ -283,6 +249,46 @@ router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
   }
 });
 
+
+router.post("/foodevents/markAsGone", ensureLoggedIn, async (req, res) => {
+  try {
+    const eventId = req.body.eventId;
+
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(
+      eventId,
+      { isGone: true }, 
+    );
+
+    if (!updatedEvent) {
+      return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
+    }
+
+    res.send(updatedEvent);
+  } catch (error) {
+    console.error("Error marking event as gone:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
+  }
+});
+
+router.post("/foodevents/unmarkAsGone", ensureLoggedIn, async (req, res) => {
+  try {
+    const eventId = req.body.eventId;
+
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(
+      eventId,
+      { isGone: false }, 
+    );
+
+    if (!updatedEvent) {
+      return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
+    }
+
+    res.send(updatedEvent);
+  } catch (error) {
+    console.error("Error marking event as gone:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
+  }
+});
 
 
 // MUST FIX rag.ts TO USE THIS

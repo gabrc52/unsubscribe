@@ -109,19 +109,19 @@
   z-index: 3;
 }
 
-ul {
+.About ul {
   list-style-position: inside;
   /* line-height: 30px; */
   line-height: 1.5;
 }
 
-ul.a {
+.About ul.a {
   margin-left: 0px;
   list-style-position: inside;
   padding: 10px 0;
 }
 
-li {
+.About li {
   margin-left: 10px;
   text-indent: -1.4em;
   padding-left: 2em;

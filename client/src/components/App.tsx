@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { CredentialResponse, GoogleOAuthProvider } from "@react-oauth/google";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { get, post } from "../utilities";
+import { UserIdContext, get, post } from "../utilities";
 import NavBar from "./modules/NavBar";
 import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
@@ -37,7 +37,7 @@ const App = () => {
         if (user._id) {
           console.log("whoami returned a user", user);
           // They are registed in the database and currently logged in.
-          setUserId(user._id);
+          setUserId(user.userId);
         }
       })
       .then(() =>
@@ -55,7 +55,7 @@ const App = () => {
     console.log("decodedCredential is", decodedCredential);
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login/google", { token: userToken }).then((user) => {
-      setUserId(user._id);
+      setUserId(user.userId);
       post("/api/initsocket", { socketid: socket.id });
     });
   };
@@ -93,12 +93,14 @@ const App = () => {
           <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             {/* Check if logged in, else show Login */}
             {userId ? (
-              <>
-                {/* <MaterialUISwitch checked={darkMode} onChange={() => setDarkMode(!darkMode)} /> */}
-                <NavBar darkMode={darkMode} setDarkMode={setDarkMode} userId={userId} handleLogout={handleLogout} />
+              <UserIdContext.Provider value={userId}>
+                <NavBar darkMode={darkMode} setDarkMode={setDarkMode} handleLogout={handleLogout} />
                 <Routes>
-                  <Route path="/" element={<FoodPage />} />
-                  <Route path="/food" element={<FoodPage />} />
+                  {/* LLMs are actually helpful! https://chat.openai.com/share/5c529995-8331-43b3-82fa-6ee9dcd5c253 */}
+                  <Route path="/" element={<Navigate to="/food/latest" replace />} />
+                  <Route path="/food" element={<Navigate to="/food/latest" replace />} />
+                  <Route path="/food/latest" element={<FoodPage time="latest" />} />
+                  <Route path="/food/scheduled" element={<FoodPage time="scheduled" />} />
                   <Route path="/food/new" element={<NewFoodPage />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/resources" element={<Resources />} />
@@ -106,7 +108,7 @@ const App = () => {
                   <Route path="/scheduled" element={<Scheduled />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </>
+              </UserIdContext.Provider>
             ) : (
               <Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
             )}

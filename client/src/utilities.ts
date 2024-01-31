@@ -1,12 +1,11 @@
-/**
- * Utility functions to make API requests.
- * By importing this file, you can use the provided get and post functions.
- * You shouldn't need to modify this file, but if you want to learn more
- * about how these functions work, google search "Fetch API"
- *
- * These functions return promises, which means you should use ".then" on them.
- * e.g. get('/api/foo', { bar: 0 }).then(res => console.log(res))
- */
+import { createContext, useContext } from "react";
+
+// context for user ID to consume it down the tree
+
+export const UserIdContext = createContext<string>("");
+export const useUserId = () => useContext(UserIdContext);
+
+// HTTP wrappers provided by web.lab stuff
 
 const formatParams = (params: object) => {
   return Object.keys(params)
@@ -60,7 +59,9 @@ export const post = (endpoint: string, params: object = {}) => {
 export const postMultiform = (endpoint: string, formData: FormData) => {
   return fetch(endpoint, {
     method: "post",
-    headers: { "Content-Type": "multipart/form-data" },
+    // Explicitly specifying the header causes an error.
+    // According to https://chat.openai.com/share/78a35daa-0a77-4bbb-af9b-f8383f3bec73
+    // the hader is automatically inferred by JS with the right "boundary" part of the header
     body: formData,
   }).then(convertToJSON);
 };

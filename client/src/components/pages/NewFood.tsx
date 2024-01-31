@@ -102,7 +102,7 @@ export const NewFoodPage = () => {
     }
     console.log("form data is", formData);
     try {
-      const result = await postMultiform("/api/foodevent", formData);
+      const result = await postMultiform("/api/foodevents/new", formData);
       console.log(result);
       navigate("/food");
     } catch (e) {
@@ -175,7 +175,7 @@ export const NewFoodPage = () => {
           onChange={handleFileInputChange}
           InputProps={{
             inputProps: {
-              accept: "image/*, video/*",
+              accept: "image/*",
             },
             startAdornment: <AttachFileIcon />,
           }}
@@ -184,7 +184,7 @@ export const NewFoodPage = () => {
             children: <CloseIcon fontSize="small" />,
           }}
           placeholder="Insert photo(s)"
-          getInputText={(fileList) => (fileList ? `Thanks!` : "")}
+          getInputText={(fileList) => fileList.map((file) => file.name).join(", ")}
           helperText="Click above! For multiple photos, please select and upload all at once."
         />
         {/* IMAGE PREVIEW - TODO may need styling */}
