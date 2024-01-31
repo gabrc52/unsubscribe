@@ -69,8 +69,11 @@ const NavBar = (props: {
         >
           <Box className="NavBar-title">Unsubscribe</Box>
         </Typography>
-        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/food")} color="inherit">
+        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/food/latest")} color="inherit">
           Food
+        </Button>
+        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/food/calendar")} color="inherit">
+          Calendar
         </Button>
         <Button sx={{ marginRight: 1 }} onClick={() => navigate("/yourposts")} color="inherit">
           Your Posts

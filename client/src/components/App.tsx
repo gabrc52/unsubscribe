@@ -178,9 +178,15 @@ const App = () => {
                   {/* LLMs are actually helpful! https://chat.openai.com/share/5c529995-8331-43b3-82fa-6ee9dcd5c253 */}
                   <Route path="/" element={<Navigate to="/food/latest" replace />} />
                   <Route path="/food" element={<Navigate to="/food/latest" replace />} />
-                  <Route path="/food/latest" element={<FoodPage time="latest" />} />
-                  <Route path="/food/scheduled" element={<FoodPage time="scheduled" />} />
-                  <Route path="/food/scheduled/calendar" element={<Scheduled />} />
+                  <Route path="/food/latest" element={<FoodPage time="latest" view="grid" />} />
+                  <Route
+                    path="/food/scheduled"
+                    element={<FoodPage time="scheduled" view="grid" />}
+                  />
+                  <Route
+                    path="/food/calendar"
+                    element={<FoodPage time="scheduled" view="calendar" />}
+                  />
                   <Route path="/food/new" element={<NewFoodPage />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/resources" element={<Resources />} />
