@@ -5,7 +5,10 @@ import { get } from "../../utilities";
 import FoodCard from "../modules/FoodCard";
 import { useNavigate } from "react-router";
 
-type Props = {};
+type Props = {
+  time: "latest" | "scheduled"; // | "any";
+  // TODO: my posts + extract component + idk if it would even go here
+};
 
 const FoodPage = (props: Props) => {
   const [foodEvents, setFoodEvents] = useState<FoodEvent[]>([]);
@@ -13,11 +16,13 @@ const FoodPage = (props: Props) => {
 
   useEffect(() => {
     document.title = "Food Events";
-    get("/api/foodevents").then((foodEventObjs: FoodEvent[]) => {
-      let reversedFoodEventObjs = foodEventObjs.reverse();
-      setFoodEvents(reversedFoodEventObjs);
-    });
-  }, []);
+    get("/api/foodevents", { scheduled: props.time === "scheduled" }).then(
+      (foodEventObjs: FoodEvent[]) => {
+        let reversedFoodEventObjs = foodEventObjs.reverse();
+        setFoodEvents(reversedFoodEventObjs);
+      }
+    );
+  }, [props.time]);
 
   // https://mui.com/material-ui/react-card/#complex-interaction
   return (
@@ -50,11 +55,19 @@ const FoodPage = (props: Props) => {
             },
           }}
         >
-          Free Food @ MIT
+          {props.time[0].toUpperCase()}
+          {props.time.substring(1)} Food
         </Typography>
-        <Button variant="contained" onClick={() => navigate("/food/scheduled")}>
-          See scheduled foods
-        </Button>
+        {props.time === "latest" && (
+          <Button variant="contained" onClick={() => navigate("/food/scheduled")}>
+            See scheduled foods
+          </Button>
+        )}
+        {props.time === "scheduled" && (
+          <Button variant="contained" onClick={() => navigate("/food/latest")}>
+            See latest foods
+          </Button>
+        )}
       </Box>
       <Grid container spacing={4}>
         {foodEvents.map((foodEvent) => (
