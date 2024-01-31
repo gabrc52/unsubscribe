@@ -7,7 +7,6 @@ import { UserIdContext, get, post } from "../utilities";
 import NavBar from "./modules/NavBar";
 import Login from "./modules/Login";
 import NotFound from "./pages/NotFound";
-import Feed from "./pages/Feed";
 import YourPosts from "./pages/YourPosts";
 import Resources from "./pages/Resources";
 import Scheduled from "./pages/Scheduled";
@@ -20,7 +19,7 @@ import { red, deepOrange } from "@mui/material/colors";
 import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
 import bluelogo from "../public/blue_logo.png";
 import yellowlogo from "../public/yellow_logo.png";
-
+import FoodEvent from "../../../shared/FoodEvent";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline, ScopedCssBaseline, Container, Switch } from "@mui/material";
 import FoodPage from "./pages/FoodPage";
@@ -48,13 +47,30 @@ const App = () => {
       );
   }, []);
 
-  // Request notification permission
-  // TODO: show something if notifications are off
+  // Handle notifications
   useEffect(() => {
     if (userId) {
       Notification.requestPermission().then((result) => {
+        // TODO: show something if notifications are off
         console.log("We requested notifications permission, got", result);
       });
+
+      const onNewFoodEvent = (foodEvent: FoodEvent) => {
+        console.log("NewFoodEvent fired!", foodEvent);
+        // TODO: icon
+        const notification = new Notification(
+          foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`,
+          {
+            body: foodEvent.content,
+          }
+        );
+      };
+
+      socket.on("NewFoodEvent", onNewFoodEvent);
+
+      return () => {
+        socket.off("NewFoodEvent", onNewFoodEvent);
+      };
     }
   }, [userId]);
 
