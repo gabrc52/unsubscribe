@@ -56,14 +56,32 @@ const FoodCard = (foodEvent: FoodEvent) => {
   const handleMarkAsGone = () => {
     setMarkedGone(!markedGone);
 
+  
     if (!markedGone) {
-      get("/api/whoami").then((user) => {
-        if (user.name) {
-          setMarkedGoneBy(user.name);
-        }
-      });
+      const reallyMarkAsGone = confirm(
+        `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
+      );
+      if (reallyMarkAsGone) {
+        fetch('/foodevents/markAsGone', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ eventId: foodEvent._id })
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log('Event marked as gone:', data);
+        })
+        .catch(error => {
+          console.error('Error marking event as gone:', error);
+        });
+      }
     }
   };
+  
 
   // this gets called when the user pushes "Submit", so their
   // post gets added to the screen right away
