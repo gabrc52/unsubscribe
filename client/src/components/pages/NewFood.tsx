@@ -88,12 +88,19 @@ export const NewFoodPage = () => {
   const onSubmit = async () => {
     // https://stackoverflow.com/a/48291476/5031798
     const formData = new FormData();
+    // TODO: do for all the other things we want to require
+    const isScheduled = scheduledState === "no";
+    if (isScheduled && !datePickerRef?.current?.value) {
+      // TODO; specify a nicer error msg
+      alert("pls specify date");
+      return;
+    }
     const foodEvent = {
       food_category: foodCategoryRef.current!.value as FoodCategory,
       food_type: foodTypeRef.current!.value,
       location: locationRef.current!.value,
       content: descriptionRef.current!.value,
-      scheduled: scheduledState === "no",
+      scheduled: isScheduled,
       scheduledDate: datePickerRef?.current?.value,
     };
     formData.append("food_event", JSON.stringify(foodEvent));

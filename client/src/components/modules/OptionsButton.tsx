@@ -34,7 +34,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
 
   const unmarkGone = () => {
     setUnmarkedGone(!unmarkedGone)
-    fetch('/foodevents/unmarkAsGone', {
+    fetch(`/api/foodevents/unmarkAsGone/${foodEvent._id}`, {
       method: 'POST'
     }).catch(console.error);
   }

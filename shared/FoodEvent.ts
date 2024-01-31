@@ -8,6 +8,10 @@ export type FoodCategory = WhyIsJavascriptLikeThis;
 
 // And we are explicity adding `title` because the substraction in PlainInterface
 // appeared to remove it
-export type IFoodEvent = PlainInterface<FoodEvent> & { title: string; creator: string };
+export type IFoodEvent = PlainInterface<FoodEvent> & {
+  title: string;
+  creator: string;
+  markedGoneName: string;
+};
 
 export default IFoodEvent;

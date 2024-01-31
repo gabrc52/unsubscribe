@@ -6,7 +6,7 @@ import formidable, { errors as formidableErrors } from "formidable";
 import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
-import { getCreatorName } from "./util";
+import { getCreatorName, populateFoodEvents } from "./util";
 import { uploadFile } from "./file";
 // import ragManager from "./rag";
 import * as fs from "fs"; // Import the callback-based fs module
@@ -64,8 +64,9 @@ router.get("/user/me/posts", ensureLoggedIn, async (req, res) => {
   try {
     const userId = req.user!.userId;
     console.log("logged in user id is", userId);
-    const userPosts = await FoodEvent.find({ creator_userId: userId });
-    res.send(userPosts);
+    const userPosts = await FoodEvent.find({ creator_userId: userId }).sort({ postedDate: "asc" });
+    const populatedEvents = await populateFoodEvents(userPosts);
+    res.send(populatedEvents);
   } catch (error) {
     console.error("Error retrieving user posts:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -99,15 +100,18 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
   // TODO: ideally do this in one mongo query. since we are on a deadline, we can do it later
   // it might cause performance issues down the line, but we could use pagination anyway/instead/in addition
   try {
-    const foodevents = await FoodEvent.find({
+    const query = FoodEvent.find({
       scheduled: getFutureEventsInstead,
     });
-    const populatedEvents = await Promise.all(
-      foodevents.map(async (event) => {
-        const creator = await getCreatorName(event.creator_userId, event.emailer_name);
-        return { ...event.toObject(), creator };
-      })
-    );
+    if (getFutureEventsInstead) {
+      // If scheduled, sort by ascending scheduled date (first = soonest)
+      query.sort({ scheduledDate: "asc" });
+    } else {
+      // If not scheduled, sort by descending posted date (first = latest food)
+      query.sort({ postedDate: "desc" });
+    }
+    const foodEvents = await query.exec();
+    const populatedEvents = await populateFoodEvents(foodEvents);
     res.send(populatedEvents);
   } catch (error) {
     console.error("Error retrieving food events:", error);
@@ -249,15 +253,14 @@ router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
   }
 });
 
-
 router.post("/foodevents/markAsGone/:postId", ensureLoggedIn, async (req, res) => {
   try {
     const postId = req.params.postId;
 
-    const updatedEvent = await FoodEvent.findByIdAndUpdate(
-      postId,
-      { isGone: true }, 
-    );
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, {
+      isGone: true,
+      markedGoneBy: req.user!.userId,
+    });
 
     if (!updatedEvent) {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
@@ -274,10 +277,10 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
   try {
     const postId = req.params.postId;
 
-    const updatedEvent = await FoodEvent.findByIdAndUpdate(
-      postId,
-      { isGone: false }, 
-    );
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, {
+      isGone: false,
+      markedGoneBy: undefined,
+    });
 
     if (!updatedEvent) {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
@@ -285,11 +288,10 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
 
     res.send(updatedEvent);
   } catch (error) {
-    console.error("Error marking event as gone:", error);
+    console.error("Error unmarking event as gone:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
-
 
 // MUST FIX rag.ts TO USE THIS
 
