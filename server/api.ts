@@ -6,7 +6,7 @@ import formidable, { errors as formidableErrors } from "formidable";
 import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
-import { getCreatorName } from "./util";
+import { getCreatorName, populateFoodEvents } from "./util";
 import { uploadFile } from "./file";
 // import ragManager from "./rag";
 import * as fs from "fs"; // Import the callback-based fs module
@@ -65,7 +65,8 @@ router.get("/user/me/posts", ensureLoggedIn, async (req, res) => {
     const userId = req.user!.userId;
     console.log("logged in user id is", userId);
     const userPosts = await FoodEvent.find({ creator_userId: userId });
-    res.send(userPosts);
+    const populatedEvents = await populateFoodEvents(userPosts);
+    res.send(populatedEvents);
   } catch (error) {
     console.error("Error retrieving user posts:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -99,22 +100,10 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
   // TODO: ideally do this in one mongo query. since we are on a deadline, we can do it later
   // it might cause performance issues down the line, but we could use pagination anyway/instead/in addition
   try {
-    const foodevents = await FoodEvent.find({
+    const foodEvents = await FoodEvent.find({
       scheduled: getFutureEventsInstead,
     });
-    const populatedEvents = await Promise.all(
-      foodevents.map(async (event) => {
-        const creator = await getCreatorName(event.creator_userId, event.emailer_name);
-        let markedGoneName: string | undefined;
-        if (event.markedGoneBy) {
-          const markedGoneUser = await User.findOne({
-            userId: event.markedGoneBy,
-          });
-          markedGoneName = markedGoneUser?.name;
-        }
-        return { ...event.toObject(), creator, markedGoneName };
-      })
-    );
+    const populatedEvents = await populateFoodEvents(foodEvents);
     res.send(populatedEvents);
   } catch (error) {
     console.error("Error retrieving food events:", error);
