@@ -80,7 +80,6 @@ const FoodCard = (foodEvent: FoodEvent) => {
           setMarkedGoneBy(user.name);
         }
         if (user.picture) {
-          console.log("setting markedGoneByPic", user.picture);
           setMarkedGoneByPic(user.picture);
         }
         // setMarkingUser(user);
@@ -92,7 +91,6 @@ const FoodCard = (foodEvent: FoodEvent) => {
         `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
       );
       if (reallyMarkAsGone) {
-        console.log("marking as gone");
         setMarkedGone(!markedGone);
         fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
           method: "POST",
@@ -125,11 +123,21 @@ const FoodCard = (foodEvent: FoodEvent) => {
     // console.log("calling markedGoneByPicGetter", foodEvent)
     if (foodEvent.markedGonePic) {
       // console.log("markedGoneByPicGetter", foodEvent.markedGonePic);
-      return <Avatar alt="Avatar" src={foodEvent.markedGonePic} sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }} />;
+      return (
+        <Avatar
+          alt="Avatar"
+          src={foodEvent.markedGonePic}
+          sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }}
+        />
+      );
     } else if (foodEvent.markedGoneName) {
       // Default avatar or placeholder if login type is unknown
       return (
-        <Avatar className="Card-avatarGradient" sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center", fontSize: "12px" }} aria-label="recipe">
+        <Avatar
+          className="Card-avatarGradient"
+          sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center", fontSize: "12px" }}
+          aria-label="recipe"
+        >
           {foodEvent.markedGoneName.at(0)}
         </Avatar>
       );
@@ -222,16 +230,17 @@ const FoodCard = (foodEvent: FoodEvent) => {
         )}
         {!foodEvent.scheduled && foodEvent.isGone && (
           <Typography
-          className="isGone u-flex u-flexRow"
-          variant="body2"
-          color="secondary"
-          sx={{ overflow: "auto", maxWidth: "100%" }}
-        >
-          <p>
-            <b>Marked gone</b> by {foodEvent.markedGoneName}
-          </p>{" "}&nbsp;
-          {markedGoneByPicGetter()}
-        </Typography>
+            className="isGone u-flex u-flexRow"
+            variant="body2"
+            color="secondary"
+            sx={{ overflow: "auto", maxWidth: "100%" }}
+          >
+            <p>
+              <b>Marked gone</b> by {foodEvent.markedGoneName}
+            </p>{" "}
+            &nbsp;
+            {markedGoneByPicGetter()}
+          </Typography>
         )}
         <ExpandMore
           expand={expanded}

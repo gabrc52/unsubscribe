@@ -20,7 +20,6 @@ const YourPosts = (props: {}) => {
     document.title = "Your Posts";
     // Fetch user information
     get("/api/whoami").then((userObj) => setUser(userObj));
-    console.log("user is", user?.name);
     get(`/api/user/me/posts`).then((posts) => setUserPosts(posts));
     // console.log("userPosts is", userPosts[0]);
   }, []);

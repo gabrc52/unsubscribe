@@ -33,9 +33,7 @@ const App = () => {
   useEffect(() => {
     get("/api/whoami")
       .then((user: User) => {
-        console.log("Just called whoami");
         if (user._id) {
-          console.log("whoami returned a user", user);
           // They are registed in the database and currently logged in.
           setUserId(user.userId);
         }
@@ -75,12 +73,8 @@ const App = () => {
   }, [userId]);
 
   const handleLogin = (credentialResponse: CredentialResponse) => {
-    console.log("On handle login, got", credentialResponse);
     const userToken = credentialResponse.credential;
-    console.log("userToken is", userToken);
     const decodedCredential = jwt_decode(userToken as string) as { name: string; email: string };
-    console.log("decodedCredential is", decodedCredential);
-    console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login/google", { token: userToken }).then((user) => {
       setUserId(user.userId);
       post("/api/initsocket", { socketid: socket.id });
@@ -115,7 +109,7 @@ const App = () => {
   const lightTheme = createTheme({
     palette: {
       mode: "light",
-      info: { main: "rgb(49, 58, 83)",},
+      info: { main: "rgb(49, 58, 83)" },
       primary: {
         main: "#f4575b",
         contrastText: "#fff",
@@ -136,7 +130,7 @@ const App = () => {
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
-      info: { main: "#fff",},
+      info: { main: "#fff" },
       primary: {
         main: "#f4575b",
         light: "#f4575b",

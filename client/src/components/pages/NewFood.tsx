@@ -107,10 +107,8 @@ export const NewFoodPage = () => {
     for (const file of selectedFiles) {
       formData.append("photo", file);
     }
-    console.log("form data is", formData);
     try {
       const result = await postMultiform("/api/foodevents/new", formData);
-      console.log(result);
       navigate("/food");
     } catch (e) {
       console.log(e);
