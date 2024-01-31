@@ -7,6 +7,31 @@ import User from "../../../../shared/User";
 import { MaterialUISwitch } from "./DarkToggle";
 import "./NavBar.css";
 
+const navigationOptions = [
+  { title: "Food", destination: "/food/latest" },
+  { title: "Calendar", destination: "/food/calendar" },
+  { title: "Your Posts", destination: "/yourposts" },
+  { title: "Resources @ MIT", destination: "/resources" },
+  { title: "About", destination: "/about" },
+];
+
+/**
+ * The navigation links (home, calendar, etc)
+ */
+const AppBarLinks = () => {
+  const navigate = useNavigate();
+
+  return navigationOptions.map((option) => (
+    <Button
+      sx={{ marginRight: 1, fontWeight: 550 }}
+      onClick={() => navigate(option.destination)}
+      color="inherit"
+    >
+      {option.title}
+    </Button>
+  ));
+};
+
 /**
  * The navigation bar at the bottom of all pages. Takes no props.
  */
@@ -16,7 +41,6 @@ const NavBar = (props: {
   logo: "*.png";
   handleLogout: () => void;
 }) => {
-  const navigate = useNavigate();
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
@@ -41,7 +65,7 @@ const NavBar = (props: {
       );
     }
   };
-  
+
   return (
     // TODO: for accessibility etc we might want a link instead of a button but I can't figure out how to do that
     <AppBar className="NavBar-container" position="sticky">
@@ -66,21 +90,7 @@ const NavBar = (props: {
         >
           <Box className="NavBar-title">Unsubscribe</Box>
         </Typography>
-        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/food/latest")} color="inherit">
-          Food
-        </Button>
-        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/food/calendar")} color="inherit">
-          Calendar
-        </Button>
-        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/yourposts")} color="inherit">
-          Your Posts
-        </Button>
-        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/resources")} color="inherit">
-          Resources @ MIT
-        </Button>
-        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/about")} color="inherit">
-          About
-        </Button>
+        <AppBarLinks />
         <Box sx={{ flexGrow: 1 }}></Box>
         <MaterialUISwitch
           className="u-pointer"
