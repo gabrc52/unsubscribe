@@ -6,7 +6,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Link, Tooltip } from "@mui/material";
 import {
   Avatar,
   Card,
@@ -92,7 +92,23 @@ const FoodCard = (foodEvent: FoodEvent) => {
           </Avatar>
         }
         action={<OptionsButton {...foodEvent} />}
-        title={foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`}
+        // foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`
+        title={
+          foodEvent.title ?? (
+            <Typography>
+              {foodEvent.food_type} in{" "}
+              <Tooltip title={`Open ${foodEvent.location} in whereis.mit.edu`}>
+                <Link
+                  sx={{ fontWeight: "bold" }}
+                  target="_blank"
+                  href={`https://whereis.mit.edu/?go=${foodEvent.location}`}
+                >
+                  {foodEvent.location}
+                </Link>
+              </Tooltip>
+            </Typography>
+          )
+        }
         subheader={
           <>
             <Typography variant="body2">{foodEvent.creator ?? "Unknown"}</Typography>
