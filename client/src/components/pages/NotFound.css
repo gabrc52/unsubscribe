@@ -3,6 +3,7 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  background-color: #fff;
   background-image: linear-gradient(
     to bottom right,
     rgba(250, 199, 37, 0.5),
