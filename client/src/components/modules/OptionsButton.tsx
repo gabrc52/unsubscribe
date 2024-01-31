@@ -2,7 +2,7 @@ import React from "react";
 import FoodEvent from "../../../../shared/FoodEvent";
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useUserId } from "../../utilities";
+import { post, useUserId } from "../../utilities";
 
 // https://mui.com/material-ui/react-menu/#basic-menu
 // ngl if you have to do the accessibility of it yourself and this level of state management,
@@ -19,6 +19,17 @@ export default function OptionsButton(foodEvent: FoodEvent) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handlePostDelete = () => {
+    const reallyDelete = confirm(
+      `Are you sure you want to delete "${foodEvent.title || foodEvent.food_type}"`
+    ); // this is synchronous? so it would block?
+    if (reallyDelete) {
+      fetch(`/api/foodevents/${foodEvent._id}`, {
+        method: "DELETE",
+      }).catch(console.error);
+    }
+    handleClose();
   };
 
   return (
@@ -52,7 +63,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
       >
         {/** TODO: FIX FUCKED UP STYLING */}
         {foodEvent.creator_userId === userId && (
-          <MenuItem onClick={handleClose}>Delete post</MenuItem>
+          <MenuItem onClick={handlePostDelete}>Delete post</MenuItem>
         )}
       </Menu>
     </div>

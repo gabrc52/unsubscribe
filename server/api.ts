@@ -178,12 +178,14 @@ router.post("/foodevent", ensureLoggedIn, async (req, res) => {
   }
 });
 
+// TODO: what is the difference between GET /comment and GET /comments?
 router.get("/comment", async (req, res) => {
   Comment.find({ parent: req.query.parent }).then((comments) => {
     res.send(comments);
   });
 });
 
+// TODO: rename to /foodevents/:postId/comments
 router.get("/comments", async (req, res) => {
   // Comment.find({ parent: req.query.parent }).then((comments) => {
   //   res.send(comments);
@@ -203,6 +205,7 @@ router.get("/comments", async (req, res) => {
   }
 });
 
+// TODO: rename to /foodevents/:postId/comments/new
 router.post("/comment", ensureLoggedIn, (req, res) => {
   const newComment = new Comment({
     creator_userId: req.body.creator_userId,
@@ -212,7 +215,7 @@ router.post("/comment", ensureLoggedIn, (req, res) => {
   newComment.save().then((comment) => res.send(comment));
 });
 
-router.delete("/delete_post/:postId", ensureLoggedIn, async (req, res) => {
+router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
   try {
     const postId = req.params.postId;
     const userId = req.user!.userId;
