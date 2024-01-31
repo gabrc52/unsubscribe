@@ -57,11 +57,11 @@ const App = () => {
 
       const onNewFoodEvent = (foodEvent: FoodEvent) => {
         console.log("NewFoodEvent fired!", foodEvent);
-        // TODO: icon
         const notification = new Notification(
           foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`,
           {
             body: foodEvent.content,
+            icon: "/favicon.png",
           }
         );
       };
