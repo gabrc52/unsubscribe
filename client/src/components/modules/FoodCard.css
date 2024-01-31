@@ -28,6 +28,16 @@
   );
 }
 
+.isGone {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+  align-self: left;
+  justify-self: left;
+  white-space: nowrap;
+}
+
 .isGone p {
   padding-left: var(--s);
   font-weight: 550;

@@ -6,7 +6,7 @@ import { NewComment } from "./NewPostInput";
 import Comment from "../../../../shared/Comment"; // IComment
 import FoodEvent from "../../../../shared/FoodEvent";
 import { get } from "../../utilities";
-import { socket } from "../../client-socket"
+import { socket } from "../../client-socket";
 
 type Props = {
   comments: Comment[]; // IComment
@@ -36,7 +36,6 @@ const CommentsBlock = (props: Props) => {
       </div>
     </div>
   );
-
 };
 
 export default CommentsBlock;

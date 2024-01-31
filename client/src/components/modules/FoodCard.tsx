@@ -122,14 +122,14 @@ const FoodCard = (foodEvent: FoodEvent) => {
 
   const markedGoneByPicGetter = () => {
     // Handle Google avatars
-    console.log("calling markedGoneByPicGetter", foodEvent)
+    // console.log("calling markedGoneByPicGetter", foodEvent)
     if (foodEvent.markedGonePic) {
-      console.log("markedGoneByPicGetter", foodEvent.markedGonePic);
-      return <Avatar alt="Avatar" src={foodEvent.markedGonePic} sx={{ width: 24, height: 24 }} />;
+      // console.log("markedGoneByPicGetter", foodEvent.markedGonePic);
+      return <Avatar alt="Avatar" src={foodEvent.markedGonePic} sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }} />;
     } else if (foodEvent.markedGoneName) {
       // Default avatar or placeholder if login type is unknown
       return (
-        <Avatar className="Card-avatarGradient" sx={{ width: 24, height: 24 }} aria-label="recipe">
+        <Avatar className="Card-avatarGradient" sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }} aria-label="recipe">
           {foodEvent.markedGoneName.at(0)}
         </Avatar>
       );
@@ -221,11 +221,16 @@ const FoodCard = (foodEvent: FoodEvent) => {
           </Button>
         )}
         {foodEvent.isGone && (
-          <Typography className="isGone" variant="body2" color="secondary">
+          <Typography
+            className="isGone u-flex u-flexRow"
+            variant="body2"
+            color="secondary"
+            sx={{ overflow: "hidden", maxWidth: "100%" }}
+          >
             <p>
               <b>Marked gone</b> by {foodEvent.markedGoneName}
-              {/* {markedGoneByPicGetter()} */}
-            </p>
+            </p>{" "}&nbsp;
+            {markedGoneByPicGetter()}
           </Typography>
         )}
         <ExpandMore

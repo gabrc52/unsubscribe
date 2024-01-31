@@ -30,13 +30,15 @@ export async function populateFoodEvents(foodEvents: FoodEvent[]) {
     foodEvents.map(async (event) => {
       const creator = await getCreatorName(event.creator_userId, event.emailer_name);
       let markedGoneName: string | undefined;
+      let markedGonePic: string | undefined;
       if (event.markedGoneBy) {
         const markedGoneUser = await User.findOne({
           userId: event.markedGoneBy,
         });
         markedGoneName = markedGoneUser?.name;
+        markedGonePic = markedGoneUser?.picture;
       }
-      return { ...event.toObject(), creator, markedGoneName };
+      return { ...event.toObject(), creator, markedGoneName, markedGonePic };
     })
   );
 }
