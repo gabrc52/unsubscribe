@@ -12,7 +12,7 @@
   color: rgb(49, 58, 83);
   background-color: #fff;
   /* display: flex; */
-  z-index: -1;
+  z-index: -100;
 }
 
 .Login-container {
@@ -41,11 +41,12 @@
   );
   animation: gradient 9s ease infinite;
   /* background-image: url("../../public/holy_moly.jpg"); */
-  z-index: -1;
+  z-index: -100;
 }
 
 .Login-linkContainer {
   margin-left: var(--l);
+  z-index: 1000;
 }
 
 .Login-link,
@@ -53,6 +54,7 @@
   color: var(--white);
   opacity: 0.6;
   text-decoration: none;
+  z-index: 1000;
 }
 
 .Login-link:hover {
@@ -74,17 +76,19 @@
   /* position: relative; */
   /* -ms-transform: translateY(-50%);
   transform: translateY(-50%); */
-  z-index: 1;
+  z-index: 1000;
 }
 
 .Login-header {
   gap: 1em;
   margin-top: 30px;
   flex-grow: 1;
+  z-index: 1000;
 }
 
 .Login-header:hover {
   letter-spacing: 6px;
+  z-index: 1000;
 }
 
 .Login-header h1 {
@@ -98,6 +102,7 @@
     2px 2px 2px rgb(223, 51, 71),
     0 0 1em rgb(223, 51, 71),
     0 0 0.2em rgb(223, 51, 71);
+    z-index: 1000;
 }
 
 h2.Login-prompt {
@@ -107,18 +112,20 @@ h2.Login-prompt {
   text-align: center;
   margin: 25px 0 10px 0;
   padding: 0 20px;
+  z-index: 1000;
 }
 
 .Login-header img {
   width: 52.5px;
   height: 49px;
+  z-index: 1000;
 }
 
 .Login-buttonPrompt {
   background-color: transparent;
   border: none;
   text-decoration: none;
-  z-index: 1;
+  z-index: 1000;
 }
 
 .Login-buttonPrompt > .Login-buttonContent {
@@ -132,6 +139,7 @@ h2.Login-prompt {
   /* background: #CBDA74; */
   background: #b5e670;
   border-radius: 50px;
+  z-index: 1000;
   transition:
     transform 0.1s,
     box-shadow 0.1s;
@@ -146,6 +154,7 @@ h2.Login-prompt {
     transform 0.1s,
     box-shadow 0.1s;
   transition-timing-function: ease;
+  z-index: 1000;
 }
 
 .Login-buttonContent p {
@@ -156,10 +165,12 @@ h2.Login-prompt {
   text-align: center;
   color: #ffffff;
   z-index: 3;
+  z-index: 1000;
 }
 
 .Login-buttonContent img {
   height: 50px;
+  z-index: 1000;
 }
 
 h3.Login-about {
@@ -170,6 +181,7 @@ h3.Login-about {
   position: relative;
   margin: 30px 0 0 0;
   padding: 0 390px;
+  z-index: 1000;
 }
 
 .Login-extraInfo {
@@ -183,6 +195,7 @@ h3.Login-about {
   /* width: 100vw; */
   /* min-width: 100vw; */
   z-index: 1;
+  z-index: 1000;
 }
 
 /* .Login-extraInfo:hover {
@@ -191,18 +204,22 @@ h3.Login-about {
 
 .Login-extraInfo a {
   opacity: 1;
+  z-index: 1000;
 }
 .Login-extraInfo a:hover {
   text-decoration: none;
   color: rgb(223, 51, 71);
+  z-index: 1000;
 }
 .Login-extraInfo b {
   font-weight: 600;
+  z-index: 1000;
 }
 
 .nsm7Bb-HzV7m-LgbsSe {
   border: 0px solid #0cf300;
   /* border-width: 20px; */
+  z-index: 1000;
 }
 
 /* .nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId { */
@@ -226,6 +243,7 @@ h3.Login-about {
 .nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb {
   font-family: "Libre Barcode 128 Text", system-ui;
   /* border-width: 20px; */
+  z-index: 1000;
 }
 
 .scroll-container {
