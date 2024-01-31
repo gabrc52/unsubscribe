@@ -8,6 +8,10 @@
   transform: translate(-50%, -50%);
 }
 
+.NewPostInput-container {
+  margin-top: 13px;
+}
+
 .NewPostInput-input,
 .NewPostInput-button {
   font-family: "Montserrat";
@@ -39,5 +43,5 @@
 
 .NewPostInput-button:hover {
   color: var(--white);
-  background-color: var(--coral);
+  background-color: var(--blue);
 }

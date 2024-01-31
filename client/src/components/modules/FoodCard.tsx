@@ -7,6 +7,8 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
 import { Box, Button, Link, Tooltip } from "@mui/material";
+import ChatIcon from '@mui/icons-material/Chat';
+import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
 import {
   Avatar,
   Card,
@@ -140,7 +142,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
         <Typography
           variant="body2"
           color="text.secondary"
-          sx={{ whiteSpace: "pre-wrap", maxHeight: 100, overflow: "scroll" }}
+          sx={{ whiteSpace: "pre-wrap", maxHeight: 100, overflow: "auto" }}
         >
           {foodEvent.content}
         </Typography>
@@ -162,7 +164,12 @@ const FoodCard = (foodEvent: FoodEvent) => {
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label="show/hide comments"
+          sx={{
+            paddingBottom: 0,
+            paddingRight: 0,
+            borderRadius: "16px 16px 16px 16px",
+          }}
         >
           <Typography
             // makes it not be upside down
@@ -170,14 +177,16 @@ const FoodCard = (foodEvent: FoodEvent) => {
               transform: expanded ? "scale(-1, -1)" : undefined,
             }}
           >
-            {expanded ? "Hide" : "Show"} comments
+            {/* {expanded ? "Hide" : "Show"} comments */}
+            {expanded ? <MarkChatReadIcon /> : <ChatIcon />}
           </Typography>{" "}
-          <ExpandMoreIcon />
+          {/* <ExpandMoreIcon sx={{ marginBottom: 1 }}/> */}
+          {expanded ? <ExpandMoreIcon sx={{ marginTop: 1 }}/> : <ExpandMoreIcon sx={{ marginBottom: 1 }}/>}
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, mt: 0 }}>
-          <Typography paragraph variant="overline">
+          <Typography variant="overline">
             Comments
           </Typography>
           <CommentsBlock
