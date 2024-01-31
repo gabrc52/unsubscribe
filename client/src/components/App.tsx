@@ -92,7 +92,8 @@ const App = () => {
     post("/api/logout");
   };
 
-  const [mode, setMode] = useState("light");
+  const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)") ? "dark" : "light";
+  const [mode, setMode] = useState(deviceTheme);
 
   const lightTheme = createTheme({
     palette: {
@@ -145,8 +146,8 @@ const App = () => {
             {userId ? (
               <UserIdContext.Provider value={userId}>
                 <NavBar
-                  mode={mode}
-                  setMode={setMode}
+                  themeMode={mode}
+                  setThemeMode={setMode}
                   logo={selectedLogo}
                   handleLogout={handleLogout}
                 />

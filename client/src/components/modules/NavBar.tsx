@@ -15,8 +15,8 @@ import "./NavBar.css";
  * The navigation bar at the bottom of all pages. Takes no props.
  */
 const NavBar = (props: {
-  mode: string;
-  setMode: React.Dispatch<React.SetStateAction<string>>;
+  themeMode: string;
+  setThemeMode: React.Dispatch<React.SetStateAction<string>>;
   logo: "*.png";
   handleLogout: () => void;
 }) => {
@@ -84,7 +84,8 @@ const NavBar = (props: {
         <Box sx={{ flexGrow: 1 }}></Box>
         <MaterialUISwitch
           className="u-pointer"
-          onChange={() => props.setMode(props.mode === "light" ? "dark" : "light")}
+          checked={props.themeMode === "dark"}
+          onChange={() => props.setThemeMode(props.themeMode === "light" ? "dark" : "light")}
         />
         {user && (
           <Button
