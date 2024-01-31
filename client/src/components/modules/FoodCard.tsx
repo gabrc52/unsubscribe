@@ -22,6 +22,7 @@ import FoodEvent from "../../../../shared/FoodEvent";
 import CommentsBlock from "./CommentsBlock";
 import Comment from "../../../../shared/Comment"; // must import if using IComment
 // ^^^ also change in CommentsBlock.tsx
+import "./FoodCard.css";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -63,7 +64,8 @@ const FoodCard = (foodEvent: FoodEvent) => {
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          // <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar className="Card-avatarGradient" aria-label="recipe">
             {foodEvent.creator.at(0)}
           </Avatar>
         }

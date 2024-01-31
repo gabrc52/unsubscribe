@@ -23,13 +23,13 @@
 }
 
 .NewPostInput-input:focus-within {
-  border-color: var(--coral);
+  border-color: var(--blue);
   box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
 }
 
 .NewPostInput-button {
-  color: var(--coral);
-  border: var(--coral) 1px solid;
+  color: var(--blue);
+  border: var(--blue) 1px solid;
   border-radius: 0 var(--xs) var(--xs) 0;
   background: none;
   transition:

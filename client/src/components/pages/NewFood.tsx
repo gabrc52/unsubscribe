@@ -220,7 +220,7 @@ export const NewFoodPage = () => {
             <div> &nbsp; </div> {/* DO NOT REMOVE LINE! for toggling spacing  */}
           </LocalizationProvider>
         )}
-        <Button sx={{ m: 0 }} variant="contained" onClick={onSubmit}>
+        <Button sx={{ mt: 0, mb: 7.5 }} variant="contained" onClick={onSubmit}>
           Submit Food
         </Button>
       </Container>
