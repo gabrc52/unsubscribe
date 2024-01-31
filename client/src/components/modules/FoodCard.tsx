@@ -55,7 +55,13 @@ const FoodCard = (foodEvent: FoodEvent) => {
 
   const handleMarkAsGone = () => {
     setMarkedGone(!markedGone);
-
+    if (!markedGone) {
+      get("/api/whoami").then((user) => {
+        if (user.name) {
+          setMarkedGoneBy(user.name);
+        }
+      });
+    }
   
     if (!markedGone) {
       const reallyMarkAsGone = confirm(
