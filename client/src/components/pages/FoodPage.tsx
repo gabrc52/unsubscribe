@@ -74,7 +74,7 @@ const FoodPage = (props: Props) => {
       <Grid container spacing={4}>
         {foodEvents.map((foodEvent) => (
           <Grid item key={foodEvent._id} xs={12} sm={12} md={6}>
-            <FoodCard {...foodEvent} />
+            <FoodCard {...foodEvent} key={foodEvent._id} />
           </Grid>
         ))}
       </Grid>

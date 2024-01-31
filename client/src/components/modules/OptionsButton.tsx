@@ -94,7 +94,6 @@ export default function OptionsButton(foodEvent: FoodEvent) {
             "aria-labelledby": "basic-button",
           }}
         >
-          {/** TODO: FIX FUCKED UP STYLING */}
           {foodEvent.creator_userId === userId && (
             <MenuItem onClick={handlePostDelete}>
               <DeleteIcon />
