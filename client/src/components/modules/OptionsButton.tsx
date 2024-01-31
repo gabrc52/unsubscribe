@@ -3,9 +3,9 @@ import FoodEvent from "../../../../shared/FoodEvent";
 import { Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { post, useUserId } from "../../utilities";
-import UndoIcon from '@mui/icons-material/Undo';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ShareIcon from '@mui/icons-material/Share';
+import UndoIcon from "@mui/icons-material/Undo";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ShareIcon from "@mui/icons-material/Share";
 
 // https://mui.com/material-ui/react-menu/#basic-menu
 // ngl if you have to do the accessibility of it yourself and this level of state management,
@@ -43,6 +43,14 @@ export default function OptionsButton(foodEvent: FoodEvent) {
     handleClose();
   };
 
+  const copyLink = () => {
+    const postLink = `${window.location.origin}/food/#${foodEvent._id}`;
+    navigator.clipboard.writeText(postLink).then(() => {
+      alert("Link copied to clipboard!");
+    });
+    handleClose();
+  };
+
   return (
     <div>
       <IconButton
@@ -75,10 +83,21 @@ export default function OptionsButton(foodEvent: FoodEvent) {
         >
           {/** TODO: FIX FUCKED UP STYLING */}
           {foodEvent.creator_userId === userId && (
-            <MenuItem onClick={handlePostDelete}><DeleteIcon/>Delete post</MenuItem>
+            <MenuItem onClick={handlePostDelete}>
+              <DeleteIcon />
+              &nbsp;Delete post
+            </MenuItem>
           )}
-          {/* <MenuItem onClick={copyLink}><ShareIcon/>Share post</MenuItem> */}
-          {foodEvent.isGone === true && <MenuItem onClick={unmarkGone}><UndoIcon/>Unmark gone</MenuItem>}
+          <MenuItem onClick={copyLink}>
+            <ShareIcon />
+            &nbsp;Share post
+          </MenuItem>
+          {foodEvent.isGone === true && (
+            <MenuItem onClick={unmarkGone}>
+              <UndoIcon />
+              &nbsp;Unmark gone
+            </MenuItem>
+          )}
         </Menu>
       )}
     </div>
