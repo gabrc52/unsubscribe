@@ -92,6 +92,7 @@ const App = () => {
     post("/api/logout");
   };
 
+  // https://medium.com/hypersphere-codes/detecting-system-theme-in-javascript-css-react-f6b961916d48
   const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)") ? "dark" : "light";
   const [mode, setMode] = useState(deviceTheme);
 
