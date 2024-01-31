@@ -41,6 +41,7 @@
     "@fullcalendar/react": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
     "@mui/icons-material": "^5.15.6",
+    "@mui/joy": "^5.0.0-beta.24",
     "@mui/material": "^5.15.6",
     "@mui/x-date-pickers": "^6.19.2",
     "@react-oauth/google": "^0.6.0",

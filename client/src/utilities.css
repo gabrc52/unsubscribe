@@ -21,7 +21,10 @@
 :root {
   --text: rgb(49, 58, 83);
   --darkertext: #131313;
-  --coral: rgb(246, 91, 101);
+  /* --coral: rgb(246, 91, 101); */
+  /* --coral: #f45761; */
+  --coral: #f4575b;
+  --blue: #001e3c;
   --yellow: rgb(250, 199, 37);
   --green: #b5e670;
   --green--dim: #dde894;

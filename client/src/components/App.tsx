@@ -16,11 +16,12 @@ import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
 import "./App.css";
+import { red } from "@mui/material/colors";
 import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
+import { MaterialUISwitch } from "./modules/DarkToggle";
 
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme";
-import { CssBaseline, ScopedCssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline, ScopedCssBaseline, Container, Switch } from "@mui/material";
 import FoodPage from "./pages/FoodPage";
 import NewFoodPage from "./pages/NewFood";
 
@@ -64,15 +65,36 @@ const App = () => {
     post("/api/logout");
   };
 
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: "#f4575b",
+      },
+      secondary: {
+        main: "#001e3c",
+      },
+      error: {
+        main: red.A400,
+      },
+    },
+    typography: {
+      fontFamily: "Montserrat, Roboto, -apple-system, Segoe UI, sans-serif",
+    },
+  });
+
   return (
     <>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             {/* Check if logged in, else show Login */}
             {userId ? (
               <UserIdContext.Provider value={userId}>
-                <NavBar handleLogout={handleLogout} />
+                <NavBar darkMode={darkMode} setDarkMode={setDarkMode} handleLogout={handleLogout} />
                 <Routes>
                   {/* LLMs are actually helpful! https://chat.openai.com/share/5c529995-8331-43b3-82fa-6ee9dcd5c253 */}
                   <Route path="/" element={<Navigate to="/food/latest" replace />} />

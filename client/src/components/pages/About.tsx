@@ -15,8 +15,11 @@ const About = () => {
   return (
     <div className="About">
       <div className="u-hideOverflow About-container">
+        <div className="child-div"></div>
         <div className="u-flexColumn About-textContainer">
-          <h1>Welcome to <a href="mailto:unsubscribe-admin@mit.edu">Unsubscribe</a>!</h1>
+          <h1>
+            Welcome to <a href="mailto:unsubscribe-admin@mit.edu">Unsubscribe</a>!
+          </h1>
           <div className="u-flex u-flex-justifyCenter u-flex-alignCenter">
             <p>
               Discover a community-driven platform where sharing resources meets a passion for
@@ -27,10 +30,10 @@ const About = () => {
           <h2>Key Features:</h2>
           <ul>
             <li>
-              <strong>Food Posts:</strong> Share and find free food on campus. We've managed
-              to achieve a seamless integration of collected mailing list emails into visually appealing
-              feed posts. Upload photos, mark items as "gone," and connect with a community committed to
-              reducing food waste.
+              <strong>Food Posts:</strong> Share and find free food on campus. We've managed to
+              achieve a seamless integration of collected mailing list emails into visually
+              appealing feed posts. Upload photos, mark items as "gone," and connect with a
+              community committed to reducing food waste.
             </li>
             <li>
               <strong>Scheduled Food Page:</strong> Explore a calendar of scheduled free food
@@ -39,18 +42,22 @@ const About = () => {
             </li>
             <li>
               <strong>Personalized Experience:</strong> We ensure the safety of our campus community
-              by (post-competition) requiring MIT Touchstone authentication to sign up. This also allows
-              us to provide personalized features. Manage your own posts, stay updated on events, and
-              contribute to a campus-wide effort towards sustainability!
+              by (post-competition) requiring MIT Touchstone authentication to sign up. This also
+              allows us to provide personalized features. Manage your own posts, stay updated on
+              events, and contribute to a campus-wide effort towards sustainability!
             </li>
             <li>
-            <strong>Avoiding Deadnaming and Dynamic User Data:</strong> We put a great deal of effort
-            into formatting data to ensure user names are dynamically updated from the MIT Touchstone
-            or Google login and thus avoid any potential for future deadnaming. This required
-            implementing efficient, real-time queries to cross-check user names during login and
-            dynamically updating post/comment creator names based on the current user data.
-            (<i>Always feel free to share suggestions on how we might further facilitate a respectful
-            and inclusive user experience!</i>)
+              <strong>Avoiding Deadnaming and Dynamic User Data:</strong> We put a great deal of
+              effort into formatting data to ensure user names are dynamically updated from the MIT
+              Touchstone or Google login and thus avoid any potential for future deadnaming. This
+              required implementing efficient, real-time queries to cross-check user names during
+              login and dynamically updating post/comment creator names based on the current user
+              data. (
+              <i>
+                Always feel free to share suggestions on how we might further facilitate a
+                respectful and inclusive user experience!
+              </i>
+              )
             </li>
             {/* Automated Email Notification Feature for posts, including a distinctive tag. */}
           </ul>
@@ -62,7 +69,7 @@ const About = () => {
             <a href="mailto: unsubscribe-admin@mit.edu">Our Team:</a>
           </h2>
           <div className="About-profilesContainer">
-            <div className="About-subContainerGutter"/>
+            <div className="About-subContainerGutter" />
             <div className="About-subContainer u-textCenter">
               <h4 className="About-subTitle">Ari Peró</h4>
               <img className="About-avatar" src={ari} alt="Photo of Ari Peró" />
@@ -75,7 +82,7 @@ const About = () => {
               <h4 className="About-subTitle">Anna Kwon</h4>
               <img className="About-avatar" src={anna} alt="Photo of Anna Kwon" />
             </div>
-            <div className="About-subContainerGutter"/>
+            <div className="About-subContainerGutter" />
           </div>
           <div className="About-thanksContainer">
             <h2>Special Thanks to:</h2>

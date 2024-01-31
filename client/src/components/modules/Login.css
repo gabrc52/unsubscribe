@@ -94,9 +94,9 @@
   color: #caed68;
   /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); */
   text-shadow:
-    2px 2px 2px rgb(246, 91, 101),
-    0 0 1em rgb(246, 91, 101),
-    0 0 0.2em rgb(246, 91, 101);
+    2px 2px 2px rgb(223, 51, 71),
+    0 0 1em rgb(223, 51, 71),
+    0 0 0.2em rgb(223, 51, 71);
 }
 
 h2.Login-prompt {
@@ -185,7 +185,7 @@ h3.Login-about {
 }
 
 /* .Login-extraInfo:hover {
-  color: rgb(246, 91, 101);
+  color: rgb(223, 51, 71);
 } */
 
 .Login-extraInfo a {
@@ -193,7 +193,7 @@ h3.Login-about {
 }
 .Login-extraInfo a:hover {
   text-decoration: none;
-  color: rgb(246, 91, 101);
+  color: rgb(223, 51, 71);
 }
 .Login-extraInfo b {
   font-weight: 600;
