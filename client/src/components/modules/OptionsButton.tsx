@@ -52,10 +52,12 @@ export default function OptionsButton(foodEvent: FoodEvent) {
         alert("Link copied to clipboard!");
       });
     } else {
+      // In practice, the title isn't actually rendered (at least on Android)
+      const title = foodEvent.title ?? `${foodEvent.food_category} in ${foodEvent.location}`;
       // Mobile
       navigator.share({
-        title: foodEvent.title ?? `${foodEvent.food_category} in ${foodEvent.location}`,
-        text: `Sent by ${foodEvent.creator || foodEvent.emailer_name}. Check it out on Unsubscribe App!`,
+        title: title,
+        text: `${title}. Sent by ${foodEvent.creator || foodEvent.emailer_name}. Check it out on Unsubscribe App!`,
         url: postLink,
       });
     }
