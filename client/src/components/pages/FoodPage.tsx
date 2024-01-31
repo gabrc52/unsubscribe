@@ -1,11 +1,10 @@
-import { Box, Button, Container, Grid, Switch, Typography, styled } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import FoodEvent from "../../../../shared/FoodEvent";
 import { get } from "../../utilities";
 import FoodCard from "../modules/FoodCard";
 import { useNavigate } from "react-router";
 import { socket } from "../../client-socket";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { MaterialUISwitch } from "../modules/CalendarToggle";
 import FoodCalendar from "./FoodCalendar";
 

@@ -61,6 +61,7 @@ const About = () => {
               )
             </li>
             {/* Automated Email Notification Feature for posts, including a distinctive tag. */}
+            {/* Prediction algorithm for upcoming free food locations(?) */}
           </ul>
           <p>
             Join us in creating a more sustainable and connected campus community. Let's build a

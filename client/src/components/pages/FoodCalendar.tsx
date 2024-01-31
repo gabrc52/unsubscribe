@@ -4,8 +4,6 @@ import FullCalendar from "@fullcalendar/react";
 import { Calendar, EventInput } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
-import { get } from "../../utilities";
 import "./FoodCalendar.css";
 
 /// TODO: fix colors on dark mode! - custom css maybe? idk!

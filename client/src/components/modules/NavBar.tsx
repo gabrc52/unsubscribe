@@ -2,10 +2,6 @@ import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/goog
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { AppBar, Box, Button, IconButton, Toolbar, Typography, Link, Avatar } from "@mui/material";
-import Switch, { SwitchProps } from "@mui/material/Switch";
-import { palette } from "@mui/system";
-import { styled } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
 import { get } from "../../utilities";
 import User from "../../../../shared/User";
 import { MaterialUISwitch } from "./DarkToggle";
