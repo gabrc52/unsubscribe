@@ -13,7 +13,6 @@ export default function OptionsButton(foodEvent: FoodEvent) {
   const userId = useUserId();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [unmarkedGone, setUnmarkedGone] = React.useState(false);
-  const [unmarkedGoneBy, setUnmarkedGoneBy] = React.useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,21 +35,8 @@ export default function OptionsButton(foodEvent: FoodEvent) {
   const unmarkGone = () => {
     setUnmarkedGone(!unmarkedGone)
     fetch('/foodevents/unmarkAsGone', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ eventId: foodEvent._id })
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      console.log('Event marked as gone:', data);
-    })
-    .catch(error => {
-      console.error('Error marking event as gone:', error);
-    });
+      method: 'POST'
+    }).catch(console.error);
   }
 
   return (
@@ -73,7 +59,8 @@ export default function OptionsButton(foodEvent: FoodEvent) {
       >
         Dashboard
       </Button> */}
-      {(foodEvent.creator_userId === userId || foodEvent.isGone === true) && (<Menu
+      {(foodEvent.creator_userId === userId || foodEvent.isGone === true) && (
+      <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
