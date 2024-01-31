@@ -105,7 +105,14 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
     const populatedEvents = await Promise.all(
       foodevents.map(async (event) => {
         const creator = await getCreatorName(event.creator_userId, event.emailer_name);
-        return { ...event.toObject(), creator };
+        let markedGoneName: string | undefined;
+        if (event.markedGoneBy) {
+          const markedGoneUser = await User.findOne({
+            userId: event.markedGoneBy,
+          });
+          markedGoneName = markedGoneUser?.name;
+        }
+        return { ...event.toObject(), creator, markedGoneName };
       })
     );
     res.send(populatedEvents);
@@ -249,16 +256,14 @@ router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
   }
 });
 
-
 router.post("/foodevents/markAsGone/:postId", ensureLoggedIn, async (req, res) => {
   try {
     const postId = req.params.postId;
 
-    const updatedEvent = await FoodEvent.findByIdAndUpdate(
-      postId,
-      { isGone: true, 
-      markedGoneBy: req.user!.userId}
-    );
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, {
+      isGone: true,
+      markedGoneBy: req.user!.userId,
+    });
 
     if (!updatedEvent) {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
@@ -275,10 +280,7 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
   try {
     const postId = req.params.postId;
 
-    const updatedEvent = await FoodEvent.findByIdAndUpdate(
-      postId,
-      { isGone: false }, 
-    );
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, { isGone: false });
 
     if (!updatedEvent) {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
@@ -290,7 +292,6 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
-
 
 // MUST FIX rag.ts TO USE THIS
 

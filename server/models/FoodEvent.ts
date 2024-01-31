@@ -28,7 +28,7 @@ const FoodEventSchema = new Schema({
   // date the food event is scheduled to (if scheduled is true)
   scheduledDate: Date,
   isGone: Boolean,
-  markedGoneBy: String
+  markedGoneBy: String,
 });
 
 export interface FoodEvent extends Document {
@@ -46,7 +46,7 @@ export interface FoodEvent extends Document {
   postedDate: Date;
   scheduledDate: Date;
   isGone: Boolean;
-  markedGoneBy: String
+  markedGoneBy?: string;
 }
 
 const FoodEventModel = model<FoodEvent>("FoodEvent", FoodEventSchema);
