@@ -55,7 +55,9 @@ export const loginTouchstone = (req: Request, res: Response) => {
         throw new Error("Unable to retrieve user.");
       }
       req.session.user = user;
-      res.redirect("/");
+      // TODO: don't hardcode - ideally be able to redirect to where URL actually indicates
+      // (so that sharing direct URLs works)
+      res.redirect("/food/latest");
     })
     .catch((err) => {
       console.log(`Failed to login: ${err}`);
