@@ -100,13 +100,13 @@ const YourPosts = (props: {}) => {
         </div>
         <hr className="YourPosts-linejj" />
         <div className="YourPosts-feed u-flex u-flex-alignCenter">
-        <Grid container spacing={2.5}>
-          {userPosts.map((post) => (
-            <Grid item key={post._id} xs={12} sm={12} md={3}>
-              <FoodCard {...post} />
-            </Grid>
-          ))}
-        </Grid>
+          <Grid container spacing={2.5}>
+            {userPosts.map((post) => (
+              <Grid item key={post._id} xs={12} sm={6} md={3}>
+                <FoodCard {...post} />
+              </Grid>
+            ))}
+          </Grid>
         </div>
       </div>
     </>
