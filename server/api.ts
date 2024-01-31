@@ -85,11 +85,23 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+/**
+ * GET /foodevents
+ *
+ * Optional query parameters
+ *  * scheduled: boolean - set to true to return scheduled (future) events. if false will return present/past events
+ */
 router.get("/foodevents", ensureLoggedIn, async (req, res) => {
+  console.log(req.query);
+  // whether to get the future events (as opposed to present/past food events)
+  const getFutureEventsInstead =
+    typeof req.query.scheduled === "string" ? req.query.scheduled.toLowerCase() === "true" : false;
   // TODO: ideally do this in one mongo query. since we are on a deadline, we can do it later
   // it might cause performance issues down the line, but we could use pagination anyway/instead/in addition
   try {
-    const foodevents = await FoodEvent.find({});
+    const foodevents = await FoodEvent.find({
+      scheduled: getFutureEventsInstead,
+    });
     const populatedEvents = await Promise.all(
       foodevents.map(async (event) => {
         const creator = await getCreatorName(event.creator_userId, event.emailer_name);
