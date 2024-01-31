@@ -168,7 +168,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
             Mark as gone?
           </Button>
         )}
-        {markedGone && <Typography variant="body2">Marked gone by {markedGoneBy}</Typography>}
+        {markedGone && foodEvent.isGone && <Typography variant="body2">Marked gone by {markedGoneBy}</Typography>}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
