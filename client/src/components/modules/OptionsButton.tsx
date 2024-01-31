@@ -75,44 +75,32 @@ export default function OptionsButton(foodEvent: FoodEvent) {
       >
         <MoreVertIcon />
       </IconButton>
-      {/* Button from sample: <Button
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
       >
-        Dashboard
-      </Button> */}
-      {(foodEvent.creator_userId === userId || foodEvent.isGone === true) && (
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          {/** TODO: FIX FUCKED UP STYLING */}
-          {foodEvent.creator_userId === userId && (
-            <MenuItem onClick={handlePostDelete}>
-              <DeleteIcon />
-              &nbsp;Delete post
-            </MenuItem>
-          )}
-          {foodEvent.isGone === true && (
-            <MenuItem onClick={unmarkGone}>
-              <UndoIcon />
-              &nbsp;Unmark gone
-            </MenuItem>
-          )}
-          <MenuItem onClick={shareLink}>
-            <ShareIcon />
-            &nbsp;Share post
+        {foodEvent.creator_userId === userId && (
+          <MenuItem onClick={handlePostDelete}>
+            <DeleteIcon />
+            &nbsp;Delete post
           </MenuItem>
-        </Menu>
-      )}
+        )}
+        <MenuItem onClick={shareLink}>
+          <ShareIcon />
+          &nbsp;Share post
+        </MenuItem>
+        {foodEvent.isGone === true && (
+          <MenuItem onClick={unmarkGone}>
+            <UndoIcon />
+            &nbsp;Unmark gone
+          </MenuItem>
+        )}
+      </Menu>
     </div>
   );
 }
