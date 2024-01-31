@@ -16,9 +16,10 @@ import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
 import "./App.css";
-import { red } from "@mui/material/colors";
+import { red, deepOrange } from "@mui/material/colors";
 import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
-import { MaterialUISwitch } from "./modules/DarkToggle";
+import bluelogo from "../public/blue_logo.png";
+import yellowlogo from "../public/yellow_logo.png";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline, ScopedCssBaseline, Container, Switch } from "@mui/material";
@@ -65,19 +66,40 @@ const App = () => {
     post("/api/logout");
   };
 
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
 
-  const theme = createTheme({
+  // const theme = createTheme({
+  //   palette: {
+  //     mode: darkMode ? "dark" : "light",
+  //     primary: {
+  //       main: "#f4575b",
+  //     },
+  //     secondary: {
+  //       main: "#001e3c",
+  //     },
+  //     error: {
+  //       main: red.A400,
+  //     },
+  //   },
+  //   typography: {
+  //     fontFamily: "Montserrat, Roboto, -apple-system, Segoe UI, sans-serif",
+  //   },
+  // });
+
+  const [mode, setMode] = useState("light");
+
+  const lightTheme = createTheme({
     palette: {
-      mode: darkMode ? "dark" : "light",
+      mode: "light",
       primary: {
         main: "#f4575b",
       },
       secondary: {
         main: "#001e3c",
+        contrastText: "#fff",
       },
       error: {
-        main: red.A400,
+        main: red[700],
       },
     },
     typography: {
@@ -85,27 +107,50 @@ const App = () => {
     },
   });
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+      primary: {
+        main: "#f4575b",
+      },
+      secondary: {
+        main: "#fdb73e",
+        contrastText: "#001e3c",
+      },
+      error: {
+        main: deepOrange.A400,
+      },
+    },
+    typography: {
+      fontFamily: "Montserrat, Roboto, -apple-system, Segoe UI, sans-serif",
+    },
+  });
+
+  const selectedTheme = mode === "dark" ? darkTheme : lightTheme;
+  const selectedLogo = mode === "dark" ? yellowlogo : bluelogo;
+
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={selectedTheme}>
         <CssBaseline />
         <BrowserRouter>
           <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             {/* Check if logged in, else show Login */}
             {userId ? (
               <UserIdContext.Provider value={userId}>
-                <NavBar darkMode={darkMode} setDarkMode={setDarkMode} handleLogout={handleLogout} />
+                {/* <NavBar darkMode={darkMode} setDarkMode={setDarkMode} handleLogout={handleLogout} /> */}
+                <NavBar mode={mode} setMode={setMode} logo={selectedLogo} handleLogout={handleLogout} />
                 <Routes>
                   {/* LLMs are actually helpful! https://chat.openai.com/share/5c529995-8331-43b3-82fa-6ee9dcd5c253 */}
                   <Route path="/" element={<Navigate to="/food/latest" replace />} />
                   <Route path="/food" element={<Navigate to="/food/latest" replace />} />
                   <Route path="/food/latest" element={<FoodPage time="latest" />} />
                   <Route path="/food/scheduled" element={<FoodPage time="scheduled" />} />
+                  <Route path="/food/scheduled/calendar" element={<Scheduled />} />
                   <Route path="/food/new" element={<NewFoodPage />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/resources" element={<Resources />} />
                   <Route path="/yourposts" element={<YourPosts />} />
-                  <Route path="/scheduled" element={<Scheduled />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </UserIdContext.Provider>

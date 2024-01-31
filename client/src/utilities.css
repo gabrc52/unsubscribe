@@ -64,6 +64,10 @@ form {
   display: flex;
   flex-direction: column;
 }
+.u-flexRow {
+  display: flex;
+  flex-direction: row;
+}
 
 .u-flex-justifyCenter {
   justify-content: center;

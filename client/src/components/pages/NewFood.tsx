@@ -215,7 +215,14 @@ export const NewFoodPage = () => {
         {showDatePicker && (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoItem label={<Label componentName="Schedule date/time" />}>
-              <DateTimePicker inputRef={datePickerRef} />
+              <DateTimePicker
+                inputRef={datePickerRef}
+                slotProps={{
+                  textField: {
+                    required: true,
+                  },
+                }}
+              />
             </DemoItem>
             <div> &nbsp; </div> {/* DO NOT REMOVE LINE! for toggling spacing  */}
           </LocalizationProvider>
