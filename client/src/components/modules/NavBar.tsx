@@ -20,13 +20,18 @@ import "./NavBar.css";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
+import EventIcon from "@mui/icons-material/Event";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import SupportIcon from "@mui/icons-material/Support";
+import InfoIcon from "@mui/icons-material/Info";
 
 const navigationOptions = [
-  { title: "Food", destination: "/food/latest" },
-  { title: "Calendar", destination: "/food/calendar" },
-  { title: "Your Posts", destination: "/yourposts" },
-  { title: "Resources @ MIT", destination: "/resources" },
-  { title: "About", destination: "/about" },
+  { title: "Food", destination: "/food/latest", icon: <DinnerDiningIcon /> },
+  { title: "Calendar", destination: "/food/calendar", icon: <EventIcon /> },
+  { title: "Your Posts", destination: "/yourposts", icon: <AccountBoxIcon /> },
+  { title: "Resources @ MIT", destination: "/resources", icon: <SupportIcon /> },
+  { title: "About", destination: "/about", icon: <InfoIcon /> },
 ];
 
 /**
@@ -47,7 +52,7 @@ const AppBarLinksDesktop = () => {
       onClick={() => navigate(option.destination)}
       color="inherit"
     >
-      {option.title}
+      {option.icon} {option.title}
     </Button>
   ));
 };
