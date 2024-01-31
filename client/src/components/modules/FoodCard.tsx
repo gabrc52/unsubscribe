@@ -7,8 +7,8 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
 import { Box, Button, Link, Tooltip } from "@mui/material";
-import ChatIcon from '@mui/icons-material/Chat';
-import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
+import ChatIcon from "@mui/icons-material/Chat";
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
 import {
   Avatar,
   Card,
@@ -57,6 +57,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
   }, []);
 
   const handleMarkAsGone = () => {
+    setMarkedGone(!markedGone);
     if (!markedGone) {
       get("/api/whoami").then((user) => {
         if (user.name) {
@@ -70,8 +71,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
         `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
       );
       if (reallyMarkAsGone) {
-        setMarkedGone(!markedGone);
-        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
+        fetch("/foodevents/markAsGone", {
           method: "POST",
         }).catch(console.error);
       }
@@ -153,13 +153,13 @@ const FoodCard = (foodEvent: FoodEvent) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
-        {!foodEvent.isGone && (
+        {!markedGone && (
           <Button variant="contained" onClick={handleMarkAsGone}>
             Mark as gone?
           </Button>
         )}
-        {foodEvent.isGone && (
-          <Typography variant="body2">Marked gone by {foodEvent.markedGoneName}</Typography>
+        {markedGone && foodEvent.isGone && (
+          <Typography variant="body2">Marked gone by {markedGoneBy}</Typography>
         )}
         <ExpandMore
           expand={expanded}
@@ -167,8 +167,11 @@ const FoodCard = (foodEvent: FoodEvent) => {
           aria-expanded={expanded}
           aria-label="show/hide comments"
           sx={{
-            paddingBottom: 0,
+            // DO NOT CHANGE THESE!!!!!!!!
             paddingRight: 0,
+            paddingBottom: expanded ? 1 : 0,
+            paddingTop: expanded ? 0 : "auto",
+            paddingLeft: expanded ? 1 : "auto",
             borderRadius: "16px 16px 16px 16px",
           }}
         >
@@ -182,14 +185,16 @@ const FoodCard = (foodEvent: FoodEvent) => {
             {expanded ? <MarkChatReadIcon /> : <ChatIcon />}
           </Typography>{" "}
           {/* <ExpandMoreIcon sx={{ marginBottom: 1 }}/> */}
-          {expanded ? <ExpandMoreIcon sx={{ marginTop: 1 }}/> : <ExpandMoreIcon sx={{ marginBottom: 1 }}/>}
+          {expanded ? (
+            <ExpandMoreIcon sx={{ marginTop: 1 }} />
+          ) : (
+            <ExpandMoreIcon sx={{ marginBottom: 1 }} />
+          )}
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, mt: 0 }}>
-          <Typography variant="overline">
-            Comments
-          </Typography>
+          <Typography variant="overline">Comments</Typography>
           <CommentsBlock
             comments={comments}
             foodevent={foodEvent}
