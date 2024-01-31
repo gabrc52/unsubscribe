@@ -280,7 +280,10 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
   try {
     const postId = req.params.postId;
 
-    const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, { isGone: false });
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, {
+      isGone: false,
+      markedGoneBy: undefined,
+    });
 
     if (!updatedEvent) {
       return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
@@ -288,7 +291,7 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
 
     res.send(updatedEvent);
   } catch (error) {
-    console.error("Error marking event as gone:", error);
+    console.error("Error unmarking event as gone:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
