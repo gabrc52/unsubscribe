@@ -51,18 +51,18 @@
   text-shadow: none;
 }
 
-ul {
+.Resources ul {
   list-style-position: inside;
   line-height: 30px;
 }
 
-ul.a {
+.Resources ul.a {
   margin-left: 30px;
   list-style-position: inside;
   line-height: 21px;
 }
 
-li {
+.Resources li {
   margin-left: 10px;
   text-indent: -1.4em;
   padding-left: 2em;
