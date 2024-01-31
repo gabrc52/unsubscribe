@@ -7,6 +7,7 @@ import IcecreamRoundedIcon from "@mui/icons-material/IcecreamRounded";
 import gabe from "../../public/gabe_profile.png";
 import ari from "../../public/ari_profile.png";
 import anna from "../../public/adventure-tim.png";
+import { Link } from "@mui/material";
 
 const About = () => {
   useEffect(() => {
@@ -18,7 +19,7 @@ const About = () => {
         <div className="child-div"></div>
         <div className="u-flexColumn About-textContainer">
           <h1>
-            Welcome to <a href="mailto:unsubscribe-admin@mit.edu">Unsubscribe</a>!
+            Welcome to <Link href="mailto:unsubscribe-admin@mit.edu">Unsubscribe</Link>!
           </h1>
           <div className="u-flex u-flex-justifyCenter u-flex-alignCenter">
             <p>
@@ -66,7 +67,7 @@ const About = () => {
             future where resources are shared, waste is minimized, and collaboration thrives.
           </p>
           <h2>
-            <a href="mailto: unsubscribe-admin@mit.edu">Our Team:</a>
+            <Link href="mailto: unsubscribe-admin@mit.edu">Our Team:</Link>
           </h2>
           <div className="About-profilesContainer">
             <div className="About-subContainerGutter" />
@@ -89,7 +90,7 @@ const About = () => {
             <ul>
               <li>
                 <strong>
-                  <a href="https://weblab.mit.edu/team/">Weblab Staff</a>
+                  <Link href="https://weblab.mit.edu/team/">Weblab Staff</Link>
                 </strong>
                 <ul className="a">
                   <li>

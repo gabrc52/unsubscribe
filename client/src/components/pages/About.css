@@ -5,16 +5,16 @@
   box-sizing: border-box;
   /* min-width: 100vw;
   min-height: 100vh; */
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to bottom right,
     rgba(250, 199, 37, 0.2),
     rgba(246, 91, 101, 0.25)
-  );
+  ); */
   z-index: -1;
 }
 
 .About-container {
-  color: var(--text);
+  /* color: var(--text); */
   margin: auto;
   /* background-size: 400% 400%; */
   display: flex;
@@ -40,7 +40,7 @@
 }
 
 .About-textContainer a {
-  color: var(--text);
+  /* color: var(--text); */
   font-weight: 700;
   text-decoration: none;
   text-shadow:
