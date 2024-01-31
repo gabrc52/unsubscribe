@@ -93,8 +93,24 @@ const App = () => {
   };
 
   // https://medium.com/hypersphere-codes/detecting-system-theme-in-javascript-css-react-f6b961916d48
+  // read device theme (only once, since the main reason is that I want to minimize people on dark theme getting light flashes,
+  // as opposed to a third setting to use the device setting - which would be more of a stretch goal and would need more
+  // than a simple switch in the UI)
   const deviceTheme = window.matchMedia("(prefers-color-scheme: dark)") ? "dark" : "light";
   const [mode, setMode] = useState(deviceTheme);
+
+  // load theme from local storage if available
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme) {
+      setMode(theme);
+    }
+  }, []);
+
+  // persist theme changes in local storage
+  useEffect(() => {
+    localStorage.setItem("theme", mode);
+  }, [mode]);
 
   const lightTheme = createTheme({
     palette: {
