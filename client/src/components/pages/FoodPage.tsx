@@ -16,12 +16,7 @@ const FoodPage = (props: Props) => {
 
   useEffect(() => {
     document.title = "Food Events";
-    get("/api/foodevents", { scheduled: props.time === "scheduled" }).then(
-      (foodEventObjs: FoodEvent[]) => {
-        let reversedFoodEventObjs = foodEventObjs.reverse();
-        setFoodEvents(reversedFoodEventObjs);
-      }
-    );
+    get("/api/foodevents", { scheduled: props.time === "scheduled" }).then(setFoodEvents);
   }, [props.time]);
 
   // https://mui.com/material-ui/react-card/#complex-interaction

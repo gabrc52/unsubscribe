@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./NewPostInput.css";
 import { post } from "../../utilities";
+import { Box, Button, Link, Tooltip } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 
 const NewCommentInput = (props) => {
   const [value, setValue] = useState("");
@@ -26,14 +28,30 @@ const NewCommentInput = (props) => {
         onChange={handleChange}
         className="NewPostInput-input"
       />
-      <button
+      {/* <button
         type="submit"
         className="NewPostInput-button u-pointer"
         value="Submit"
         onClick={handleSubmit}
       >
         Submit
-      </button>
+      </button> */}
+      {/* <Box className="NewPostInput-button u-pointer" sx={{ bgcolor: "secondary.main", color: "secondary.contrastText" }}> */}
+      <Button
+        type="submit"
+        className="NewPostInput-button u-pointer"
+        value="Submit"
+        onClick={handleSubmit}
+        disableElevation
+        variant="contained"
+        endIcon={<SendIcon />}
+        sx={{ borderRadius: "0 4px 4px 0", cursor: "pointer" }}
+        // sx={{ bgcolor: "secondary", color: "secondary.contrastText" }}
+        // variant="contained"
+      >
+        Submit
+      </Button>
+      {/* </Box> */}
     </div>
   );
 };

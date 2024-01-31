@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { AppBar, Box, Button, IconButton, Toolbar, Typography, Link, Avatar } from "@mui/material";
 import Switch, { SwitchProps } from "@mui/material/Switch";
-import { palette } from '@mui/system';
+import { palette } from "@mui/system";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import { get } from "../../utilities";
@@ -16,8 +16,9 @@ import "./NavBar.css";
  * The navigation bar at the bottom of all pages. Takes no props.
  */
 const NavBar = (props: {
-  darkMode: boolean;
-  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  mode: string;
+  setMode: React.Dispatch<React.SetStateAction<string>>;
+  logo: "*.png";
   handleLogout: () => void;
 }) => {
   const navigate = useNavigate();
@@ -35,7 +36,11 @@ const NavBar = (props: {
       // Default avatar or placeholder if login type is unknown
       return (
         // <Avatar sx={{ bgcolor: "secondary.main", width: 34, height: 34 }} aria-label="recipe">
-        <Avatar className="grad" sx={{ color: "#fff", bgcolor: "secondary.main", width: 34, height: 34 }} aria-label="recipe">
+        <Avatar
+          className="grad"
+          sx={{ color: "secondary.contrastText", bgcolor: "secondary.main", width: 34, height: 34 }}
+          aria-label="recipe"
+        >
           {user.name.at(0)}
         </Avatar>
       );
@@ -43,56 +48,59 @@ const NavBar = (props: {
   };
   return (
     // TODO: for accessibility etc we might want a link instead of a button but I can't figure out how to do that
-    <AppBar className="NavBar-container" position="sticky">
+    <AppBar className="NavBar-container" position="sticky" sx={{ bgcolor: "secondary" }}>
       <Toolbar>
-        <Box><img className="Navbar-logo" src={logo} alt="Unsubscribe logo" height={30} /></Box>
+        <Box>
+          <img className="Navbar-logo" src={props.logo} alt="Unsubscribe logo" height={34.5} />
+        </Box>
         &nbsp;&nbsp;
         <Typography
           className="NavBar-title"
-          fontSize={30}
+          fontSize={34}
           variant="h6"
           color="secondary"
+          // fontFamily={"Libre Barcode 128 Text"}
           sx={{
-            paddingRight: 3,
+            paddingRight: 2.5,
             display: {
               xs: "none",
               sm: "block",
             },
           }}
         >
-          Unsubscribe
+          <Box className="NavBar-title">Unsubscribe</Box>
         </Typography>
-        <Button sx={{ paddingRight: 1.6 }} onClick={() => navigate("/food")} color="inherit">
+        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/food")} color="inherit">
           Food
         </Button>
-        <Button sx={{ paddingRight: 1.6 }} onClick={() => navigate("/yourposts")} color="inherit">
+        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/yourposts")} color="inherit">
           Your Posts
         </Button>
-        <Button onClick={() => navigate("/resources")} color="inherit">
+        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/resources")} color="inherit">
           Resources @ MIT
         </Button>
-        <Button sx={{ paddingRight: 1.6 }} onClick={() => navigate("/about")} color="inherit">
+        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/about")} color="inherit">
           About
         </Button>
         <Box sx={{ flexGrow: 1 }}></Box>
         <MaterialUISwitch
-          checked={props.darkMode}
-          onChange={() => props.setDarkMode(!props.darkMode)}
+          className="u-pointer"
+          onChange={() => props.setMode(props.mode === "light" ? "dark" : "light")}
         />
         {user && (
-        <Button className="u-pointer"
-          onClick={() => {
-            googleLogout();
-            props.handleLogout();
-          }}
-          color="secondary"
-        >
-          Logout &nbsp;&nbsp; {renderAvatar(user)}
-        </Button>
+          <Button
+            className="u-pointer"
+            onClick={() => {
+              googleLogout();
+              props.handleLogout();
+            }}
+            color="secondary"
+          >
+            Logout &nbsp;&nbsp; {renderAvatar(user)}
+          </Button>
         )}
       </Toolbar>
     </AppBar>
-    // </ColorModeContext.Provider>
   );
 };
 

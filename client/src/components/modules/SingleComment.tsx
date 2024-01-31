@@ -15,7 +15,7 @@ import React from "react";
 const SingleComment = (props) => {
   return (
     <div className="Card-commentBody">
-      <p>{props.creator || "Unknown"}:</p>
+      <strong>{props.creator || "Unknown"}:</strong>
       <span>{" " + props.content}</span>
     </div>
   );
