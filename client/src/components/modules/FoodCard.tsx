@@ -68,7 +68,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
         `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
       );
       if (reallyMarkAsGone) {
-        fetch('/foodevents/markAsGone', {
+        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
           method: 'POST'
         }).catch(console.error)
       }
