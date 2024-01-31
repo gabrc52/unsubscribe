@@ -26,6 +26,8 @@ const FoodPage = (props: Props) => {
     };
   }, [props.time]);
 
+  const oppositeTime = props.time === "latest" ? "scheduled" : "latest";
+
   // https://mui.com/material-ui/react-card/#complex-interaction
   return (
     <Container maxWidth="md" sx={{ alignContent: "center" }}>
@@ -42,7 +44,11 @@ const FoodPage = (props: Props) => {
           },
         }}
       >
-        <Button variant="contained" sx={{ color: "#fff", fontWeight: 550 }} onClick={() => navigate("/food/new")}>
+        <Button
+          variant="contained"
+          sx={{ color: "#fff", fontWeight: 550 }}
+          onClick={() => navigate("/food/new")}
+        >
           Submit a New Food
         </Button>
         <Typography
@@ -54,22 +60,19 @@ const FoodPage = (props: Props) => {
             display: {
               xs: "none",
               sm: "flex",
-            }
+            },
           }}
         >
           {props.time[0].toUpperCase()}
           {props.time.substring(1)} Food
         </Typography>
-        {props.time === "latest" && (
-          <Button variant="contained" sx={{ color: "#fff", fontWeight: 550 }} onClick={() => navigate("/food/scheduled")}>
-            See scheduled foods
-          </Button>
-        )}
-        {props.time === "scheduled" && (
-          <Button variant="contained" onClick={() => navigate("/food/latest")}>
-            See latest foods
-          </Button>
-        )}
+        <Button
+          variant="contained"
+          sx={{ color: "#fff", fontWeight: 550 }}
+          onClick={() => navigate(`/food/${oppositeTime}`)}
+        >
+          See {oppositeTime} foods
+        </Button>
       </Box>
       <Grid container spacing={4}>
         {foodEvents.map((foodEvent) => (
