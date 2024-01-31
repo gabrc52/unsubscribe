@@ -48,6 +48,16 @@ const App = () => {
       );
   }, []);
 
+  // Request notification permission
+  // TODO: show something if notifications are off
+  useEffect(() => {
+    if (userId) {
+      Notification.requestPermission().then((result) => {
+        console.log("We requested notifications permission, got", result);
+      });
+    }
+  }, [userId]);
+
   const handleLogin = (credentialResponse: CredentialResponse) => {
     console.log("On handle login, got", credentialResponse);
     const userToken = credentialResponse.credential;
