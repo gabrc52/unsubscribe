@@ -22,7 +22,7 @@
   border-color: var(--dimmerblue);
 }
 
-a:-webkit-any-link {
+.fc a:-webkit-any-link {
   color: var(--brighterblue);
   cursor: pointer;
 }
