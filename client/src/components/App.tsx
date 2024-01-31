@@ -72,7 +72,7 @@ const App = () => {
             {/* Check if logged in, else show Login */}
             {userId ? (
               <UserIdContext.Provider value={userId}>
-                <NavBar userId={userId} handleLogout={handleLogout} />
+                <NavBar handleLogout={handleLogout} />
                 <Routes>
                   <Route path="/" element={<FoodPage />} />
                   <Route path="/food" element={<FoodPage />} />

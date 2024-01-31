@@ -10,12 +10,12 @@ import "./NavBar.css";
 /**
  * The navigation bar at the bottom of all pages. Takes no props.
  */
-const NavBar = (props: { userId: string; handleLogout: () => void }) => {
+const NavBar = (props: { handleLogout: () => void }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    get(`/api/whoami`).then((userObj) => setUser(userObj));
   }, []);
 
   if (!user) {
@@ -74,8 +74,7 @@ const NavBar = (props: { userId: string; handleLogout: () => void }) => {
           }}
           color="inherit"
         >
-          {renderAvatar()} &nbsp;
-          Logout
+          {renderAvatar()} &nbsp; Logout
         </Button>
       </Toolbar>
     </AppBar>
