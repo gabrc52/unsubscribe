@@ -48,6 +48,16 @@ const App = () => {
       );
   }, []);
 
+  // Request notification permission
+  // TODO: show something if notifications are off
+  useEffect(() => {
+    if (userId) {
+      Notification.requestPermission().then((result) => {
+        console.log("We requested notifications permission, got", result);
+      });
+    }
+  }, [userId]);
+
   const handleLogin = (credentialResponse: CredentialResponse) => {
     console.log("On handle login, got", credentialResponse);
     const userToken = credentialResponse.credential;
@@ -65,26 +75,6 @@ const App = () => {
     setUserId(undefined);
     post("/api/logout");
   };
-
-  // const [darkMode, setDarkMode] = useState(false);
-
-  // const theme = createTheme({
-  //   palette: {
-  //     mode: darkMode ? "dark" : "light",
-  //     primary: {
-  //       main: "#f4575b",
-  //     },
-  //     secondary: {
-  //       main: "#001e3c",
-  //     },
-  //     error: {
-  //       main: red.A400,
-  //     },
-  //   },
-  //   typography: {
-  //     fontFamily: "Montserrat, Roboto, -apple-system, Segoe UI, sans-serif",
-  //   },
-  // });
 
   const [mode, setMode] = useState("light");
 
@@ -138,8 +128,12 @@ const App = () => {
             {/* Check if logged in, else show Login */}
             {userId ? (
               <UserIdContext.Provider value={userId}>
-                {/* <NavBar darkMode={darkMode} setDarkMode={setDarkMode} handleLogout={handleLogout} /> */}
-                <NavBar mode={mode} setMode={setMode} logo={selectedLogo} handleLogout={handleLogout} />
+                <NavBar
+                  mode={mode}
+                  setMode={setMode}
+                  logo={selectedLogo}
+                  handleLogout={handleLogout}
+                />
                 <Routes>
                   {/* LLMs are actually helpful! https://chat.openai.com/share/5c529995-8331-43b3-82fa-6ee9dcd5c253 */}
                   <Route path="/" element={<Navigate to="/food/latest" replace />} />

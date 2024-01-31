@@ -23,6 +23,7 @@ const FoodEventSchema = new Schema({
   postedDate: {
     type: Date,
     // automatically set to now so no need to do anything else :D
+    // TODO: this causes a bug for the posts that didn't have a date, so that any QUERIES also return the now
     default: Date.now,
   },
   // date the food event is scheduled to (if scheduled is true)

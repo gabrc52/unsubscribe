@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ReactTimeAgo from "react-time-ago";
-import { get, post } from "../../utilities";
+import { get } from "../../utilities";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
 import { Box, Button, Link, Tooltip } from "@mui/material";
 import ChatIcon from "@mui/icons-material/Chat";
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import {
   Avatar,
   Card,
@@ -27,6 +26,7 @@ import Comment from "../../../../shared/Comment"; // must import if using IComme
 import OptionsButton from "./OptionsButton";
 // ^^^ also change in CommentsBlock.tsx
 import "./FoodCard.css";
+import { socket } from "../../client-socket";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -49,11 +49,27 @@ const FoodCard = (foodEvent: FoodEvent) => {
   const [markedGoneBy, setMarkedGoneBy] = useState("");
 
   useEffect(() => {
-    get(`/api/foodevents/${foodEvent._id}/comments`)
-      .then((comments) => {
-        setComments(comments);
-      })
-      .catch(console.warn);
+    const updateComments = () => {
+      get(`/api/foodevents/${foodEvent._id}/comments`)
+        .then((comments) => {
+          setComments(comments);
+        })
+        .catch(console.warn);
+    };
+
+    updateComments();
+
+    const handleCommentsUpdate = (foodEventId) => {
+      if (foodEvent._id === foodEventId) {
+        updateComments();
+      }
+    };
+
+    socket.on("CommentsUpdate", handleCommentsUpdate);
+
+    return () => {
+      socket.off("CommentsUpdate", handleCommentsUpdate);
+    };
   }, []);
 
   const handleMarkAsGone = () => {

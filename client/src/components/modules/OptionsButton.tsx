@@ -33,11 +33,12 @@ export default function OptionsButton(foodEvent: FoodEvent) {
   };
 
   const unmarkGone = () => {
-    setUnmarkedGone(!unmarkedGone)
+    setUnmarkedGone(!unmarkedGone);
     fetch(`/api/foodevents/unmarkAsGone/${foodEvent._id}`, {
-      method: 'POST'
+      method: "POST",
     }).catch(console.error);
-  }
+    handleClose();
+  };
 
   return (
     <div>
@@ -60,23 +61,21 @@ export default function OptionsButton(foodEvent: FoodEvent) {
         Dashboard
       </Button> */}
       {(foodEvent.creator_userId === userId || foodEvent.isGone === true) && (
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        {/** TODO: FIX FUCKED UP STYLING */}
-        {foodEvent.creator_userId === userId && (
-          <MenuItem onClick={handlePostDelete}>Delete post</MenuItem>
-        )}
-        {foodEvent.isGone === true && (
-          <MenuItem onClick={unmarkGone}>Unmark gone</MenuItem>
-        )}
-      </Menu>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          {/** TODO: FIX FUCKED UP STYLING */}
+          {foodEvent.creator_userId === userId && (
+            <MenuItem onClick={handlePostDelete}>Delete post</MenuItem>
+          )}
+          {foodEvent.isGone === true && <MenuItem onClick={unmarkGone}>Unmark gone</MenuItem>}
+        </Menu>
       )}
     </div>
   );
