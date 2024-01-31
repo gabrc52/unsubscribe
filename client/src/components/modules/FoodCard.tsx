@@ -69,7 +69,8 @@ const FoodCard = (foodEvent: FoodEvent) => {
       );
       if (reallyMarkAsGone) {
         setMarkedGone(!markedGone);
-        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
+        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, 
+        {
           method: 'POST'
         }).catch(console.error)
       }
@@ -157,7 +158,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
             Mark as gone?
           </Button>
         )}
-        {foodEvent.isGone && <Typography variant="body2">Marked gone by {markedGoneBy}</Typography>}
+        {foodEvent.isGone && <Typography variant="body2">Marked gone by ${foodEvent.markedGoneBy}</Typography>}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
