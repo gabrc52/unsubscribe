@@ -21,7 +21,7 @@ const YourPosts = (props: {}) => {
     // Fetch user information
     get("/api/whoami").then((userObj) => setUser(userObj));
     console.log("user is", user?.name);
-    get(`/api/user/posts`).then((posts) => setUserPosts(posts));
+    get(`/api/user/me/posts`).then((posts) => setUserPosts(posts));
     // console.log("userPosts is", userPosts[0]);
   }, []);
 
@@ -58,7 +58,7 @@ const YourPosts = (props: {}) => {
     const messages = {
       lessThan5: [
         "You're a food waste warrior in the making! Keep those posts coming ;)",
-        "Every post means one less 'unsubscribe pls🥺' making it to free-foods xD (claims unverified...)"
+        "Every post means one less 'unsubscribe pls🥺' making it to free-foods xD (claims unverified...)",
       ],
       between5And9: [
         "Thanks for being a food waste warrior! Every post makes a difference :)",
@@ -77,11 +77,11 @@ const YourPosts = (props: {}) => {
         "Champion of munching! Your posts are a *feast* for the eyes.",
       ],
     };
-  
+
     const randomIndex = Math.floor(Math.random() * 2); // Randomly choose between two messages
     return messages[tier][randomIndex];
   };
-  
+
   const getPersonalMessage = () => {
     const numberOfPosts = userPosts.length;
 
@@ -102,10 +102,12 @@ const YourPosts = (props: {}) => {
     <>
       <div className="YourPosts-container">
         <div>
-        <h1 className="YourPosts-name u-flex u-flex-alignCenter">{renderAvatar()} &nbsp;{user.name}</h1>
-        <p className="YourPosts-congratulatory-message u-flex u-flex-alignCenter">
-        {getPersonalMessage()}
-        </p>
+          <h1 className="YourPosts-name u-flex u-flex-alignCenter">
+            {renderAvatar()} &nbsp;{user.name}
+          </h1>
+          <p className="YourPosts-congratulatory-message u-flex u-flex-alignCenter">
+            {getPersonalMessage()}
+          </p>
         </div>
         <hr className="YourPosts-linejj" />
         <div className="YourPosts-feed u-flex">

@@ -50,18 +50,17 @@ router.get("/whoami", (req, res) => {
   res.send(req.user);
 });
 
-router.get("/user", (req, res) => {
-  if (typeof req.query.userid === "string") {
-    User.findOne({ userId: req.query.userid }).then((user) => {
+router.get("/user/:userId", ensureLoggedIn, (req, res) => {
+  User.findOne({ userId: req.params.userId })
+    .then((user) => {
       res.send(user);
+    })
+    .catch((e) => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${e}` });
     });
-  } else {
-    res.status(StatusCodes.BAD_REQUEST);
-    res.send({ error: "Please provide the user ID (and only one)" });
-  }
 });
 
-router.get("/user/posts", ensureLoggedIn, async (req, res) => {
+router.get("/user/me/posts", ensureLoggedIn, async (req, res) => {
   try {
     const userId = req.user!.userId;
     console.log("logged in user id is", userId);
@@ -104,7 +103,7 @@ router.get("/foodevents", ensureLoggedIn, async (req, res) => {
   }
 });
 
-router.post("/foodevent", ensureLoggedIn, async (req, res) => {
+router.post("/foodevents/new", ensureLoggedIn, async (req, res) => {
   try {
     const creator_userId = req.user!.userId;
 

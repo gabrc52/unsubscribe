@@ -127,7 +127,7 @@ const NewComment = (props) => {
 const NewFoodevent = (props) => {
   const addFoodevent = ({ food_type, title, content, photos }) => {
     const body = { food_type, title, content, photos };
-    post("/api/foodevent", body).then((foodevent) => {
+    post("/api/foodevents/new", body).then((foodevent) => {
       props.addNewFoodevent(foodevent);
     });
   };

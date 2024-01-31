@@ -102,7 +102,7 @@ export const NewFoodPage = () => {
     }
     console.log("form data is", formData);
     try {
-      const result = await postMultiform("/api/foodevent", formData);
+      const result = await postMultiform("/api/foodevents/new", formData);
       console.log(result);
       navigate("/food");
     } catch (e) {
