@@ -204,8 +204,6 @@ router.get("/foodevents/:postId/comments", async (req, res) => {
     const comments = await Comment.find({ parent: req.params.postId });
     const populatedComments = await Promise.all(
       comments.map(async (comment) => {
-        // - should i make parent function to getCreatorName or is this fine enough for now
-        // - i'm not sure what you're asking but it's probably fine?
         const creator = await getCreatorName(comment.creator_userId, undefined);
         return { ...comment.toObject(), creator };
       })
@@ -305,22 +303,6 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
   }
 });
-
-// MUST FIX rag.ts TO USE THIS
-
-// router.post("/query", (req, res) => {
-//   const makeQuery = async () => {
-//     try {
-//       const queryresponse = await ragManager.retrievalAugmentedGeneration(req.body.query);
-//       res.send({ queryresponse });
-//     } catch (error) {
-//       console.log("error:", error);
-//       res.status(500);
-//       res.send({});
-//     }
-//   };
-//   makeQuery();
-// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

@@ -19,14 +19,12 @@ import {
   // IconButton,
   Typography,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
 import FoodEvent from "../../../../shared/FoodEvent";
 import CommentsBlock from "./CommentsBlock";
 import Comment from "../../../../shared/Comment"; // must import if using IComment
 import OptionsButton from "./OptionsButton";
 import "./FoodCard.css";
 import { socket } from "../../client-socket";
-import User from "../../../../shared/User";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -44,7 +42,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const FoodCard = (foodEvent: FoodEvent) => {
-  const [comments, setComments] = useState<Comment[]>([]); // or <IComment[]> ??
+  const [comments, setComments] = useState<Comment[]>([]);
   const [markedGone, setMarkedGone] = useState(false);
   const [markedGoneBy, setMarkedGoneBy] = useState("");
   const [markedGoneByPic, setMarkedGoneByPic] = useState("");
@@ -101,35 +99,24 @@ const FoodCard = (foodEvent: FoodEvent) => {
     }
   };
 
-  // // temporary avatar fix bc this type stuff was driving me insane
-  // const [markingUser, setMarkingUser] = useState<User>();
-
-  // const renderAvatar = () => {
-  //   // Handle Google avatars
-  //   if (markingUser) {
-  //     if (markingUser.picture) {
-  //       return <Avatar alt="Avatar" src={markingUser.picture} sx={{ width: 24, height: 24 }} />;
-  //     } else {
-  //       // Default avatar or placeholder if login type is unknown
-  //       return (
-  //         <Avatar className="Card-avatarGradient" aria-label="recipe">
-  //           {markingUser.name.at(0)}
-  //         </Avatar>
-  //       );
-  //     }
-  //   }
-  // };
-
   const markedGoneByPicGetter = () => {
     // Handle Google avatars
-    // console.log("calling markedGoneByPicGetter", foodEvent)
     if (foodEvent.markedGonePic) {
-      // console.log("markedGoneByPicGetter", foodEvent.markedGonePic);
-      return <Avatar alt="Avatar" src={foodEvent.markedGonePic} sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }} />;
+      return (
+        <Avatar
+          alt="Avatar"
+          src={foodEvent.markedGonePic}
+          sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center" }}
+        />
+      );
     } else if (foodEvent.markedGoneName) {
       // Default avatar or placeholder if login type is unknown
       return (
-        <Avatar className="Card-avatarGradient" sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center", fontSize: "12px" }} aria-label="recipe">
+        <Avatar
+          className="Card-avatarGradient"
+          sx={{ width: 20, height: 20, marginBottom: 0.3, alignSelf: "center", fontSize: "12px" }}
+          aria-label="recipe"
+        >
           {foodEvent.markedGoneName.at(0)}
         </Avatar>
       );
@@ -194,7 +181,6 @@ const FoodCard = (foodEvent: FoodEvent) => {
       {foodEvent.photos.length > 0 && (
         <CardMedia component="img" height="200" image={foodEvent.photos[0]} />
       )}
-      {/* TODO: change to suit our needs */}
       <CardContent>
         <Typography
           variant="body2"
@@ -205,12 +191,6 @@ const FoodCard = (foodEvent: FoodEvent) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {/* <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
         {!foodEvent.scheduled && !foodEvent.isGone && (
           <Button
             variant="contained"
@@ -222,16 +202,17 @@ const FoodCard = (foodEvent: FoodEvent) => {
         )}
         {!foodEvent.scheduled && foodEvent.isGone && (
           <Typography
-          className="isGone u-flex u-flexRow"
-          variant="body2"
-          color="secondary"
-          sx={{ overflow: "auto", maxWidth: "100%" }}
-        >
-          <p>
-            <b>Marked gone</b> by {foodEvent.markedGoneName}
-          </p>{" "}&nbsp;
-          {markedGoneByPicGetter()}
-        </Typography>
+            className="isGone u-flex u-flexRow"
+            variant="body2"
+            color="secondary"
+            sx={{ overflow: "auto", maxWidth: "100%" }}
+          >
+            <p>
+              <b>Marked gone</b> by {foodEvent.markedGoneName}
+            </p>{" "}
+            &nbsp;
+            {markedGoneByPicGetter()}
+          </Typography>
         )}
         <ExpandMore
           expand={expanded}
