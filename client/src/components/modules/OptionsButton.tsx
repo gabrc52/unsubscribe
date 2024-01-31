@@ -43,11 +43,22 @@ export default function OptionsButton(foodEvent: FoodEvent) {
     handleClose();
   };
 
-  const copyLink = () => {
+  const shareLink = () => {
     const postLink = `${window.location.origin}/food/#${foodEvent._id}`;
-    navigator.clipboard.writeText(postLink).then(() => {
-      alert("Link copied to clipboard!");
-    });
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+    if (!navigator.canShare) {
+      // Desktop
+      navigator.clipboard.writeText(postLink).then(() => {
+        alert("Link copied to clipboard!");
+      });
+    } else {
+      // Mobile
+      navigator.share({
+        title: foodEvent.title ?? `${foodEvent.food_category} in ${foodEvent.location}`,
+        text: `Sent by ${foodEvent.creator || foodEvent.emailer_name}. Check it out on Unsubscribe App!`,
+        url: postLink,
+      });
+    }
     handleClose();
   };
 
@@ -88,7 +99,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
               &nbsp;Delete post
             </MenuItem>
           )}
-          <MenuItem onClick={copyLink}>
+          <MenuItem onClick={shareLink}>
             <ShareIcon />
             &nbsp;Share post
           </MenuItem>
