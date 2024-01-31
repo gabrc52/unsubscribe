@@ -27,6 +27,7 @@ import Comment from "../../../../shared/Comment"; // must import if using IComme
 import OptionsButton from "./OptionsButton";
 // ^^^ also change in CommentsBlock.tsx
 import "./FoodCard.css";
+import { socket } from "../../client-socket";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -49,11 +50,27 @@ const FoodCard = (foodEvent: FoodEvent) => {
   const [markedGoneBy, setMarkedGoneBy] = useState("");
 
   useEffect(() => {
-    get(`/api/foodevents/${foodEvent._id}/comments`)
+    const updateComments = () => {
+      get(`/api/foodevents/${foodEvent._id}/comments`)
       .then((comments) => {
         setComments(comments);
       })
       .catch(console.warn);
+    }
+
+    updateComments();
+
+    const handleCommentsUpdate = (foodEventId) => {
+      if (foodEvent._id === foodEventId) {
+        updateComments();
+      }
+    };
+
+    socket.on('CommentsUpdate', handleCommentsUpdate);
+
+    return () => {
+      socket.off('CommentsUpdate', handleCommentsUpdate);
+    };
   }, []);
 
   const handleMarkAsGone = () => {

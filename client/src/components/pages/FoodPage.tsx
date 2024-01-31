@@ -4,6 +4,7 @@ import FoodEvent from "../../../../shared/FoodEvent";
 import { get } from "../../utilities";
 import FoodCard from "../modules/FoodCard";
 import { useNavigate } from "react-router";
+import { socket } from "../../client-socket";
 
 type Props = {
   time: "latest" | "scheduled"; // | "any";
@@ -16,7 +17,13 @@ const FoodPage = (props: Props) => {
 
   useEffect(() => {
     document.title = "Food Events";
-    get("/api/foodevents", { scheduled: props.time === "scheduled" }).then(setFoodEvents);
+    const fetchFoodEvents = () =>
+      get("/api/foodevents", { scheduled: props.time === "scheduled" }).then(setFoodEvents);
+    fetchFoodEvents();
+    socket.on("FoodEventsUpdate", fetchFoodEvents);
+    return () => {
+      socket.off("FoodEventsUpdate", fetchFoodEvents);
+    };
   }, [props.time]);
 
   // https://mui.com/material-ui/react-card/#complex-interaction

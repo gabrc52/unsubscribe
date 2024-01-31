@@ -185,6 +185,7 @@ router.post("/foodevents/new", ensureLoggedIn, async (req, res) => {
 
       // Send the response
       res.send(savedEvent);
+      socketManager.getIo().emit("FoodEventsUpdate");
     });
   } catch (error) {
     console.error("Error creating food event:", error);
@@ -214,9 +215,10 @@ router.get("/foodevents/:postId/comments", async (req, res) => {
 router.post("/foodevents/:postId/comments/new", ensureLoggedIn, (req, res) => {
   console.log("Attempt to add new comment");
   console.log("post id", req.params.postId);
+  const parent = req.params.postId;
   const newComment = new Comment({
     creator_userId: req.user!.userId,
-    parent: req.params.postId,
+    parent: parent,
     content: req.body.content,
   });
   console.log(newComment);
@@ -228,6 +230,7 @@ router.post("/foodevents/:postId/comments/new", ensureLoggedIn, (req, res) => {
       console.error(error);
       res.send({ error: `${error}` });
     });
+  socketManager.getIo().emit("CommentsUpdate", parent);
 });
 
 router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
@@ -247,6 +250,7 @@ router.delete("/foodevents/:postId", ensureLoggedIn, async (req, res) => {
 
     await FoodEvent.findByIdAndDelete(postId);
     res.status(StatusCodes.OK).send({ message: "Post deleted successfully" });
+    socketManager.getIo().emit("FoodEventsUpdate");
   } catch (error) {
     console.error("Error deleting post:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
@@ -267,6 +271,7 @@ router.post("/foodevents/markAsGone/:postId", ensureLoggedIn, async (req, res) =
     }
 
     res.send(updatedEvent);
+    socketManager.getIo().emit("FoodEventsUpdate");
   } catch (error) {
     console.error("Error marking event as gone:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
@@ -287,6 +292,7 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
     }
 
     res.send(updatedEvent);
+    socketManager.getIo().emit("FoodEventsUpdate");
   } catch (error) {
     console.error("Error unmarking event as gone:", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
