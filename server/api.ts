@@ -267,6 +267,7 @@ router.post("/foodevents/markAsGone/:postId", ensureLoggedIn, async (req, res) =
     const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, {
       isGone: true,
       markedGoneBy: req.user!.userId,
+      markedGoneByPic: req.user!.picture,
     });
 
     if (!updatedEvent) {
@@ -288,6 +289,7 @@ router.post("/foodevents/unmarkAsGone/:postId", ensureLoggedIn, async (req, res)
     const updatedEvent = await FoodEvent.findByIdAndUpdate(postId, {
       isGone: false,
       markedGoneBy: undefined,
+      markedGoneByPic: undefined,
     });
 
     if (!updatedEvent) {

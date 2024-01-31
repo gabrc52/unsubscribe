@@ -27,3 +27,12 @@
     /* rgba(0, 30, 60, 0.8), */ rgba(250, 199, 37, 0.8)
   );
 }
+
+.isGone p {
+  padding-left: var(--s);
+  font-weight: 550;
+}
+
+.isGone b {
+  font-weight: 750;
+}

@@ -24,9 +24,9 @@ import FoodEvent from "../../../../shared/FoodEvent";
 import CommentsBlock from "./CommentsBlock";
 import Comment from "../../../../shared/Comment"; // must import if using IComment
 import OptionsButton from "./OptionsButton";
-// ^^^ also change in CommentsBlock.tsx
 import "./FoodCard.css";
 import { socket } from "../../client-socket";
+import User from "../../../../shared/User";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -47,6 +47,7 @@ const FoodCard = (foodEvent: FoodEvent) => {
   const [comments, setComments] = useState<Comment[]>([]); // or <IComment[]> ??
   const [markedGone, setMarkedGone] = useState(false);
   const [markedGoneBy, setMarkedGoneBy] = useState("");
+  const [markedGoneByPic, setMarkedGoneByPic] = useState("");
 
   useEffect(() => {
     const updateComments = () => {
@@ -78,6 +79,11 @@ const FoodCard = (foodEvent: FoodEvent) => {
         if (user.name) {
           setMarkedGoneBy(user.name);
         }
+        if (user.picture) {
+          console.log("setting markedGoneByPic", user.picture);
+          setMarkedGoneByPic(user.picture);
+        }
+        // setMarkingUser(user);
       });
     }
 
@@ -86,11 +92,47 @@ const FoodCard = (foodEvent: FoodEvent) => {
         `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
       );
       if (reallyMarkAsGone) {
+        console.log("marking as gone");
         setMarkedGone(!markedGone);
         fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
           method: "POST",
         }).catch(console.error);
       }
+    }
+  };
+
+  // // temporary avatar fix bc this type stuff was driving me insane
+  // const [markingUser, setMarkingUser] = useState<User>();
+
+  // const renderAvatar = () => {
+  //   // Handle Google avatars
+  //   if (markingUser) {
+  //     if (markingUser.picture) {
+  //       return <Avatar alt="Avatar" src={markingUser.picture} sx={{ width: 24, height: 24 }} />;
+  //     } else {
+  //       // Default avatar or placeholder if login type is unknown
+  //       return (
+  //         <Avatar className="Card-avatarGradient" aria-label="recipe">
+  //           {markingUser.name.at(0)}
+  //         </Avatar>
+  //       );
+  //     }
+  //   }
+  // };
+
+  const markedGoneByPicGetter = () => {
+    // Handle Google avatars
+    console.log("calling markedGoneByPicGetter", foodEvent)
+    if (foodEvent.markedGonePic) {
+      console.log("markedGoneByPicGetter", foodEvent.markedGonePic);
+      return <Avatar alt="Avatar" src={foodEvent.markedGonePic} sx={{ width: 24, height: 24 }} />;
+    } else if (foodEvent.markedGoneName) {
+      // Default avatar or placeholder if login type is unknown
+      return (
+        <Avatar className="Card-avatarGradient" sx={{ width: 24, height: 24 }} aria-label="recipe">
+          {foodEvent.markedGoneName.at(0)}
+        </Avatar>
+      );
     }
   };
 
@@ -170,13 +212,21 @@ const FoodCard = (foodEvent: FoodEvent) => {
           <ShareIcon />
         </IconButton> */}
         {!foodEvent.isGone && (
-          <Button variant="contained" onClick={handleMarkAsGone}
-          sx={{ bgcolor: "secondary.main", color: "primary.contrastText", fontWeight: 570 }}>
+          <Button
+            variant="contained"
+            onClick={handleMarkAsGone}
+            sx={{ bgcolor: "secondary.main", color: "primary.contrastText", fontWeight: 570 }}
+          >
             Mark as gone?
           </Button>
         )}
         {foodEvent.isGone && (
-          <Typography variant="body2">Marked gone by {foodEvent.markedGoneName}</Typography>
+          <Typography className="isGone" variant="body2" color="secondary">
+            <p>
+              <b>Marked gone</b> by {foodEvent.markedGoneName}
+              {/* {markedGoneByPicGetter()} */}
+            </p>
+          </Typography>
         )}
         <ExpandMore
           expand={expanded}

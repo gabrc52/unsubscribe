@@ -12,6 +12,7 @@ export type IFoodEvent = PlainInterface<FoodEvent> & {
   title: string;
   creator: string;
   markedGoneName: string;
+  markedGonePic: string;
 };
 
 export default IFoodEvent;

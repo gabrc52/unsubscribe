@@ -30,6 +30,7 @@ const FoodEventSchema = new Schema({
   scheduledDate: Date,
   isGone: Boolean,
   markedGoneBy: String,
+  markedGoneByPic: String,
 });
 
 export interface FoodEvent extends Document {
@@ -48,6 +49,7 @@ export interface FoodEvent extends Document {
   scheduledDate: Date;
   isGone: Boolean;
   markedGoneBy?: string;
+  markedGoneByPic?: string;
 }
 
 const FoodEventModel = model<FoodEvent>("FoodEvent", FoodEventSchema);

@@ -45,9 +45,10 @@ const NavBar = (props: {
       );
     }
   };
+  
   return (
     // TODO: for accessibility etc we might want a link instead of a button but I can't figure out how to do that
-    <AppBar className="NavBar-container" position="sticky" sx={{ bgcolor: "secondary" }}>
+    <AppBar className="NavBar-container" position="sticky">
       <Toolbar>
         <Box>
           <img className="Navbar-logo" src={props.logo} alt="Unsubscribe logo" height={34.5} />
@@ -69,16 +70,16 @@ const NavBar = (props: {
         >
           <Box className="NavBar-title">Unsubscribe</Box>
         </Typography>
-        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/food")} color="inherit">
+        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/food")} color="inherit">
           Food
         </Button>
-        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/yourposts")} color="inherit">
+        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/yourposts")} color="inherit">
           Your Posts
         </Button>
-        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/resources")} color="inherit">
+        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/resources")} color="inherit">
           Resources @ MIT
         </Button>
-        <Button sx={{ marginRight: 1 }} onClick={() => navigate("/about")} color="inherit">
+        <Button sx={{ marginRight: 1, fontWeight: 550 }} onClick={() => navigate("/about")} color="inherit">
           About
         </Button>
         <Box sx={{ flexGrow: 1 }}></Box>
@@ -95,6 +96,7 @@ const NavBar = (props: {
               props.handleLogout();
             }}
             color="secondary"
+            sx={{ fontWeight: 550 }}
           >
             Logout &nbsp;&nbsp; {renderAvatar(user)}
           </Button>
