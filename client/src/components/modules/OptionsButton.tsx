@@ -44,7 +44,7 @@ export default function OptionsButton(foodEvent: FoodEvent) {
   };
 
   const shareLink = () => {
-    const postLink = `${window.location.origin}/food/#${foodEvent._id}`;
+    const postLink = `${window.location.origin}/food/${foodEvent.scheduled ? "scheduled" : "latest"}/#${foodEvent._id}`;
     // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
     if (!navigator.canShare) {
       // Desktop
