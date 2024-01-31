@@ -42,7 +42,7 @@ const FoodPage = (props: Props) => {
           },
         }}
       >
-        <Button variant="contained" onClick={() => navigate("/food/new")}>
+        <Button variant="contained" sx={{ color: "#fff", fontWeight: 550 }} onClick={() => navigate("/food/new")}>
           Submit a New Food
         </Button>
         <Typography
@@ -54,14 +54,14 @@ const FoodPage = (props: Props) => {
             display: {
               xs: "none",
               sm: "flex",
-            },
+            }
           }}
         >
           {props.time[0].toUpperCase()}
           {props.time.substring(1)} Food
         </Typography>
         {props.time === "latest" && (
-          <Button variant="contained" onClick={() => navigate("/food/scheduled")}>
+          <Button variant="contained" sx={{ color: "#fff", fontWeight: 550 }} onClick={() => navigate("/food/scheduled")}>
             See scheduled foods
           </Button>
         )}

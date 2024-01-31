@@ -170,7 +170,8 @@ const FoodCard = (foodEvent: FoodEvent) => {
           <ShareIcon />
         </IconButton> */}
         {!foodEvent.isGone && (
-          <Button variant="contained" onClick={handleMarkAsGone}>
+          <Button variant="contained" onClick={handleMarkAsGone}
+          sx={{ bgcolor: "secondary.main", color: "primary.contrastText", fontWeight: 570 }}>
             Mark as gone?
           </Button>
         )}

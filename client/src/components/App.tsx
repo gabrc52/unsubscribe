@@ -99,6 +99,7 @@ const App = () => {
       mode: "light",
       primary: {
         main: "#f4575b",
+        contrastText: "#fff",
       },
       secondary: {
         main: "#001e3c",
@@ -118,9 +119,14 @@ const App = () => {
       mode: "dark",
       primary: {
         main: "#f4575b",
+        light: "#f4575b",
+        dark: "#f4575b",
+        contrastText: "#003c77",
       },
       secondary: {
         main: "#fdb73e",
+        light: "#fdb73e",
+        dark: "#fdb73e",
         contrastText: "#001e3c",
       },
       error: {
