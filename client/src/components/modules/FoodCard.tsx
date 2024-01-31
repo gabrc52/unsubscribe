@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ReactTimeAgo from "react-time-ago";
-import { get, post } from "../../utilities";
+import { get } from "../../utilities";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
 import { Box, Button, Link, Tooltip } from "@mui/material";
-import ChatIcon from '@mui/icons-material/Chat';
-import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
+import ChatIcon from "@mui/icons-material/Chat";
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import {
   Avatar,
   Card,
@@ -52,11 +51,11 @@ const FoodCard = (foodEvent: FoodEvent) => {
   useEffect(() => {
     const updateComments = () => {
       get(`/api/foodevents/${foodEvent._id}/comments`)
-      .then((comments) => {
-        setComments(comments);
-      })
-      .catch(console.warn);
-    }
+        .then((comments) => {
+          setComments(comments);
+        })
+        .catch(console.warn);
+    };
 
     updateComments();
 
@@ -66,10 +65,10 @@ const FoodCard = (foodEvent: FoodEvent) => {
       }
     };
 
-    socket.on('CommentsUpdate', handleCommentsUpdate);
+    socket.on("CommentsUpdate", handleCommentsUpdate);
 
     return () => {
-      socket.off('CommentsUpdate', handleCommentsUpdate);
+      socket.off("CommentsUpdate", handleCommentsUpdate);
     };
   }, []);
 
@@ -199,14 +198,16 @@ const FoodCard = (foodEvent: FoodEvent) => {
             {expanded ? <MarkChatReadIcon /> : <ChatIcon />}
           </Typography>{" "}
           {/* <ExpandMoreIcon sx={{ marginBottom: 1 }}/> */}
-          {expanded ? <ExpandMoreIcon sx={{ marginTop: 1 }}/> : <ExpandMoreIcon sx={{ marginBottom: 1 }}/>}
+          {expanded ? (
+            <ExpandMoreIcon sx={{ marginTop: 1 }} />
+          ) : (
+            <ExpandMoreIcon sx={{ marginBottom: 1 }} />
+          )}
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, mt: 0 }}>
-          <Typography variant="overline">
-            Comments
-          </Typography>
+          <Typography variant="overline">Comments</Typography>
           <CommentsBlock
             comments={comments}
             foodevent={foodEvent}
