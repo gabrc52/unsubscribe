@@ -270,6 +270,26 @@ router.post("/foodevents/markAsGone", ensureLoggedIn, async (req, res) => {
   }
 });
 
+router.post("/foodevents/unmarkAsGone", ensureLoggedIn, async (req, res) => {
+  try {
+    const eventId = req.body.eventId;
+
+    const updatedEvent = await FoodEvent.findByIdAndUpdate(
+      eventId,
+      { isGone: false }, 
+    );
+
+    if (!updatedEvent) {
+      return res.status(StatusCodes.NOT_FOUND).send({ error: "Event not found" });
+    }
+
+    res.send(updatedEvent);
+  } catch (error) {
+    console.error("Error marking event as gone:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ error: `${error}` });
+  }
+});
+
 
 // MUST FIX rag.ts TO USE THIS
 
