@@ -73,7 +73,6 @@ const FoodCard = (foodEvent: FoodEvent) => {
   }, []);
 
   const handleMarkAsGone = () => {
-    setMarkedGone(!markedGone);
     if (!markedGone) {
       get("/api/whoami").then((user) => {
         if (user.name) {
@@ -87,7 +86,8 @@ const FoodCard = (foodEvent: FoodEvent) => {
         `Are you sure you want to mark this as gone? "${foodEvent.title || foodEvent.food_type}"`
       );
       if (reallyMarkAsGone) {
-        fetch("/foodevents/markAsGone", {
+        setMarkedGone(!markedGone);
+        fetch(`/api/foodevents/markAsGone/${foodEvent._id}`, {
           method: "POST",
         }).catch(console.error);
       }
@@ -169,13 +169,13 @@ const FoodCard = (foodEvent: FoodEvent) => {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
-        {!markedGone && (
+        {!foodEvent.isGone && (
           <Button variant="contained" onClick={handleMarkAsGone}>
             Mark as gone?
           </Button>
         )}
-        {markedGone && foodEvent.isGone && (
-          <Typography variant="body2">Marked gone by {markedGoneBy}</Typography>
+        {foodEvent.isGone && (
+          <Typography variant="body2">Marked gone by {foodEvent.markedGoneName}</Typography>
         )}
         <ExpandMore
           expand={expanded}
