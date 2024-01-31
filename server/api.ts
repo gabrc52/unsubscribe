@@ -256,7 +256,8 @@ router.post("/foodevents/markAsGone/:postId", ensureLoggedIn, async (req, res) =
 
     const updatedEvent = await FoodEvent.findByIdAndUpdate(
       postId,
-      { isGone: true }, 
+      { isGone: true, 
+      markedGoneBy: User.name}
     );
 
     if (!updatedEvent) {
