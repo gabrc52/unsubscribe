@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import ReactTimeAgo from "react-time-ago";
 import { get, post } from "../../utilities";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ShareIcon from "@mui/icons-material/Share";
 import { styled } from "@mui/material/styles";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
   Avatar,
   Card,
@@ -92,7 +93,14 @@ const FoodCard = (foodEvent: FoodEvent) => {
         }
         action={<OptionsButton {...foodEvent} />}
         title={foodEvent.title ?? `${foodEvent.food_type} in ${foodEvent.location}`}
-        subheader={`${foodEvent.creator ?? "Unknown"} - ${foodEvent.postedDate ?? "Unknown Date"}`}
+        subheader={
+          <>
+            <Typography variant="body2">{foodEvent.creator ?? "Unknown"}</Typography>
+            <Box sx={{ fontSize: 12 }}>
+              {foodEvent.postedDate && <ReactTimeAgo date={foodEvent.postedDate} locale="en-US" />}
+            </Box>
+          </>
+        }
       />
       {/* TODO: gallery / handle multiple photos */}
       {foodEvent.photos.length > 0 && (
