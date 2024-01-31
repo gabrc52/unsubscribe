@@ -6,11 +6,9 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import "./FoodCalendar.css";
 
-/// TODO: fix colors on dark mode! - custom css maybe? idk!
 
 // Get color by category
 const categoryToColor = (category: FoodCategory | undefined) => {
-  // TODO(ari) choose better colors
   if (category === "Groceries") {
     return "#b5e670";
   } else if (category === "Meal") {
@@ -23,9 +21,6 @@ const categoryToColor = (category: FoodCategory | undefined) => {
 
 const convertToCalendarEvent = (foodEvent: FoodEvent): EventInput => {
   const startTime = foodEvent.scheduledDate;
-  // according to chatgpt, looks wrong but there's probably not going to be anything scheduled at almost midnight
-  // maybe i would try to convert to unix then add the equivalent of 1 hour then convert back
-  // either way, adding one hour is arbitrary...
   const endTime = new Date(startTime);
   endTime.setHours(endTime.getHours() + 1);
 
