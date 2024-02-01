@@ -182,13 +182,24 @@ const FoodCard = (foodEvent: FoodEvent) => {
         <CardMedia component="img" height="200" image={foodEvent.photos[0]} />
       )}
       <CardContent>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ whiteSpace: "pre-wrap", maxHeight: 100, overflow: "auto" }}
-        >
-          {foodEvent.content}
-        </Typography>
+        {foodEvent.photos.length > 0 && (
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ whiteSpace: "pre-wrap", maxHeight: 100, overflow: "auto" }}
+          >
+            {foodEvent.content}
+          </Typography>
+        )}
+        {foodEvent.photos.length < 1 && (
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ whiteSpace: "pre-wrap", maxHeight: 280.5, overflow: "auto" }}
+          >
+            {foodEvent.content}
+          </Typography>
+        )}
       </CardContent>
       <CardActions disableSpacing>
         {!foodEvent.scheduled && !foodEvent.isGone && (

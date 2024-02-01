@@ -11,6 +11,7 @@ export type FoodCategory = WhyIsJavascriptLikeThis;
 export type IFoodEvent = PlainInterface<FoodEvent> & {
   title: string;
   creator: string;
+  creatorPic: string;
   markedGoneName: string;
   markedGonePic: string;
 };
