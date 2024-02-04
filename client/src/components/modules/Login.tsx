@@ -35,7 +35,7 @@ const Login = (props: Props) => {
                 <p>Touchstone</p>
               </span>
             </a>
-            <button className="Login-buttonPrompt u-pointer">
+            {/* <button className="Login-buttonPrompt u-pointer">
               <span className="u-flex u-flex-justifyCenter u-flex-alignCenter Login-buttonContent">
                 <GoogleLogin
                   // ux_mode="redirect"
@@ -47,7 +47,7 @@ const Login = (props: Props) => {
                   onSuccess={handleLogin}
                 />
               </span>
-            </button>
+            </button> */}
             <h3 className="Login-about">
               Discover free food, share surplus items, and be reunited with your lost
               belongings, all in one place!
