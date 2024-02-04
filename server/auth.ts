@@ -6,7 +6,8 @@ import { User as UserInterface } from "./models/User";
 import { Issuer, UserinfoResponse } from "openid-client";
 import { StatusCodes } from "http-status-codes";
 
-type LoginType = "google" | "touchstone";
+// type LoginType = "google" | "touchstone";
+type LoginType = "touchstone";
 
 /* Touchstone (OIDC - OpenID Connect) */
 
@@ -70,17 +71,17 @@ export const loginTouchstone = (req: Request, res: Response) => {
 
 /** Google */
 
-// create a new OAuth client used to verify google sign-in
-const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
+// // create a new OAuth client used to verify google sign-in
+// const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 
-const verifyGoogle = (token: string) => {
-  return googleClient
-    .verifyIdToken({
-      idToken: token,
-      audience: GOOGLE_CLIENT_ID,
-    })
-    .then((ticket) => ticket.getPayload());
-};
+// const verifyGoogle = (token: string) => {
+//   return googleClient
+//     .verifyIdToken({
+//       idToken: token,
+//       audience: GOOGLE_CLIENT_ID,
+//     })
+//     .then((ticket) => ticket.getPayload());
+// };
 
 /** Common code */
 
@@ -111,24 +112,24 @@ const getOrCreateUser = (
   );
 };
 
-export const loginGoogle = (req: Request, res: Response) => {
-  verifyGoogle(req.body.token)
-    .then((user) => {
-      if (user === undefined) return;
-      return getOrCreateUser("google", user);
-    })
-    .then((user) => {
-      if (user === null || user === undefined) {
-        throw new Error("Unable to retrieve user.");
-      }
-      req.session.user = user;
-      res.send(user);
-    })
-    .catch((err) => {
-      console.log(`Failed to login: ${err}`);
-      res.status(401).send({ err });
-    });
-};
+// export const loginGoogle = (req: Request, res: Response) => {
+//   verifyGoogle(req.body.token)
+//     .then((user) => {
+//       if (user === undefined) return;
+//       return getOrCreateUser("google", user);
+//     })
+//     .then((user) => {
+//       if (user === null || user === undefined) {
+//         throw new Error("Unable to retrieve user.");
+//       }
+//       req.session.user = user;
+//       res.send(user);
+//     })
+//     .catch((err) => {
+//       console.log(`Failed to login: ${err}`);
+//       res.status(401).send({ err });
+//     });
+// };
 
 export const logout = (req: Request, res: Response) => {
   req.session.user = undefined;

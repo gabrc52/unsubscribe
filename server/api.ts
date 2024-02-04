@@ -3,7 +3,8 @@ import { StatusCodes } from "http-status-codes";
 import "process";
 // an actually async multipart/form-data
 import formidable, { errors as formidableErrors } from "formidable";
-import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
+// import { loginGoogle, loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
+import { loginTouchstone, logout, ensureLoggedIn, redirectOidc } from "./auth";
 import { handleEmail } from "./email";
 import socketManager from "./server-socket";
 import { getCreatorName, populateFoodEvents } from "./util";
@@ -36,7 +37,7 @@ router.post("/receive_email", (req, res) => {
     .catch((e) => res.status(500).send({ error: `${e}` }));
 });
 
-router.post("/login/google", loginGoogle);
+// router.post("/login/google", loginGoogle);
 router.post("/logout", logout);
 
 router.get("/login/touchstone/redirect", redirectOidc);

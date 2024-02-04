@@ -16,12 +16,12 @@ import User from "../../../shared/User";
 import "../utilities.css";
 import "./App.css";
 import { red, deepOrange } from "@mui/material/colors";
-import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
+// import { GOOGLE_CLIENT_ID } from "../../../shared/constants";
 import bluelogo from "../public/blue_logo.png";
 import yellowlogo from "../public/yellow_logo.png";
 import FoodEvent from "../../../shared/FoodEvent";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { CssBaseline, ScopedCssBaseline, Container, Switch } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import FoodPage from "./pages/FoodPage";
 import NewFoodPage from "./pages/NewFood";
 
@@ -166,7 +166,7 @@ const App = () => {
       <ThemeProvider theme={selectedTheme}>
         <CssBaseline />
         <BrowserRouter>
-          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          {/* <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}> */}
             {/* Check if logged in, else show Login */}
             {userId ? (
               <UserIdContext.Provider value={userId}>
@@ -199,7 +199,7 @@ const App = () => {
             ) : (
               <Login handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
             )}
-          </GoogleOAuthProvider>
+          {/* </GoogleOAuthProvider> */}
         </BrowserRouter>
       </ThemeProvider>
     </>
